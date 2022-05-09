@@ -10,4 +10,7 @@
     <string name="or">Or</string>
     <string name="sign_up_here">If you do not have an account, sign up here</string>
     <string name="log_in">Log in</string>
+    <string name="sign_up">Sign up</string>
+    <string name="create_account">Create my account</string>
+    <string name="sign_in_here">Already have an account? Sign in here</string>
 </resources>
