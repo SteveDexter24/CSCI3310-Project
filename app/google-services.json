@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "139909038123",
+    "project_id": "ecosell",
+    "storage_bucket": "ecosell.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:139909038123:android:34a79022697ced24deea6e",
+        "android_client_info": {
+          "package_name": "com.yolo.ecosell"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "139909038123-3n3l00p92j15fn4uutpgdum8c5s3uo1p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZQEDfpmodEEUnLBg2ZUlOOWJKAt3ly-Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "139909038123-3n3l00p92j15fn4uutpgdum8c5s3uo1p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
