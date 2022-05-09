@@ -3,4 +3,11 @@
     <string name="starting_title_text">Save. Our. Planet.</string>
     <string name="what_to_sell_today">What do you want to sell today?</string>
     <string name="start_selling_now">Start Selling Now</string>
+    <string name="enter_email">Enter your email address</string>
+    <string name="enter_password">Enter your password</string>
+    <string name="login">Login</string>
+    <string name="sign_in_with_google">Sign in with Google</string>
+    <string name="or">Or</string>
+    <string name="sign_up_here">If you do not have an account, sign up here</string>
+    <string name="log_in">Log in</string>
 </resources>
