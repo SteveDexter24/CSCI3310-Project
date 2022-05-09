@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">EcoSell</string>
+    <string name="starting_title_text">Save. Our. Planet.</string>
+    <string name="what_to_sell_today">What do you want to sell today?</string>
+    <string name="start_selling_now">Start Selling Now</string>
 </resources>
