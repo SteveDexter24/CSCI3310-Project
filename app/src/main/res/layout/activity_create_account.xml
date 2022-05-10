@@ -38,7 +38,8 @@ tools:context=".CreateAccountActivity">
         android:scaleType="fitXY"
         android:src="@drawable/signup_add_profile_image"
         tools:ignore="SpeakableTextPresentCheck"
-        android:focusable="true" />
+        android:focusable="true"
+        android:contentDescription="@string/image_button" />
 
     <TextView
         android:layout_width="match_parent"
