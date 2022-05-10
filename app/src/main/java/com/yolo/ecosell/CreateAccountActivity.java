@@ -98,6 +98,14 @@ public class CreateAccountActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        currentUser = firebaseAuth.getCurrentUser();
+        //firebaseAuth.addAuthStateListener(authStateListener);
+    }
+
         goToSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
