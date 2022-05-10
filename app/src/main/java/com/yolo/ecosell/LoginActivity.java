@@ -95,4 +95,29 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+    private void getUserCollectionRef(String currentUserId){
+        collectionReference
+                .whereEqualTo("userId", currentUserId)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+
+                        assert queryDocumentSnapshots != null;
+                        if (!queryDocumentSnapshots.isEmpty()) {
+
+                            progressBar.setVisibility(View.INVISIBLE);
+                            for (QueryDocumentSnapshot snapshot : queryDocumentSnapshots) {
+                                User user = new User();
+                                user.setEmail(snapshot.getString("email"));
+                                user.setUsername(snapshot.getString("username"));
+                                user.setUserId(snapshot.getString("userId"));
+                                user.setLocation(snapshot.getString("location"));
+                                user.setImageUrl(snapshot.getString("imageUrl"));
+                                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                            }
+
+                        }
+                    }
+                });
+    }
 }
