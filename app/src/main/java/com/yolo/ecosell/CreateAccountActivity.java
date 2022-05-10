@@ -155,59 +155,54 @@ public class CreateAccountActivity extends AppCompatActivity {
                                 currentUser = firebaseAuth.getCurrentUser();
                                 assert currentUser != null;
                                 String userId = currentUser.getUid();
-                                // Create User Map
-                                Map<String, String> userObject = new HashMap<>();
-                                userObject.put("userId", userId);
-                                userObject.put("username", username);
-                                userObject.put("email", currentUser.getEmail());
-                                userObject.put("location", location);
-
-                                // Add to db collection
-                                // Put into another function
-                                collectionReference.add(userObject)
-                                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                            @Override
-                                            public void onSuccess(DocumentReference documentReference) {
-                                                documentReference.get()
-                                                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                                            @Override
-                                                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                                                if (task.getResult().exists()){
-                                                                    progressBar.setVisibility(View.INVISIBLE);
-                                                                    String username = task.getResult()
-                                                                            .getString("username");
-                                                                    Intent intent = new Intent(CreateAccountActivity.this, HomeActivity.class);
-                                                                    intent.putExtra("username", username);
-                                                                    intent.putExtra("userId", userObject.get(userId));
-                                                                    startActivity(intent);
-
-                                                                }else{
-
-                                                                }
-                                                            }
-                                                        });
-                                            }
-                                        }).addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-
-                                    }
-                                });
 
 
                             }else{
                                 // something went wrong
                             }
                         }
-                    }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
 
-                }
-            });
-        }else{
-
+                    }
+                });
+            }else{
         }
     }
+
+    private void createUserObjectEntry(User user){
+        collectionReference.add(user)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        documentReference.get()
+                                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                        if (task.getResult().exists()){
+                                            progressBar.setVisibility(View.INVISIBLE);
+                                            String username = task.getResult()
+                                                    .getString("username");
+                                            Intent intent = new Intent(CreateAccountActivity.this, HomeActivity.class);
+                                            intent.putExtra("username", username);
+                                            intent.putExtra("userId", user.getUserId());
+                                            startActivity(intent);
+
+                                        }else{
+                                            progressBar.setVisibility(View.INVISIBLE);
+
+                                        }
+                                    }
+                                });
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                    }
+                });
+        }
 
 }
