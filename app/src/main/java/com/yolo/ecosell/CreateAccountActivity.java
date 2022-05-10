@@ -156,7 +156,35 @@ public class CreateAccountActivity extends AppCompatActivity {
                                 assert currentUser != null;
                                 String userId = currentUser.getUid();
 
+                                StorageReference filepath = storageReference
+                                        .child("profile_images")
+                                        .child(userId);
 
+                                filepath.putFile(imageUri)
+                                        .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                            @Override
+                                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                                filepath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                                    @Override
+                                                    public void onSuccess(Uri uri) {
+                                                        User user = new User();
+                                                        user.setUserId(userId);
+                                                        user.setUsername(username);
+                                                        user.setEmail(email);
+                                                        user.setLocation(location);
+                                                        user.setImageUrl(uri.toString());
+                                                        user.setTimeAdded(new Timestamp(new Date()));
+                                                        createUserObjectEntry(user);
+                                                    }
+                                                });
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                progressBar.setVisibility(View.INVISIBLE);
+                                            }
+                                        });
                             }else{
                                 // something went wrong
                             }
