@@ -73,6 +73,8 @@ tools:context=".CreateAccountActivity">
             android:layout_marginTop="16dp"
             tools:ignore="TextContrastCheck" />
 
+        <AutoCompleteTextView
+            android:id="@+id/sign_up_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/enter_email"
@@ -95,7 +97,7 @@ tools:context=".CreateAccountActivity">
             android:importantForAutofill="no" />
 
         <AutoCompleteTextView
-            android:id="@+id/location"
+            android:id="@+id/sign_up_location"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Enter your location"
@@ -105,7 +107,7 @@ tools:context=".CreateAccountActivity">
             tools:ignore="TextContrastCheck" />
 
         <Button
-            android:id="@+id/email_sign_up_button"
+            android:id="@+id/sign_up_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
