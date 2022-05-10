@@ -66,6 +66,7 @@ public class CreateAccountActivity extends AppCompatActivity {
 
 
         goToSignIn = findViewById(R.id.link_to_sign_in);
+        goToSignInActivity();
 
         authStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -106,6 +107,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         //firebaseAuth.addAuthStateListener(authStateListener);
     }
 
+    private void goToSignInActivity(){
         goToSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
