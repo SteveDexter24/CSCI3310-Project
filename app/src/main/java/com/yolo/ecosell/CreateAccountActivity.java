@@ -28,24 +28,32 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Date;
+
+import model.User;
 
 public class CreateAccountActivity extends AppCompatActivity {
     private Button goToSignIn, createAccountButton;
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
     private FirebaseUser currentUser;
+    private FirebaseStorage storage;
+    private StorageReference storageReference;
 
     // FireStore connection
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     // User Collection
     private CollectionReference collectionReference = db.collection("Users");
 
+
     private ImageButton profileImageButton;
     private EditText emailEditText, passwordEditText, usernameEditText, locationEditText;
     private ProgressBar progressBar;
+    private Uri imageUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
