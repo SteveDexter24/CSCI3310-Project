@@ -67,6 +67,25 @@ public class CreateAccountActivity extends AppCompatActivity {
 
         goToSignIn = findViewById(R.id.link_to_sign_in);
 
+
+        createAccountButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String email = emailEditText.getText().toString().trim();
+                String password = passwordEditText.getText().toString().trim();
+                String username = usernameEditText.getText().toString().trim();
+                String location = locationEditText.getText().toString().trim();
+
+                if (TextUtils.isEmpty(email) && TextUtils.isEmpty(password) && TextUtils.isEmpty(username) && TextUtils.isEmpty(location)){
+                    createUserByEmailAddPassword(username, email, password, location);
+                }else{
+                    Toast.makeText(CreateAccountActivity.this, "Some fields are missing", Toast.LENGTH_LONG).show();
+                }
+
+            }
+        });
+    }
+
         goToSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
