@@ -14,4 +14,6 @@
     <string name="create_account">Create my account</string>
     <string name="sign_in_here">Already have an account? Sign in here</string>
     <string name="add_profile_photo">Add a profile photo</string>
+    <string name="enter_username">Enter a Username</string>
+    <string name="sign_up_enter_location">Enter your location</string>
 </resources>
