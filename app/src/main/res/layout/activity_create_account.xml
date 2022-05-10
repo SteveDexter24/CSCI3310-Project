@@ -47,7 +47,7 @@ tools:context=".CreateAccountActivity">
             tools:ignore="TextContrastCheck" />
 
         <EditText
-            android:id="@+id/password"
+            android:id="@+id/sign_up_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
