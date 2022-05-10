@@ -67,6 +67,18 @@ public class CreateAccountActivity extends AppCompatActivity {
 
         goToSignIn = findViewById(R.id.link_to_sign_in);
 
+        authStateListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                currentUser = firebaseAuth.getCurrentUser();
+
+                if(currentUser != null){
+                    // User is logged in
+                }else{
+                    // No user yet
+                }
+            }
+        };
 
         createAccountButton.setOnClickListener(new View.OnClickListener() {
             @Override
