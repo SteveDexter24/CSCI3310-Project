@@ -116,6 +116,17 @@ public class CreateAccountActivity extends AppCompatActivity {
         });
     }
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == 2 && resultCode == RESULT_OK && data != null){
+            profileImageButton.setImageURI(data.getData());
+        }
+
+    }
+
     private void createUserByEmailAddPassword(String username, String email, String password, String location ){
         if (!TextUtils.isEmpty(email) && email.contains("@") && !TextUtils.isEmpty(password) && !TextUtils.isEmpty(username) && !TextUtils.isEmpty(location)){
             progressBar.setVisibility(View.VISIBLE);
