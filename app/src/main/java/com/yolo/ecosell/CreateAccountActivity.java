@@ -97,12 +97,11 @@ public class CreateAccountActivity extends AppCompatActivity {
                 String username = usernameEditText.getText().toString().trim();
                 String location = locationEditText.getText().toString().trim();
 
-                if (TextUtils.isEmpty(email) && TextUtils.isEmpty(password) && TextUtils.isEmpty(username) && TextUtils.isEmpty(location)){
+                if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password) && !TextUtils.isEmpty(username) && !TextUtils.isEmpty(location) && imageUri != null){
                     createUserByEmailAddPassword(username, email, password, location);
                 }else{
                     Toast.makeText(CreateAccountActivity.this, "Some fields are missing", Toast.LENGTH_LONG).show();
                 }
-
             }
         });
     }
