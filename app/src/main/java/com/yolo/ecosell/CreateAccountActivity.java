@@ -115,4 +115,72 @@ public class CreateAccountActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void createUserByEmailAddPassword(String username, String email, String password, String location ){
+        if (!TextUtils.isEmpty(email) && email.contains("@") && !TextUtils.isEmpty(password) && !TextUtils.isEmpty(username) && !TextUtils.isEmpty(location)){
+            progressBar.setVisibility(View.VISIBLE);
+            firebaseAuth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()){
+                                // Take User to Home Screen
+                                currentUser = firebaseAuth.getCurrentUser();
+                                assert currentUser != null;
+                                String userId = currentUser.getUid();
+                                // Create User Map
+                                Map<String, String> userObject = new HashMap<>();
+                                userObject.put("userId", userId);
+                                userObject.put("username", username);
+                                userObject.put("email", currentUser.getEmail());
+                                userObject.put("location", location);
+
+                                // Add to db collection
+                                // Put into another function
+                                collectionReference.add(userObject)
+                                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                            @Override
+                                            public void onSuccess(DocumentReference documentReference) {
+                                                documentReference.get()
+                                                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                            @Override
+                                                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                                if (task.getResult().exists()){
+                                                                    progressBar.setVisibility(View.INVISIBLE);
+                                                                    String username = task.getResult()
+                                                                            .getString("username");
+                                                                    Intent intent = new Intent(CreateAccountActivity.this, HomeActivity.class);
+                                                                    intent.putExtra("username", username);
+                                                                    intent.putExtra("userId", userObject.get(userId));
+                                                                    startActivity(intent);
+
+                                                                }else{
+
+                                                                }
+                                                            }
+                                                        });
+                                            }
+                                        }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+
+                                    }
+                                });
+
+
+                            }else{
+                                // something went wrong
+                            }
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+
+                }
+            });
+        }else{
+
+        }
+    }
+
 }
