@@ -22,6 +22,24 @@ tools:context=".CreateAccountActivity">
         android:textSize="30sp"
         android:textStyle="bold"/>
 
+    <ImageButton
+        android:id="@+id/sign_up_profile_image"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
+        android:adjustViewBounds="false"
+        android:backgroundTint="@android:color/transparent"
+        android:clickable="true"
+        android:background="@null"
+        android:cropToPadding="false"
+        android:hapticFeedbackEnabled="false"
+        android:scaleType="fitXY"
+        android:src="@drawable/signup_add_profile_image"
+        tools:ignore="SpeakableTextPresentCheck"
+        android:focusable="true" />
+
     <ProgressBar
         android:id="@+id/login_progress"
         style="?android:attr/progressBarStyleLarge"
