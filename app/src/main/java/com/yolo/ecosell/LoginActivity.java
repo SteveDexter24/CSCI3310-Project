@@ -60,4 +60,39 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+    private void loginWithEmailAndPassword(){
+        signInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                progressBar.setVisibility(View.VISIBLE);
+
+                String email = emailEditText.getText().toString().trim();
+                String password = passwordEditText.getText().toString().trim();
+
+                if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
+                    firebaseAuth.signInWithEmailAndPassword(email, password)
+                          .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                              @Override
+                              public void onComplete(@NonNull Task<AuthResult> task) {
+                                  if (task.isSuccessful()){
+                                      FirebaseUser loggedInUser = firebaseAuth.getCurrentUser();
+                                      assert loggedInUser != null;
+                                      final String currentUserId = loggedInUser.getUid();
+                                      getUserCollectionRef(currentUserId);
+                                  }
+                              }
+                          })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    // Dialogue failed to login
+                                    progressBar.setVisibility(View.INVISIBLE);
+                                }
+                            });
+                }else{
+                    // Show Dialog to tell users that email or password field is not valid
+                }
+            }
+        });
+    }
 }
