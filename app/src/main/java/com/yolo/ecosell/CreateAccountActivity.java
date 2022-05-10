@@ -61,9 +61,9 @@ public class CreateAccountActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_account);
 
         firebaseAuth = FirebaseAuth.getInstance();
+        storageReference = FirebaseStorage.getInstance().getReference();
 
         profileImageButton = findViewById(R.id.sign_up_profile_image);
-        //profileImageButton.
         getImage();
         progressBar = findViewById(R.id.login_progress);
         usernameEditText = findViewById(R.id.username_editText);
