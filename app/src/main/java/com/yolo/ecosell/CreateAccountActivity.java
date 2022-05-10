@@ -138,9 +138,9 @@ public class CreateAccountActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode == 2 && resultCode == RESULT_OK && data != null){
-            profileImageButton.setImageURI(data.getData());
+            imageUri = data.getData();
+            profileImageButton.setImageURI(imageUri);
         }
-
     }
 
     private void createUserByEmailAddPassword(String username, String email, String password, String location ){
