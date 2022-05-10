@@ -14,7 +14,9 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         createAccount = findViewById(R.id.link_to_signup);
-
+        goToCreateAccountActivity();
+    }
+    private void goToCreateAccountActivity(){
         createAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -22,5 +24,4 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-
 }
