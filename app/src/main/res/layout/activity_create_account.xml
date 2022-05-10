@@ -40,6 +40,16 @@ tools:context=".CreateAccountActivity">
         tools:ignore="SpeakableTextPresentCheck"
         android:focusable="true" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/add_profile_photo"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="4dp"
+        android:textColor="@color/primary_variant"
+        android:textSize="13sp"
+        android:textStyle="bold"/>
+
     <ProgressBar
         android:id="@+id/login_progress"
         style="?android:attr/progressBarStyleLarge"
