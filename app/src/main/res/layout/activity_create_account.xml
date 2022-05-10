@@ -22,9 +22,39 @@ tools:context=".CreateAccountActivity">
         android:textSize="30sp"
         android:textStyle="bold"/>
 
+    <ImageButton
+        android:id="@+id/sign_up_profile_image"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
+        android:adjustViewBounds="false"
+        android:backgroundTint="@android:color/transparent"
+        android:clickable="true"
+        android:background="@null"
+        android:cropToPadding="false"
+        android:hapticFeedbackEnabled="false"
+        android:scaleType="fitXY"
+        android:src="@drawable/signup_add_profile_image"
+        tools:ignore="SpeakableTextPresentCheck"
+        android:focusable="true"
+        android:contentDescription="@string/image_button" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/add_profile_photo"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="4dp"
+        android:textColor="@color/primary_variant"
+        android:textSize="13sp"
+        android:textStyle="bold"/>
+
     <ProgressBar
         android:id="@+id/login_progress"
         style="?android:attr/progressBarStyleLarge"
+        android:layout_gravity="center_horizontal"
         android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
@@ -36,7 +66,17 @@ tools:context=".CreateAccountActivity">
         android:layout_height="wrap_content">
 
         <AutoCompleteTextView
-            android:id="@+id/email"
+            android:id="@+id/username_editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/enter_username"
+            android:maxLines="1"
+            android:minHeight="48dp"
+            android:layout_marginTop="16dp"
+            tools:ignore="TextContrastCheck" />
+
+        <AutoCompleteTextView
+            android:id="@+id/sign_up_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/enter_email"
@@ -47,7 +87,7 @@ tools:context=".CreateAccountActivity">
             tools:ignore="TextContrastCheck" />
 
         <EditText
-            android:id="@+id/password"
+            android:id="@+id/sign_up_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -59,17 +99,17 @@ tools:context=".CreateAccountActivity">
             android:importantForAutofill="no" />
 
         <AutoCompleteTextView
-            android:id="@+id/location"
+            android:id="@+id/sign_up_location"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter your location"
+            android:hint="@string/sign_up_enter_location"
             android:maxLines="1"
             android:minHeight="48dp"
             android:layout_marginTop="16dp"
             tools:ignore="TextContrastCheck" />
 
         <Button
-            android:id="@+id/email_sign_up_button"
+            android:id="@+id/sign_up_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"

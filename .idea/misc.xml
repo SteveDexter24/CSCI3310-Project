@@ -13,6 +13,15 @@
         <entry key="app/src/main/res/layout/layout.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/layout/mobile_navigation.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.3098958333333333" />
+
+        <entry key="app/src/main/res/drawable/green_border.xml" value="0.5" />
+        <entry key="app/src/main/res/drawable/signup_add_profile_image.xml" value="0.3536458333333333" />
+        <entry key="app/src/main/res/layout/activity_create_account.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_home.xml" value="0.1828125" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.29583333333333334" />
+        <entry key="app/src/main/res/layout/green_image_border.xml" value="0.2617753623188406" />
+        <entry key="app/src/main/res/layout/imagebutton_border.xml" value="0.2617753623188406" />
       </map>
     </option>
   </component>
