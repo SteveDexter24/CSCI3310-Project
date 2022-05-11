@@ -53,6 +53,9 @@ public class LoginActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.login_progress);
         signInButton = findViewById(R.id.email_sign_in_button);
 
+        emailEditText.setText("dummy2@gmail.com");
+        passwordEditText.setText("12345678");
+
         userViewModel = new ViewModelProvider.AndroidViewModelFactory(LoginActivity.this.getApplication())
                 .create(UserViewModel.class);
 
