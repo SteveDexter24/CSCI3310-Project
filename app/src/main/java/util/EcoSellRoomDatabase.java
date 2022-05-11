@@ -2,9 +2,11 @@ package util;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -30,4 +32,16 @@ public abstract class EcoSellRoomDatabase extends RoomDatabase {
         }
         return INSTANCE;
     }
+
+    private static final RoomDatabase.Callback sRoomDatabaseCallback =
+            new RoomDatabase.Callback() {
+                @Override
+                public void onCreate(@NonNull SupportSQLiteDatabase db) {
+                    super.onCreate(db);
+                    // Away from UI Thread
+                    databaseWriteExecutor.execute(() -> {
+                        UserDao userDao = INSTANCE.userDao();
+                    });
+                }
+            };
 }
