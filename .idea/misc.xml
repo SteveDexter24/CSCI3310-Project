@@ -12,6 +12,7 @@
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.31861724853515627" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.29583333333333334" />
+        <entry key="app/src/main/res/layout/chat_layout.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/explore_item.xml" value="0.3609512329101562" />
         <entry key="app/src/main/res/layout/fragment_explore.xml" value="0.4397680973661119" />
         <entry key="app/src/main/res/layout/fragment_producdetail.xml" value="0.320013427734375" />
