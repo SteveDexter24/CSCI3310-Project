@@ -23,4 +23,10 @@ public class UserRepository {
 
     public LiveData<List<User>> getAllUsers() { return allUsers; }
 
+    public void insertUser(User user) {
+        EcoSellRoomDatabase.databaseWriteExecutor.execute(() ->{
+            userDao.insert(user);
+        });
+    }
+
 }
