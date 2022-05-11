@@ -113,6 +113,9 @@ public class LoginActivity extends AppCompatActivity {
                                 user.setUserId(snapshot.getString("userId"));
                                 user.setLocation(snapshot.getString("location"));
                                 user.setImageUrl(snapshot.getString("imageUrl"));
+
+                                UserViewModel.insert(user);
+
                                 startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                             }
 
