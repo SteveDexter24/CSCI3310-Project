@@ -173,7 +173,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                                                         user.setEmail(email);
                                                         user.setLocation(location);
                                                         user.setImageUrl(uri.toString());
-                                                        user.setTimeAdded(new Timestamp(new Date()));
+                                                        user.setTimeAdded(new Timestamp(new Date()).toString());
                                                         createUserObjectEntry(user);
                                                     }
                                                 });

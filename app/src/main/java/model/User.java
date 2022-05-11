@@ -1,21 +1,41 @@
 package model;
 
 
-import com.google.firebase.Timestamp;
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "User_table")
 public class User {
+    @PrimaryKey
+    @NonNull
+    @ColumnInfo(name = "userId")
     private String userId;
+
+    @ColumnInfo(name = "username")
     private String username;
+
+    @ColumnInfo(name = "email")
     private String email;
+
+    @ColumnInfo(name = "password")
     private String password;
+
+    @ColumnInfo(name = "location")
     private String location;
+
+    @ColumnInfo(name = "imageUrl")
     private String imageUrl;
-    private Timestamp timeAdded;
+
+    @ColumnInfo(name = "timeAdded")
+    private String timeAdded;
 
     public User() {
     }
 
-    public User(String userId, String username, String email, String password, String location, String imageUrl, Timestamp timeAdded) {
+    public User(String userId, String username, String email, String password, String location, String imageUrl, String timeAdded) {
         this.userId = userId;
         this.username = username;
         this.email = email;
@@ -73,11 +93,11 @@ public class User {
         this.imageUrl = imageUrl;
     }
 
-    public Timestamp getTimeAdded() {
+    public String getTimeAdded() {
         return timeAdded;
     }
 
-    public void setTimeAdded(Timestamp timeAdded) {
+    public void setTimeAdded(String timeAdded) {
         this.timeAdded = timeAdded;
     }
 }
