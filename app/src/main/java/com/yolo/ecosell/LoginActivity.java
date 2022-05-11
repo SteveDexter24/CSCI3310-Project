@@ -52,6 +52,10 @@ public class LoginActivity extends AppCompatActivity {
         passwordEditText = findViewById(R.id.password);
         progressBar = findViewById(R.id.login_progress);
         signInButton = findViewById(R.id.email_sign_in_button);
+
+        userViewModel = new ViewModelProvider.AndroidViewModelFactory(LoginActivity.this.getApplication())
+                .create(UserViewModel.class);
+
         goToCreateAccountActivity();
         loginWithEmailAndPassword();
     }
