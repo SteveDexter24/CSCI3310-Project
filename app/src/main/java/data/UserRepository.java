@@ -46,4 +46,11 @@ public class UserRepository {
             userDao.deleteOne(user);
         });
     }
+
+    public LiveData<List<User>> searchUsers(String search) {
+        EcoSellRoomDatabase.databaseWriteExecutor.execute(() ->{
+            searchUsers = userDao.searchUsers(search);
+        });
+        return searchUsers;
+    }
 }
