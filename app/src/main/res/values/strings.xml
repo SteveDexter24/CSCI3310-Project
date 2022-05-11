@@ -22,4 +22,5 @@
     <string name="enter_username">Enter a Username</string>
     <string name="sign_up_enter_location">Enter your location</string>
     <string name="image_button">image button</string>
+    <string name="what_to_search">Search and Save the our plant</string>
 </resources>
