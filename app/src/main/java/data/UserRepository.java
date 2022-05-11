@@ -29,4 +29,10 @@ public class UserRepository {
         });
     }
 
+    public void editUser(User user) {
+        EcoSellRoomDatabase.databaseWriteExecutor.execute(() ->{
+            userDao.edit(user);
+        });
+    }
+
 }
