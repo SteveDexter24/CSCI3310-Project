@@ -7,12 +7,14 @@
 
     <!-- name should be the fragment under com.yolo.ecosell
          and layout be the corresponding layout xml
+         -->
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.yolo.ecosell.ui.home.HomeFragment"
+        android:name="com.yolo.ecosell.HomeActivity"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/activity_home" />
 
+    <!--
     <fragment
         android:id="@+id/navigation_dashboard"
         android:name="com.yolo.ecosell.ui.dashboard.DashboardFragment"
