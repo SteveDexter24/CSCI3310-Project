@@ -3,6 +3,7 @@ package com.yolo.ecosell;
 import androidx.appcompat.app.AppCompatActivity;
 
 import androidx.appcompat.widget.SearchView;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -10,11 +11,14 @@ import androidx.navigation.ui.NavigationUI;
 
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import model.UserViewModel;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -22,11 +26,24 @@ public class HomeActivity extends AppCompatActivity {
 //    String[] items = {"Outers", "Tops", "Dresses","Skirts","Shorts", "Pants","Shoes","Bags","Accessories"};
 //    ArrayAdapter<String> arrayAdapter;
 
+    private UserViewModel userViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        userViewModel = new ViewModelProvider.AndroidViewModelFactory(HomeActivity.this.getApplication())
+                .create(UserViewModel.class);
+
+        userViewModel.getAllUsers().observe(this, users -> {
+            try{
+                Log.d("HomeActivity", "onCreate: " + users.get(0).getUsername());
+            }catch (Exception e){
+                Log.d("HomeActivity", e.toString());
+            }
+
+        });
 
         //search bar
 //                listView = findViewById(R.id.listview);
