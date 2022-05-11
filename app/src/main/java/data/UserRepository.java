@@ -41,4 +41,9 @@ public class UserRepository {
         });
     }
 
+    public void deleteOneUser(User user){
+        EcoSellRoomDatabase.databaseWriteExecutor.execute(() ->{
+            userDao.deleteOne(user);
+        });
+    }
 }
