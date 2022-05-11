@@ -43,6 +43,7 @@ public abstract class EcoSellRoomDatabase extends RoomDatabase {
                     // Away from UI Thread
                     databaseWriteExecutor.execute(() -> {
                         UserDao userDao = INSTANCE.userDao();
+                        userDao.deleteAll();
                     });
                 }
             };
