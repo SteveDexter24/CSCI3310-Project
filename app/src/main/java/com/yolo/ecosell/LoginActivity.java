@@ -3,6 +3,7 @@ package com.yolo.ecosell;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,6 +27,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import model.User;
+import model.UserViewModel;
 
 public class LoginActivity extends AppCompatActivity {
     private Button createAccount, signInButton, signInWithGoogleButton;
@@ -38,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference collectionReference = db.collection("Users");
 
+    private UserViewModel userViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +52,13 @@ public class LoginActivity extends AppCompatActivity {
         passwordEditText = findViewById(R.id.password);
         progressBar = findViewById(R.id.login_progress);
         signInButton = findViewById(R.id.email_sign_in_button);
+
+        emailEditText.setText("dummy2@gmail.com");
+        passwordEditText.setText("12345678");
+
+        userViewModel = new ViewModelProvider.AndroidViewModelFactory(LoginActivity.this.getApplication())
+                .create(UserViewModel.class);
+
         goToCreateAccountActivity();
         loginWithEmailAndPassword();
     }
@@ -113,6 +123,9 @@ public class LoginActivity extends AppCompatActivity {
                                 user.setUserId(snapshot.getString("userId"));
                                 user.setLocation(snapshot.getString("location"));
                                 user.setImageUrl(snapshot.getString("imageUrl"));
+                                user.setTimeAdded(snapshot.getData().get("timeAdded").toString());
+                                UserViewModel.insert(user);
+
                                 startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                             }
 
