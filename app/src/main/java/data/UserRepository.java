@@ -14,6 +14,7 @@ public class UserRepository {
     private UserDao userDao;
     private LiveData<List<User>> allUsers;
     private LiveData<List<User>> searchUsers;
+    private User user;
 
     public UserRepository(Application application) {
         EcoSellRoomDatabase db = EcoSellRoomDatabase.getDatabase(application);
@@ -22,6 +23,13 @@ public class UserRepository {
     }
 
     public LiveData<List<User>> getAllUsers() { return allUsers; }
+
+    public User getUser(String userId){
+        EcoSellRoomDatabase.databaseWriteExecutor.execute(() ->{
+            user = userDao.getUser(userId);
+        });
+        return user;
+    }
 
     public void insertUser(User user) {
         EcoSellRoomDatabase.databaseWriteExecutor.execute(() ->{
