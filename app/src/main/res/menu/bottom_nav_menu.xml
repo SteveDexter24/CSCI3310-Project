@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <!-- item of icon up to five only
     item 1: Explore
@@ -13,6 +14,11 @@
         android:title="@string/title_home" />
 
     <item
+        android:id="@+id/navigation_groups"
+        android:icon="@drawable/ic_baseline_group_24"
+        android:title="@string/Groups" />
+
+    <item
         android:id="@+id/navigation_dashboard"
         android:icon="@drawable/ic_dashboard_black_24dp"
         android:title="@string/title_dashboard" />
@@ -21,5 +27,10 @@
         android:id="@+id/navigation_notifications"
         android:icon="@drawable/ic_notifications_black_24dp"
         android:title="@string/title_notifications" />
+
+    <item
+        android:id="@+id/navigation_me"
+        android:icon="@drawable/ic_baseline_person_24"
+        android:title="@string/navigation_me" />
 
 </menu>
