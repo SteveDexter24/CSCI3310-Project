@@ -2,13 +2,34 @@ package model;
 
 
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "User_table")
 public class User {
+    @PrimaryKey
+    @NonNull
+    @ColumnInfo(name = "userId")
     private String userId;
+
+    @ColumnInfo(name = "username")
     private String username;
+
+    @ColumnInfo(name = "email")
     private String email;
+
+    @ColumnInfo(name = "password")
     private String password;
+
+    @ColumnInfo(name = "location")
     private String location;
+
+    @ColumnInfo(name = "imageUrl")
     private String imageUrl;
+
+    @ColumnInfo(name = "timeAdded")
     private String timeAdded;
 
     public User() {
