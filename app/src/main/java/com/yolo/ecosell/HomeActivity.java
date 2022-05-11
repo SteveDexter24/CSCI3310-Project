@@ -1,5 +1,6 @@
 package com.yolo.ecosell;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import androidx.appcompat.widget.SearchView;
@@ -18,6 +19,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import model.UserViewModel;
 
 public class HomeActivity extends AppCompatActivity {
@@ -27,6 +30,12 @@ public class HomeActivity extends AppCompatActivity {
 //    ArrayAdapter<String> arrayAdapter;
 
     private UserViewModel userViewModel;
+
+    BottomNavigationView bottomNavigationView;
+    MeFragment meFragment = new MeFragment();
+    GroupsFragment groupsFragment = new GroupsFragment();
+    DashboardFragment dashboardFragment = new DashboardFragment();
+    NotificationsFragment notificationsFragment = new NotificationsFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +52,26 @@ public class HomeActivity extends AppCompatActivity {
                 Log.d("HomeActivity", e.toString());
             }
 
+            bottomNavigationView = findViewById(R.id.bottom_nav);
+            bottomNavigationView.setOnItemSelectedListener(item -> {
+                switch (item.getItemId()) {
+                    case R.id.navigation_groups:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment, groupsFragment).commit();
+                        return true;
+                    case R.id.navigation_dashboard:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment, dashboardFragment).commit();
+                        return true;
+                    case R.id.navigation_notifications:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment, notificationsFragment).commit();
+                        return true;
+                    case R.id.navigation_me:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment, meFragment).commit();
+                        return true;
+                    default:
+                        return false;
+                }
+            });
         });
-
         //search bar
 //                listView = findViewById(R.id.listview);
 //                arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, items);
