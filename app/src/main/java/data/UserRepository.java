@@ -35,4 +35,10 @@ public class UserRepository {
         });
     }
 
+    public void deleteAllUser(){
+        EcoSellRoomDatabase.databaseWriteExecutor.execute(() ->{
+            userDao.deleteAll();
+        });
+    }
+
 }
