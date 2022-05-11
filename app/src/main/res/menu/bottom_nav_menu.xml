@@ -8,7 +8,7 @@
     item 4: Activity
     item 5: Me-->
     <item
-        android:id="@+id/navigation_home"
+        android:id="@+id/navigation_explore"
         android:icon="@drawable/ic_home_black_24dp"
         android:title="@string/title_home" />
 
