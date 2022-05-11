@@ -26,7 +26,9 @@ public abstract class EcoSellRoomDatabase extends RoomDatabase {
         if (context == null){
             synchronized (EcoSellRoomDatabase.class) {
                 if (INSTANCE == null){
-                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(), EcoSellRoomDatabase.class, "EcoSellDB").build();
+                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(), EcoSellRoomDatabase.class, "EcoSellDB")
+                            .addCallback(sRoomDatabaseCallback)
+                            .build();
                 }
             }
         }
