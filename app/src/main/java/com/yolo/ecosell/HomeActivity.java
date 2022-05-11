@@ -56,16 +56,16 @@ public class HomeActivity extends AppCompatActivity {
             bottomNavigationView.setOnItemSelectedListener(item -> {
                 switch (item.getItemId()) {
                     case R.id.navigation_groups:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment, groupsFragment).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.bottom_nav_fragment, groupsFragment).commit();
                         return true;
                     case R.id.navigation_dashboard:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment, dashboardFragment).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.bottom_nav_fragment, dashboardFragment).commit();
                         return true;
                     case R.id.navigation_notifications:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment, notificationsFragment).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.bottom_nav_fragment, notificationsFragment).commit();
                         return true;
                     case R.id.navigation_me:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.home_fragment, meFragment).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.bottom_nav_fragment, meFragment).commit();
                         return true;
                     default:
                         return false;
