@@ -1,7 +1,6 @@
 package model;
 
 
-import com.google.firebase.Timestamp;
 
 public class User {
     private String userId;
@@ -10,12 +9,12 @@ public class User {
     private String password;
     private String location;
     private String imageUrl;
-    private Timestamp timeAdded;
+    private String timeAdded;
 
     public User() {
     }
 
-    public User(String userId, String username, String email, String password, String location, String imageUrl, Timestamp timeAdded) {
+    public User(String userId, String username, String email, String password, String location, String imageUrl, String timeAdded) {
         this.userId = userId;
         this.username = username;
         this.email = email;
@@ -73,11 +72,11 @@ public class User {
         this.imageUrl = imageUrl;
     }
 
-    public Timestamp getTimeAdded() {
+    public String getTimeAdded() {
         return timeAdded;
     }
 
-    public void setTimeAdded(Timestamp timeAdded) {
+    public void setTimeAdded(String timeAdded) {
         this.timeAdded = timeAdded;
     }
 }
