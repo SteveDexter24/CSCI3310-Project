@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- item of icon up to five only-->
+    <!-- item of icon up to five only
+    item 1: Explore
+    item 2: Group
+    item 3: Create Product
+    item 4: Activity
+    item 5: Me-->
     <item
         android:id="@+id/navigation_home"
         android:icon="@drawable/ic_home_black_24dp"
