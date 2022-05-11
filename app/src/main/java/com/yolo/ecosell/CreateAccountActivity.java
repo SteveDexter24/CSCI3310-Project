@@ -3,6 +3,7 @@ package com.yolo.ecosell;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -35,6 +36,7 @@ import com.google.firebase.storage.UploadTask;
 import java.util.Date;
 
 import model.User;
+import model.UserViewModel;
 
 public class CreateAccountActivity extends AppCompatActivity {
     private Button goToSignIn, createAccountButton;
@@ -55,6 +57,8 @@ public class CreateAccountActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private Uri imageUri;
 
+    private UserViewModel userViewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +75,9 @@ public class CreateAccountActivity extends AppCompatActivity {
         passwordEditText = findViewById(R.id.sign_up_password);
         locationEditText = findViewById(R.id.sign_up_location);
         createAccountButton = findViewById(R.id.sign_up_button);
+
+        userViewModel = new ViewModelProvider.AndroidViewModelFactory(CreateAccountActivity.this.getApplication())
+                .create(UserViewModel.class);
 
 
         goToSignIn = findViewById(R.id.link_to_sign_in);
@@ -174,6 +181,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                                                         user.setLocation(location);
                                                         user.setImageUrl(uri.toString());
                                                         user.setTimeAdded(new Timestamp(new Date()).toString());
+                                                        UserViewModel.insert(user);
                                                         createUserObjectEntry(user);
                                                     }
                                                 });
