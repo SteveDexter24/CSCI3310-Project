@@ -18,7 +18,7 @@ public abstract class EcoSellRoomDatabase extends RoomDatabase {
     public static final int NUM_OF_THREADS = 4;
 
     private static volatile EcoSellRoomDatabase INSTANCE;
-    private  static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(NUM_OF_THREADS);
+    public static final ExecutorService databaseWriteExecutor = Executors.newFixedThreadPool(NUM_OF_THREADS);
 
     public static EcoSellRoomDatabase getDatabase(final Context context){
         if (context == null){
