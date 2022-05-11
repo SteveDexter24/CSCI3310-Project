@@ -8,14 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class DashboardFragment extends Fragment {
+public class SellFragment extends Fragment {
 
-    public DashboardFragment() {
+    public SellFragment() {
         // Required empty public constructor
     }
 
-    public static DashboardFragment newInstance(String param1, String param2) {
-        DashboardFragment fragment = new DashboardFragment();
+    public static SellFragment newInstance(String param1, String param2) {
+        SellFragment fragment = new SellFragment();
         Bundle args = new Bundle();
         return fragment;
     }
@@ -29,6 +29,6 @@ public class DashboardFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_dashboard, container, false);
+        return inflater.inflate(R.layout.fragment_sell, container, false);
     }
 }

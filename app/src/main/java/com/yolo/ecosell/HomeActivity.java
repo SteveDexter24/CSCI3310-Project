@@ -34,7 +34,7 @@ public class HomeActivity extends AppCompatActivity {
     ExploreFragment exploreFragment = new ExploreFragment();
     MeFragment meFragment = new MeFragment();
     GroupsFragment groupsFragment = new GroupsFragment();
-    DashboardFragment dashboardFragment = new DashboardFragment();
+    SellFragment sellFragment = new SellFragment();
     NotificationsFragment notificationsFragment = new NotificationsFragment();
 
     @Override
@@ -62,7 +62,7 @@ public class HomeActivity extends AppCompatActivity {
                         getSupportFragmentManager().beginTransaction().replace(R.id.bottom_nav_fragment, groupsFragment).commit();
                         return true;
                     case R.id.navigation_dashboard:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.bottom_nav_fragment, dashboardFragment).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.bottom_nav_fragment, sellFragment).commit();
                         return true;
                     case R.id.navigation_notifications:
                         getSupportFragmentManager().beginTransaction().replace(R.id.bottom_nav_fragment, notificationsFragment).commit();
