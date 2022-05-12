@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/otherUserLayout">
 <!--    layout of the item inside chat listview-->
 
 
@@ -23,6 +24,7 @@
         android:layout_below="@+id/msg_username"
         android:layout_marginLeft="6dp"
         android:layout_toRightOf="@id/msg_usericon"
+        android:background="@mipmap/bubble_system"
         android:text="This is a message!"
         android:textSize="20sp" />
 
