@@ -31,4 +31,11 @@
     <string name="settings">Settings</string>
     <string name="placeholder_username">Placeholder Username</string>
     <string name="placeholderemail">placeholderEmail@gmail.com</string>
+    <string name="me_mobile_string">Mobile:</string>
+    <string name="me_mobile_num">+852 9876 1234</string>
+    <string name="me_location_string">Location:</string>
+    <string name="me_location">Hong Kong</string>
+    <string name="me_edit_profile_button_title">Edit Profile</string>
+    <string name="me_listings_string">Listings</string>
+    <string name="me_payment_string">Payment</string>
 </resources>
