@@ -1,5 +1,6 @@
 package com.yolo.ecosell;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -96,7 +97,7 @@ public class MeFragment extends Fragment {
 
     private void goToMyListingScreen() {
         listingLinearLayout.setOnClickListener(view -> {
-            Log.d(TAG, "listingClicked");
+            startActivity(new Intent(MeFragment.this.getActivity(), MyListingsActivity.class));
         });
     }
 
