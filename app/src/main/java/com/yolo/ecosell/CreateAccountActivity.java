@@ -53,7 +53,7 @@ public class CreateAccountActivity extends AppCompatActivity {
 
 
     private ImageButton profileImageButton;
-    private EditText emailEditText, passwordEditText, usernameEditText, locationEditText;
+    private EditText emailEditText, passwordEditText, usernameEditText, locationEditText, phoneNumberEditText;
     private ProgressBar progressBar;
     private Uri imageUri;
 
@@ -72,6 +72,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.login_progress);
         usernameEditText = findViewById(R.id.username_editText);
         emailEditText = findViewById(R.id.sign_up_email);
+        phoneNumberEditText = findViewById(R.id.sign_up_phone_number);
         passwordEditText = findViewById(R.id.sign_up_password);
         locationEditText = findViewById(R.id.sign_up_location);
         createAccountButton = findViewById(R.id.sign_up_button);
@@ -103,9 +104,10 @@ public class CreateAccountActivity extends AppCompatActivity {
                 String password = passwordEditText.getText().toString().trim();
                 String username = usernameEditText.getText().toString().trim();
                 String location = locationEditText.getText().toString().trim();
+                String phoneNumber = phoneNumberEditText.getText().toString().trim();
 
-                if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password) && !TextUtils.isEmpty(username) && !TextUtils.isEmpty(location) && imageUri != null){
-                    createUserByEmailAddPassword(username, email, password, location);
+                if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password) && !TextUtils.isEmpty(username) && !TextUtils.isEmpty(location) && imageUri != null && !TextUtils.isEmpty(phoneNumber)){
+                    createUserByEmailAddPassword(username, email, password, location, phoneNumber);
                 }else{
                     Toast.makeText(CreateAccountActivity.this, "Some fields are missing", Toast.LENGTH_LONG).show();
                 }
@@ -150,7 +152,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         }
     }
 
-    private void createUserByEmailAddPassword(String username, String email, String password, String location ){
+    private void createUserByEmailAddPassword(String username, String email, String password, String location, String phoneNumber ){
         if (!TextUtils.isEmpty(email) && email.contains("@") && !TextUtils.isEmpty(password) && !TextUtils.isEmpty(username) && !TextUtils.isEmpty(location)){
             progressBar.setVisibility(View.VISIBLE);
             firebaseAuth.createUserWithEmailAndPassword(email, password)
@@ -179,6 +181,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                                                         user.setUsername(username);
                                                         user.setEmail(email);
                                                         user.setLocation(location);
+                                                        user.setMobile(phoneNumber);
                                                         user.setImageUrl(uri.toString());
                                                         user.setTimeAdded(new Timestamp(new Date()).toString());
                                                         UserViewModel.insert(user);

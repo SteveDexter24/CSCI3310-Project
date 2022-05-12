@@ -38,4 +38,5 @@
     <string name="me_edit_profile_button_title">Edit Profile</string>
     <string name="me_listings_string">Listings</string>
     <string name="me_payment_string">Payment</string>
+    <string name="enter_phone_number">Enter your phone number</string>
 </resources>

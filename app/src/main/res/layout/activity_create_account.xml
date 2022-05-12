@@ -86,6 +86,17 @@ tools:context=".CreateAccountActivity">
             android:layout_marginTop="16dp"
             tools:ignore="TextContrastCheck" />
 
+        <AutoCompleteTextView
+            android:id="@+id/sign_up_phone_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/enter_phone_number"
+            android:inputType="phone"
+            android:maxLines="1"
+            android:minHeight="48dp"
+            android:layout_marginTop="16dp"
+            tools:ignore="TextContrastCheck" />
+
         <EditText
             android:id="@+id/sign_up_password"
             android:layout_width="match_parent"
