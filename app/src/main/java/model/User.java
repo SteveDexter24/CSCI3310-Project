@@ -26,6 +26,9 @@ public class User {
     @ColumnInfo(name = "location")
     private String location;
 
+    @ColumnInfo(name = "mobile")
+    private String mobile;
+
     @ColumnInfo(name = "imageUrl")
     private String imageUrl;
 
@@ -35,12 +38,13 @@ public class User {
     public User() {
     }
 
-    public User(String userId, String username, String email, String password, String location, String imageUrl, String timeAdded) {
+    public User(String userId, String username, String email, String password, String location, String mobile, String imageUrl, String timeAdded) {
         this.userId = userId;
         this.username = username;
         this.email = email;
         this.password = password;
         this.location = location;
+        this.mobile = mobile;
         this.imageUrl = imageUrl;
         this.timeAdded = timeAdded;
     }
@@ -88,6 +92,10 @@ public class User {
     public String getImageUrl() {
         return imageUrl;
     }
+
+    public String getMobile() { return mobile; }
+
+    public void setMobile(String mobile) { this.mobile = mobile; }
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;

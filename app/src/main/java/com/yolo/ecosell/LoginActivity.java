@@ -124,6 +124,7 @@ public class LoginActivity extends AppCompatActivity {
                                 user.setLocation(snapshot.getString("location"));
                                 user.setImageUrl(snapshot.getString("imageUrl"));
                                 user.setTimeAdded(snapshot.getData().get("timeAdded").toString());
+                                user.setMobile(snapshot.getString("mobile"));
                                 UserViewModel.insert(user);
 
                                 startActivity(new Intent(LoginActivity.this, HomeActivity.class));

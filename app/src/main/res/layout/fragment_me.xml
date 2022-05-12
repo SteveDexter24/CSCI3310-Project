@@ -8,11 +8,12 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        tools:ignore="UselessParent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:background="#f5f5f5">
 
             <ImageView
@@ -23,9 +24,10 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toTopOf="@+id/card_linearLayout"
-                app:srcCompat="@drawable/profile_header_background" />
+                app:srcCompat="@drawable/profile_header_background"
+                tools:ignore="ContentDescription" />
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profile_imageView"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
@@ -33,9 +35,12 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/profile" />
+                app:civ_border_width="2dp"
+                app:civ_border_color="#ecf0f1"
+                app:srcCompat="@drawable/profile"
+                tools:ignore="ContentDescription" />
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/me_username_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -49,15 +54,15 @@
                 app:layout_constraintTop_toBottomOf="@+id/profile_imageView" />
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/me_email_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/placeholderemail"
                 android:textColor="#ffffff"
                 android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="@+id/textView"
-                app:layout_constraintStart_toStartOf="@+id/textView"
-                app:layout_constraintTop_toBottomOf="@+id/textView" />
+                app:layout_constraintEnd_toEndOf="@+id/me_username_text_view"
+                app:layout_constraintStart_toStartOf="@+id/me_username_text_view"
+                app:layout_constraintTop_toBottomOf="@+id/me_username_text_view" />
 
             <LinearLayout
                 android:id="@+id/card_linearLayout"
@@ -70,15 +75,18 @@
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView2">
+                app:layout_constraintTop_toBottomOf="@+id/me_email_text_view">
 
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:baselineAligned="false"
+                    tools:ignore="UselessParent">
 
                     <LinearLayout
+                        android:id="@+id/me_listing_layout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
@@ -92,14 +100,15 @@
                             android:layout_height="60dp"
                             android:layout_gravity="center_horizontal"
                             android:layout_margin="10dp"
-                            app:srcCompat="@drawable/product_listing" />
+                            app:srcCompat="@drawable/product_listing"
+                            tools:ignore="ContentDescription" />
 
                         <TextView
                             android:id="@+id/textView3"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="10dp"
-                            android:text="Listings"
+                            android:text="@string/me_listings_string"
                             android:textAlignment="center"
                             android:textColor="#000000"
                             android:textSize="14sp"
@@ -107,6 +116,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/me_payment_layout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
@@ -120,13 +130,14 @@
                             android:layout_height="60dp"
                             android:layout_gravity="center_horizontal"
                             android:layout_margin="10dp"
-                            app:srcCompat="@drawable/payment" />
+                            app:srcCompat="@drawable/payment"
+                            tools:ignore="ContentDescription" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="10dp"
-                            android:text="Payment"
+                            android:text="@string/me_payment_string"
                             android:textAlignment="center"
                             android:textColor="#000000"
                             android:textSize="14sp"
@@ -149,7 +160,8 @@
                             android:layout_height="60dp"
                             android:layout_margin="10dp"
                             android:layout_gravity="center_horizontal"
-                            app:srcCompat="@drawable/gear" />
+                            app:srcCompat="@drawable/gear"
+                            tools:ignore="ContentDescription" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -180,15 +192,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Mobile:"
+                    android:text="@string/me_mobile_string"
                     android:textColor="#5917e1"
                     android:textSize="18sp" />
 
                 <TextView
+                    android:id="@+id/me_mobile_phone_number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="987-4563-12"
+                    android:text="@string/me_mobile_num"
                     android:textAlignment="viewEnd"
                     android:textColor="#5b5b5b"
                     android:textSize="18sp" />
@@ -210,15 +223,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Location:"
+                    android:text="@string/me_location_string"
                     android:textColor="#5917e1"
                     android:textSize="18sp" />
 
                 <TextView
+                    android:id="@+id/me_location"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Hong Kong"
+                    android:text="@string/me_location"
                     android:textAlignment="viewEnd"
                     android:textColor="#5b5b5b"
                     android:textSize="18sp" />
@@ -231,7 +245,7 @@
                 android:layout_marginTop="60dp"
                 android:backgroundTint="#16A085"
                 android:gravity="center"
-                android:text="Edit Profile"
+                android:text="@string/me_edit_profile_button_title"
                 android:textColor="#ffffff"
                 android:textSize="18sp"
                 android:textStyle="bold"
