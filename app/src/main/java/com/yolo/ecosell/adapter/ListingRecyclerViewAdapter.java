@@ -39,6 +39,9 @@ public class ListingRecyclerViewAdapter extends RecyclerView.Adapter<ListingRecy
         holder.sellerTextView.setText(("DummyUser1234"));
         Glide.with(holder.itemView.getContext())
                 .load("https://images.lululemon.com/is/image/lululemon/LM5ADRS_0001_1?size=800,800").into(holder.productImageView);
+
+        Glide.with(holder.itemView.getContext())
+                .load("https://images.lululemon.com/is/image/lululemon/LM5ADRS_0001_1?size=800,800").into(holder.sellerImageView);
     }
 
     @Override
