@@ -115,7 +115,7 @@ public class MeFragment extends Fragment {
 
     private void goToEditProfileScreen() {
         editProfileButton.setOnClickListener(view -> {
-            Log.d(TAG, "editProfileClicked");
+            startActivity(new Intent(MeFragment.this.getActivity(), EditProfileActivity.class));
         });
     }
 }
