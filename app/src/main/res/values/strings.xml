@@ -39,4 +39,11 @@
     <string name="me_listings_string">Listings</string>
     <string name="me_payment_string">Payment</string>
     <string name="enter_phone_number">Enter your phone number</string>
+    <string name="change_profile_photo">Update profile photo</string>
+    <string name="edit_username">Update your username</string>
+    <string name="edit_email_address">Update your email address</string>
+    <string name="update_profile">Update my profile</string>
+    <string name="change_password">Update your password</string>
+    <string name="change_location">Update your location</string>
+    <string name="enter_old_password">Enter your old password</string>
 </resources>
