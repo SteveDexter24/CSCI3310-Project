@@ -4,44 +4,111 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/otherUserLayout">
+    >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 <!--    layout of the item inside chat listview-->
 
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/chatotherUserLayout">
 
-    <TextView
-        android:id="@+id/msg_username"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="6dp"
-        android:layout_toRightOf="@id/msg_usericon"
-        android:text="name" />
+            <ImageView
+                android:id="@+id/msg_ousericon"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentStart="true"
+                tools:srcCompat="@tools:sample/avatars" />
 
-    <TextView
-        android:id="@+id/msg_content"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/msg_username"
-        android:layout_marginLeft="6dp"
-        android:layout_toRightOf="@id/msg_usericon"
-        android:background="@mipmap/bubble_system"
-        android:text="This is a message!"
-        android:textSize="20sp" />
+            <TextView
+                android:id="@+id/msg_ousername"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="6dp"
+                android:layout_toRightOf="@id/msg_ousericon"
+                android:text="otheruser" />
 
-    <TextView
-        android:id="@+id/msg_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/msg_content"
-        android:layout_marginRight="6dp"
-        android:layout_alignParentEnd="true"
-        android:text="18:31:23 12/05/21" />
+            <TextView
+                android:id="@+id/msg_ocontent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/msg_ousername"
+                android:layout_marginLeft="6dp"
+                android:paddingTop="14dp"
+                android:paddingBottom="14dp"
+                android:paddingStart="23dp"
+                android:paddingEnd="33dp"
+                android:layout_toRightOf="@id/msg_ousericon"
+                android:background="@mipmap/bubble_system"
+                android:text="This is a message!"
+                android:textSize="20sp" />
 
-    <ImageView
-        android:id="@+id/msg_usericon"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_alignParentStart="true"
+            <TextView
+                android:id="@+id/msg_otime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/msg_ocontent"
+                android:layout_marginRight="6dp"
+                android:layout_alignParentEnd="true"
+                android:text="18:31:23 12/05/21" />
 
-        tools:srcCompat="@tools:sample/avatars" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/chatUserLayout">
+
+            <ImageView
+                android:id="@+id/msg_usericon"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentEnd="true"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <TextView
+                android:id="@+id/msg_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginRight="6dp"
+                android:layout_toLeftOf="@id/msg_usericon"
+                android:text="user" />
+
+            <TextView
+                android:id="@+id/msg_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/msg_username"
+                android:layout_marginRight="6dp"
+                android:paddingTop="14dp"
+                android:paddingBottom="14dp"
+                android:paddingStart="23dp"
+                android:paddingEnd="33dp"
+                android:layout_toLeftOf="@id/msg_usericon"
+                android:background="@mipmap/bubble_user1"
+                android:text="This is an other message!"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/msg_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/msg_content"
+                android:layout_marginLeft="6dp"
+                android:layout_alignParentStart="true"
+                android:text="19:31:23 12/05/21" />
+
+
+
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
 </RelativeLayout>
