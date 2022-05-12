@@ -28,4 +28,7 @@
     <string name="Groups">Groups</string>
     <string name="title_explore">Explore</string>
     <string name="title_sell">Sell</string>
+    <string name="settings">Settings</string>
+    <string name="placeholder_username">Placeholder Username</string>
+    <string name="placeholderemail">placeholderEmail@gmail.com</string>
 </resources>
