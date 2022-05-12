@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EcoSell">
         <activity
+            android:name=".MyListingsActivity"
+            android:exported="false" />
+        <activity
             android:name=".MeActivity"
             android:exported="false" />
         <activity
