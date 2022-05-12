@@ -45,4 +45,5 @@
     <string name="update_profile">Update my profile</string>
     <string name="change_password">Update your password</string>
     <string name="change_location">Update your location</string>
+    <string name="enter_old_password">Enter your old password</string>
 </resources>

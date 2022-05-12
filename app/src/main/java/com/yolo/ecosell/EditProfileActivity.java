@@ -19,7 +19,7 @@ import model.UserViewModel;
 
 public class EditProfileActivity extends AppCompatActivity {
 
-    private EditText usernameEditText, emailEditText, passwordEditText, phoneNumberEditText, locationEditText;
+    private EditText usernameEditText, emailEditText, oldPasswordEditText, passwordEditText, phoneNumberEditText, locationEditText;
     private Button updateProfileButton;
     private ImageView profileImageView;
     private UserViewModel userViewModel;
@@ -32,6 +32,7 @@ public class EditProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_profile);
         usernameEditText = findViewById(R.id.edit_username);
         emailEditText = findViewById(R.id.edit_email);
+        oldPasswordEditText = findViewById(R.id.edit_old_password);
         passwordEditText = findViewById(R.id.edit_password);
         phoneNumberEditText = findViewById(R.id.edit_phone);
         locationEditText = findViewById(R.id.edit_location);
