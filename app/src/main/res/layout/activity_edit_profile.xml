@@ -64,6 +64,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
+
                 <AutoCompleteTextView
                     android:id="@+id/edit_username"
                     android:layout_width="match_parent"
@@ -92,30 +93,6 @@
                     android:layout_marginTop="16dp"
                     android:hint="Update your phone number"
                     android:inputType="textEmailAddress"
-                    android:maxLines="1"
-                    android:minHeight="48dp"
-                    tools:ignore="TextContrastCheck" />
-
-                <EditText
-                    android:id="@+id/edit_old_password"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:hint="@string/enter_old_password"
-                    android:importantForAutofill="no"
-                    android:inputType="textPassword"
-                    android:maxLines="1"
-                    android:minHeight="48dp"
-                    tools:ignore="TextContrastCheck" />
-
-                <EditText
-                    android:id="@+id/edit_password"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:hint="@string/change_password"
-                    android:importantForAutofill="no"
-                    android:inputType="textPassword"
                     android:maxLines="1"
                     android:minHeight="48dp"
                     tools:ignore="TextContrastCheck" />
