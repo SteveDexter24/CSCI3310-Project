@@ -82,8 +82,9 @@ public class EditPasswordActivity extends AppCompatActivity {
                     );
             firebaseUser.reauthenticate(credential)
                     .addOnCompleteListener(task -> {
-                        firebaseUser
-                                .updatePassword(newPassword)
+                        if (!task.isSuccessful()) return;
+                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                        user.updatePassword(newPassword)
                                 .addOnCompleteListener(task1 -> {
                                     progressBar.setVisibility(View.GONE);
                                     Toast.makeText(this, "Successfully update password", Toast.LENGTH_LONG).show();
