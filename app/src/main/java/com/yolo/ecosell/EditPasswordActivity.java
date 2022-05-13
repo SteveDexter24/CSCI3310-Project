@@ -45,7 +45,7 @@ public class EditPasswordActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        getSupportActionBar().setTitle("Update Password");
         userViewModel = new ViewModelProvider.AndroidViewModelFactory(this.getApplication())
                 .create(UserViewModel.class);
 
