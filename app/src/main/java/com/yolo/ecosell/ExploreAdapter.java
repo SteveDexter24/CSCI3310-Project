@@ -19,11 +19,24 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.Adapter;
 
+import model.Product;
+
 public class ExploreAdapter extends RecyclerView.Adapter<ExploreAdapter.ExploreViewHolder>{
     private String[] localDataSet;
     private static final String TAG = "ExploreAdaptor";
     private Context context;
     private LayoutInflater mInflater;
+
+
+    private List<Product> productList;
+    public ExploreAdapter(List<Product> productList){
+        this.productList = productList;
+    }
+
+    public void setFilteredList(List<Product> filteredList){
+        this.productList = filteredList;
+        notifyDataSetChanged();
+    }
 
     class ExploreViewHolder extends RecyclerView.ViewHolder {
         public ImageView imageItemView;
