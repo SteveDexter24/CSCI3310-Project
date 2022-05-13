@@ -1,6 +1,5 @@
 package com.yolo.ecosell;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -16,33 +15,24 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.EmailAuthCredential;
-import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.OAuthCredential;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
+import java.util.Objects;
 
 import model.User;
 import model.UserViewModel;
 
 public class EditProfileActivity extends AppCompatActivity {
-    private String TAG = "Edit Profile Activity";
+    private final String TAG = "EditProfileActivity";
     private EditText usernameEditText, emailEditText, phoneNumberEditText, locationEditText;
     private Button updateProfileButton;
     private ImageView profileImageView;
@@ -57,6 +47,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private StorageReference storageReference;
     private String oldEmail;
     private User mUser;
+    private String new_image_url;
 
     // FireStore connection
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -69,14 +60,14 @@ public class EditProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         firebaseAuth = FirebaseAuth.getInstance();
         storageReference = FirebaseStorage.getInstance().getReference();
-        getSupportActionBar().setTitle("Update Profile");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Update Profile");
         setContentView(R.layout.activity_edit_profile);
         usernameEditText = findViewById(R.id.edit_username);
         emailEditText = findViewById(R.id.edit_email);
         phoneNumberEditText = findViewById(R.id.edit_phone);
         locationEditText = findViewById(R.id.edit_location);
         profileImageView = findViewById(R.id.edit_profile_profile_image);
-        updateProfileButton = findViewById(R.id.edit_profile_button);
+        updateProfileButton = findViewById(R.id.edit_user_profile_button);
         progressBar = findViewById(R.id.edit_progress);
 
         getImage();
@@ -99,49 +90,84 @@ public class EditProfileActivity extends AppCompatActivity {
             String username = usernameEditText.getText().toString().trim();
             String email = emailEditText.getText().toString().trim();
             String location = locationEditText.getText().toString().trim();
-            if (TextUtils.isEmpty(email) &&
-                    TextUtils.isEmpty(username) &&
-                    TextUtils.isEmpty(location)) return;
-
-            progressBar.setVisibility(View.VISIBLE);
-
-            FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-            firebaseUser.updateEmail(email)
-                    .addOnCompleteListener(task -> {
-                        progressBar.setVisibility(View.GONE);
-                        if (task.isSuccessful()) {
-                            Log.d(TAG, "User email address updated.");
-                            User user = mUser;
-                            user.setUsername(username);
-                            user.setEmail(email);
-                            user.setLocation(location);
-                            updateUserCollection(user);
-                        }
-                    }).addOnFailureListener(e -> {
-
-            });
+            String mobileNum = phoneNumberEditText.getText().toString().trim();
+            if (!TextUtils.isEmpty(email) &&
+                    !TextUtils.isEmpty(username) &&
+                    !TextUtils.isEmpty(location) &&
+                    !TextUtils.isEmpty(mobileNum)) {
+                updateEmailAddress(username, email, location, mobileNum);
+            }
         });
+    }
 
+    private void updateEmailAddress(String username, String email, String location, String mobileNum){
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        assert firebaseUser != null;
+        progressBar.setVisibility(View.VISIBLE);
+        firebaseUser.updateEmail(email)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Log.d(TAG, "User email address updated.");
+                        if (imageUri != null) {
+                            uploadImage(mUser.getUserId(), imageUri);
+                        }
+                        mUser.setMobile(mobileNum);
+                        mUser.setUsername(username);
+                        mUser.setEmail(email);
+                        mUser.setLocation(location);
+                        updateUserCollection(mUser);
+                    }
+                })
+                .addOnFailureListener(e -> progressBar.setVisibility(View.GONE));
+    }
+
+    private void uploadImage(String userId, Uri updated_image_uri) {
+        StorageReference filepath = storageReference
+                .child("profile_images")
+                .child(userId);
+
+        filepath
+                .putFile(updated_image_uri)
+                .addOnSuccessListener(taskSnapshot -> filepath
+                        .getDownloadUrl()
+                        .addOnSuccessListener(uri -> {
+                           mUser.setImageUrl(uri.toString());
+                        })
+                        .addOnFailureListener(e -> {
+                            progressBar.setVisibility(View.GONE);
+                            Toast.makeText(this, "Failed to update profile image", Toast.LENGTH_LONG).show();
+                        }));
     }
 
     private void updateUserCollection(User user) {
         collectionReference.document(mUser.getUserId())
                 .set(user)
                 .addOnSuccessListener(aVoid -> {
-                    Log.d(TAG, "Successfully update user");
                     collectionReference
                             .whereEqualTo("userId", user.getUserId())
                             .addSnapshotListener((value, error) -> {
                                 assert value != null;
+                                Log.d(TAG, "Successfully update user");
+                                progressBar.setVisibility(View.GONE);
                                 if (!value.isEmpty()) {
-                                    progressBar.setVisibility(View.VISIBLE);
+                                    progressBar.setVisibility(View.GONE);
+                                    Toast.makeText(this, "Successfully updated your profile", Toast.LENGTH_LONG).show();
                                     for (QueryDocumentSnapshot snapshot : value) {
                                         user.setEmail(snapshot.getString("email"));
                                         user.setUsername(snapshot.getString("username"));
                                         user.setLocation(snapshot.getString("location"));
+                                        user.setMobile(snapshot.getString("mobile"));
+                                        String imageUrl = snapshot.getString("imageUrl");
+                                        user.setImageUrl(imageUrl);
+                                        // By default replaces as long as same primary key
+                                        userViewModel.editUser(user);
                                     }
                                 }
                             });
+                })
+                .addOnFailureListener(e -> {
+                    progressBar.setVisibility(View.GONE);
+                    Toast.makeText(this, "Failed to update your profile", Toast.LENGTH_LONG).show();
                 });
     }
 
