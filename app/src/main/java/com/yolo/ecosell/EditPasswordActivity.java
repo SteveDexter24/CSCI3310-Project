@@ -97,7 +97,7 @@ public class EditPasswordActivity extends AppCompatActivity {
                     })
                     .addOnFailureListener(e -> {
                         // Incorrect credential
-                        Toast.makeText(this, "Failed update password", Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, "Previous password is wrong", Toast.LENGTH_LONG).show();
                         progressBar.setVisibility(View.GONE);
                     });
 
