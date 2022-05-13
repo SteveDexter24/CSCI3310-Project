@@ -250,10 +250,23 @@
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:cornerRadius="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/location_linear_layout"
                 app:layout_constraintStart_toStartOf="@+id/location_linear_layout"
                 app:layout_constraintTop_toBottomOf="@+id/location_linear_layout" />
+            <Button
+                android:id="@+id/goto_edit_password"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:backgroundTint="#d35400"
+                android:gravity="center"
+                android:text="@string/update_password_button_text"
+                android:textColor="#ffffff"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:cornerRadius="8dp"
+                app:layout_constraintEnd_toEndOf="@+id/location_linear_layout"
+                app:layout_constraintStart_toStartOf="@+id/location_linear_layout"
+                app:layout_constraintTop_toBottomOf="@+id/goto_edit_profile" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
