@@ -159,9 +159,9 @@ public class EditProfileActivity extends AppCompatActivity {
                                         user.setMobile(snapshot.getString("mobile"));
                                         String imageUrl = snapshot.getString("imageUrl");
                                         user.setImageUrl(imageUrl);
-                                        // By default replaces as long as same primary key
-                                        userViewModel.editUser(user);
                                     }
+                                    // By default replaces as long as same primary key
+                                    userViewModel.editUser(user);
                                 }
                             });
                 })
