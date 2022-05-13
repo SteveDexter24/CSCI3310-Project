@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/explore_search_view_bg.xml" value="0.2085" />
         <entry key="app/src/main/res/drawable/green_border.xml" value="0.5" />
         <entry key="app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.2085" />
         <entry key="app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.2085" />
