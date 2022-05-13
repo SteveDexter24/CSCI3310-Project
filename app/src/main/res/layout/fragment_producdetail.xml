@@ -34,37 +34,89 @@
         android:text="$9999"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/productName" />
+        app:layout_constraintTop_toBottomOf="@id/productName" />
 
-    <TextView
-        android:id="@+id/productCatagory"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageView
+        android:id="@+id/sellerImage"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="10dp"
-        android:text="productCatagory"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/productState" />
+        app:layout_constraintTop_toBottomOf="@id/productPrice"
+        app:srcCompat="@drawable/face_24" />
 
     <TextView
-        android:id="@+id/productDescription"
+        android:id="@+id/productSeller"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="6dp"
+        android:layout_marginTop="13dp"
+        android:text="Seller's name"
+        app:layout_constraintStart_toEndOf="@id/sellerImage"
+        app:layout_constraintTop_toBottomOf="@id/productPrice" />
+
+
+    <ImageView
+        android:id="@+id/stateImage"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="10dp"
-        android:text="productDescription"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/productCatagory" />
+        app:layout_constraintTop_toBottomOf="@+id/sellerImage"
+        app:srcCompat="@drawable/tab_b24" />
+
 
     <TextView
         android:id="@+id/productState"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="6dp"
+        android:layout_marginTop="13dp"
+        android:text="productState"
+        app:layout_constraintStart_toEndOf="@+id/stateImage"
+        app:layout_constraintTop_toBottomOf="@id/sellerImage" />
+
+    <ImageView
+        android:id="@+id/categoryImage"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="10dp"
-        android:text="productState"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/productPrice" />
+        app:layout_constraintTop_toBottomOf="@+id/stateImage"
+        app:srcCompat="@drawable/toc_24" />
+
+    <TextView
+        android:id="@+id/productCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="13dp"
+        android:text="productCatagory"
+        app:layout_constraintStart_toEndOf="@id/categoryImage"
+        app:layout_constraintTop_toBottomOf="@id/stateImage" />
+
+    <ImageView
+        android:id="@+id/descriptionImage"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/categoryImage"
+        app:srcCompat="@drawable/description_24" />
+
+    <TextView
+        android:id="@+id/productDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="13dp"
+        android:text="productDescription"
+        app:layout_constraintStart_toEndOf="@id/descriptionImage"
+        app:layout_constraintTop_toBottomOf="@id/categoryImage" />
 
     <TextView
         android:id="@+id/productDelivery"
@@ -77,22 +129,32 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/productDescription" />
 
+    <ImageView
+        android:id="@+id/deliveryImage"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/productDelivery"
+        app:srcCompat="@drawable/shipping_24" />
+
     <TextView
         android:id="@+id/productDeliveryMethod"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="13dp"
         android:text="productDeliveryMethod"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/deliveryImage"
         app:layout_constraintTop_toBottomOf="@+id/productDelivery" />
 
     <Button
         android:id="@+id/btn_chat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="30dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginBottom="28dp"
         android:text="Chat"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btn_Offer" />
@@ -101,10 +163,13 @@
         android:id="@+id/btn_Offer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="50dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginEnd="56dp"
+        android:layout_marginBottom="28dp"
         android:text="Offer"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
