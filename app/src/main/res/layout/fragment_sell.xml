@@ -6,113 +6,414 @@
     android:layout_height="match_parent"
     tools:context=".SellFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
-    android:layout_height="match_parent">
+        android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/add_listing_linear_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/add_listing_add_photo_text_view"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Add Images"
-            android:textColor="#2c3e50"
-            android:textSize="26sp"
-            android:textStyle="bold"
-            android:paddingHorizontal="8dp"
-            android:paddingVertical="8dp"
-            tools:ignore="HardcodedText" />
-
-        <LinearLayout
-            android:id="@+id/PhotoCellLinearLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:paddingBottom="30dp">
 
             <TextView
-                android:id="@+id/add_listing_photo_text_view"
+                android:id="@+id/add_listing_add_photo_text_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="8dp"
-                android:text="Photo"
+                android:paddingVertical="8dp"
+                android:text="Add details"
                 android:textColor="#2c3e50"
-                android:textSize="18sp"
+                android:textSize="26sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/add_listing_linear_layout"
                 tools:ignore="HardcodedText" />
 
             <LinearLayout
-                android:id="@+id/add_listing_photo_linear_layout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingHorizontal="8dp"
-                android:paddingVertical="8dp">
+                android:id="@+id/add_listing_linear_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/add_listing_button">
 
-                <ImageButton
-                    android:id="@+id/add_listing_photo_1"
-                    android:layout_width="90dp"
-                    android:layout_height="90dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_weight="1"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ic_baseline_add_circle_outline_24"
-                    tools:ignore="SpeakableTextPresentCheck, contentDescription"
-                    />
+                <LinearLayout
+                    android:id="@+id/PhotoCellLinearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-                <ImageButton
-                    android:id="@+id/add_listing_photo_2"
-                    android:layout_width="90dp"
-                    android:layout_height="90dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_weight="1"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ic_baseline_add_circle_outline_24"
-                    tools:ignore="ContentDescription,SpeakableTextPresentCheck"
-                    />
+                    <TextView
+                        android:id="@+id/add_listing_photo_text_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="8dp"
+                        android:text="Photo"
+                        android:textColor="#2c3e50"
+                        android:textSize="18sp"
+                        tools:ignore="HardcodedText" />
 
-                <ImageButton
-                    android:id="@+id/add_listing_photo_3"
-                    android:layout_width="90dp"
-                    android:layout_height="90dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_weight="1"
-                    android:scaleType="centerCrop"
-                    tools:ignore="ContentDescription,ImageContrastCheck,SpeakableTextPresentCheck"
-                    android:src="@drawable/ic_baseline_add_circle_outline_24" />
 
-                <ImageButton
-                    android:id="@+id/add_listing_photo_4"
-                    android:layout_width="90dp"
-                    android:layout_height="90dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_weight="1"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ic_baseline_add_circle_outline_24"
-                    tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
+                    <LinearLayout
+                        android:id="@+id/add_listing_photo_linear_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="8dp"
+                        android:paddingVertical="8dp">
 
+                        <ImageButton
+                            android:id="@+id/add_listing_photo_1"
+                            android:layout_width="90dp"
+                            android:layout_height="90dp"
+                            android:layout_weight="1"
+                            android:backgroundTint="#bdc3c7"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/ic_baseline_add_circle_outline_24"
+                            tools:ignore="SpeakableTextPresentCheck, contentDescription" />
+
+                        <ImageButton
+                            android:id="@+id/add_listing_photo_2"
+                            android:layout_width="90dp"
+                            android:layout_height="90dp"
+                            android:layout_weight="1"
+                            android:backgroundTint="#bdc3c7"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/ic_baseline_add_circle_outline_24"
+                            tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
+
+                        <ImageButton
+                            android:id="@+id/add_listing_photo_3"
+                            android:layout_width="90dp"
+                            android:layout_height="90dp"
+                            android:layout_weight="1"
+                            android:backgroundTint="#bdc3c7"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/ic_baseline_add_circle_outline_24"
+                            tools:ignore="ContentDescription,ImageContrastCheck,SpeakableTextPresentCheck" />
+
+                        <ImageButton
+                            android:id="@+id/add_listing_photo_4"
+                            android:layout_width="90dp"
+                            android:layout_height="90dp"
+                            android:layout_weight="1"
+                            android:backgroundTint="#bdc3c7"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/ic_baseline_add_circle_outline_24"
+                            tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
+
+                    </LinearLayout>
+
+
+                    <TextView
+                        android:id="@+id/add_listing_photo_text_view2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="8dp"
+                        android:text="Not happy with the photo crop? Just tap to re-crop or edit."
+                        android:textColor="#2c3e50"
+                        android:textSize="14sp"
+                        tools:ignore="HardcodedText" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/CategoryCellLinearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="vertical">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <EditText
+                            android:id="@+id/add_listing_category_edit_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:background="@drawable/custom_input"
+                            android:ems="10"
+                            android:hint="@string/enter_a_category"
+                            android:importantForAutofill="no"
+                            android:inputType="textPersonName"
+                            android:paddingHorizontal="8dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/add_listing_category_text_view" />
+
+                        <TextView
+                            android:id="@+id/add_listing_category_text_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingHorizontal="8dp"
+                            android:text="Category"
+                            android:textColor="#2c3e50"
+                            android:textSize="18sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:ignore="HardcodedText" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ListingNameCellLinearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="vertical">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <EditText
+                            android:id="@+id/add_listing_name_edit_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:background="@drawable/custom_input"
+                            android:ems="10"
+                            android:hint="@string/name_your_listing"
+                            android:importantForAutofill="no"
+                            android:inputType="textPersonName"
+                            android:paddingHorizontal="8dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/add_listing_name_text_view"
+                            tools:ignore="TextContrastCheck" />
+
+                        <TextView
+                            android:id="@+id/add_listing_name_text_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingHorizontal="8dp"
+                            android:text="Listing Title"
+                            android:textColor="#2c3e50"
+                            android:textSize="18sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:ignore="HardcodedText" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ListingPriceCellLinearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="vertical">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <EditText
+                            android:id="@+id/add_listing_price_edit_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:background="@drawable/custom_input"
+                            android:ems="10"
+                            android:hint="@string/enter_the_price_of_your_listing"
+                            android:importantForAutofill="no"
+                            android:inputType="number"
+                            android:paddingHorizontal="8dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/add_listing_price_text_view"
+                            tools:ignore="TextContrastCheck" />
+
+                        <TextView
+                            android:id="@+id/add_listing_price_text_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingHorizontal="8dp"
+                            android:text="Price (in HKD)"
+                            android:textColor="#2c3e50"
+                            android:textSize="18sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:ignore="HardcodedText" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ListingConditionCellLinearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="vertical">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/add_listing_condition_text_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingHorizontal="8dp"
+                            android:text="Condition"
+                            android:textColor="#2c3e50"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:ignore="HardcodedText" />
+
+                        <com.google.android.material.chip.ChipGroup
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingHorizontal="8dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/add_listing_condition_text_view">
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/chip_brand_new"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:checkable="true"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:text="@string/brand_new"
+                                android:textSize="17sp"
+                                app:checkedIcon="@drawable/ic_baseline_check_circle_24"
+                                app:chipBackgroundColor="@color/white"
+                                app:chipStrokeColor="#bdc3c7"
+                                app:chipStrokeWidth="1dp" />
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/chip_like_new"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:checkable="true"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:text="@string/like_new"
+                                android:textSize="17sp"
+                                app:checkedIcon="@drawable/ic_baseline_check_circle_24"
+                                app:chipBackgroundColor="@color/white"
+                                app:chipStrokeColor="#bdc3c7"
+                                app:chipStrokeWidth="1dp" />
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/chip_well_used"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:checkable="true"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:text="@string/well_used"
+                                android:textSize="17sp"
+                                app:checkedIcon="@drawable/ic_baseline_check_circle_24"
+                                app:chipBackgroundColor="@color/white"
+                                app:chipStrokeColor="#bdc3c7"
+                                app:chipStrokeWidth="1dp" />
+
+                            <com.google.android.material.chip.Chip
+                                android:id="@+id/heavily_used"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:checkable="true"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:text="@string/heavily_used"
+                                android:textSize="17sp"
+                                app:checkedIcon="@drawable/ic_baseline_check_circle_24"
+                                app:chipBackgroundColor="@color/white"
+                                app:chipStrokeColor="#bdc3c7"
+                                app:chipStrokeWidth="1dp" />
+
+                        </com.google.android.material.chip.ChipGroup>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ListingDeliveryCellLinearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="16dp"
+                    android:orientation="vertical">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <EditText
+                            android:id="@+id/add_listing_delivery_edit_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:background="@drawable/custom_input"
+                            android:ems="10"
+                            android:hint="@string/are_there_additional_mailing_or_delivery_options_and_charges"
+                            android:importantForAutofill="no"
+                            android:inputType="textMultiLine"
+                            android:lines="4"
+                            android:maxLines="5"
+                            android:paddingHorizontal="8dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/add_listing_delivery_text_view"
+                            tools:ignore="TextContrastCheck" />
+
+                        <TextView
+                            android:id="@+id/add_listing_delivery_text_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingHorizontal="8dp"
+                            android:text="@string/mailing_and_delivery"
+                            android:textColor="#2c3e50"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:ignore="HardcodedText" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </LinearLayout>
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/add_listing_photo_text_view2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="8dp"
-                android:text="Not happy with the photo crop? Just tap to re-crop or edit."
-                android:textColor="#2c3e50"
-                android:textSize="15sp"
-                tools:ignore="HardcodedText" />
-
-        </LinearLayout>
-
-    </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <Button
+                android:id="@+id/add_listing_button"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="8dp"
+                android:backgroundTint="#16A085"
+                android:gravity="center"
+                android:text="@string/list_it"
+                android:textColor="#ffffff"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:cornerRadius="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/add_listing_linear_layout" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
 </FrameLayout>

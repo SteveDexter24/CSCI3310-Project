@@ -47,4 +47,14 @@
     <string name="change_location">Update your location</string>
     <string name="enter_old_password">Enter your old password</string>
     <string name="update_password_button_text">Update my password</string>
+    <string name="are_there_additional_mailing_or_delivery_options_and_charges">Are there additional mailing or delivery options and charges?</string>
+    <string name="heavily_used">Heavily Used</string>
+    <string name="well_used">Well used</string>
+    <string name="like_new">Like New</string>
+    <string name="enter_the_price_of_your_listing">Enter the price of your listing</string>
+    <string name="brand_new">Brand New</string>
+    <string name="name_your_listing">Name your listing</string>
+    <string name="enter_a_category">Enter a category</string>
+    <string name="mailing_and_delivery">Mailing and Delivery</string>
+    <string name="list_it">List it!</string>
 </resources>
