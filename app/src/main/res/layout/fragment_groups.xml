@@ -1,14 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".GroupsFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_group_fragment" />
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/group_search"
+        android:layout_width="411dp"
+        android:layout_height="49dp"
+        android:layout_margin="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/explore_search_view_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:queryHint="Search for group/organization..."
+        app:iconifiedByDefault="false">
+    </androidx.appcompat.widget.SearchView>
 
-</FrameLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/explore_recyclerview"
+        android:layout_width="409dp"
+        android:layout_height="629dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/group_search" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
