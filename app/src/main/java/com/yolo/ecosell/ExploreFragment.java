@@ -37,22 +37,22 @@ public class ExploreFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        searchView = getView().findViewById(R.id.explore_search);
-        searchView.clearFocus();
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                filterText(newText);
-                return true;
-            }
-        });
-
-        recyclerView = getView().findViewById(R.id.explore_recyclerview);
+//        searchView = getView().findViewById(R.id.explore_search);
+//        searchView.clearFocus();
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                filterText(newText);
+//                return true;
+//            }
+//        });
+//
+//        recyclerView = getView().findViewById(R.id.explore_recyclerview);
 
 
     }
