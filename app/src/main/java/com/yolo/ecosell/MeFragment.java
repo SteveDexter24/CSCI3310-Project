@@ -34,7 +34,7 @@ public class MeFragment extends Fragment {
     private TextView usernameTextView, emailTextView, mobileTextView, locationTextView;
     private UserViewModel userViewModel;
     private LinearLayout listingLinearLayout, paymentLinearLayout, settingsLinearLayout;
-    private Button editProfileButton;
+    private Button editProfileButton, editPasswordButton;
 
     public MeFragment() {
         // Required empty public constructor
@@ -76,11 +76,13 @@ public class MeFragment extends Fragment {
         settingsLinearLayout = view.findViewById(R.id.settings_button_linear_layout);
 
         editProfileButton = view.findViewById(R.id.goto_edit_profile);
+        editPasswordButton = view.findViewById(R.id.goto_edit_password);
 
         goToMyListingScreen();
         goToPaymentScreen();
         goToSettingScreen();
         goToEditProfileScreen();
+        goToEditPasswordScreen();
 
         userViewModel = new ViewModelProvider.AndroidViewModelFactory(MeFragment.this.getActivity().getApplication())
                 .create(UserViewModel.class);
@@ -116,6 +118,12 @@ public class MeFragment extends Fragment {
     private void goToEditProfileScreen() {
         editProfileButton.setOnClickListener(view -> {
             startActivity(new Intent(MeFragment.this.getActivity(), EditProfileActivity.class));
+        });
+    }
+
+    private void goToEditPasswordScreen(){
+        editPasswordButton.setOnClickListener(view -> {
+            startActivity(new Intent(MeFragment.this.getActivity(), EditPasswordActivity.class));
         });
     }
 }
