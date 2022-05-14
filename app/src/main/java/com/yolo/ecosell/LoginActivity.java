@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,6 +26,11 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
 import model.User;
 import model.UserViewModel;
@@ -125,6 +131,12 @@ public class LoginActivity extends AppCompatActivity {
                                 user.setImageUrl(snapshot.getString("imageUrl"));
                                 user.setTimeAdded(snapshot.getData().get("timeAdded").toString());
                                 user.setMobile(snapshot.getString("mobile"));
+                                if ((List<String>) snapshot.get("products") != null){
+                                    user.setProducts((List<String>) snapshot.get("products"));
+                                }else{
+                                    user.setProducts(new ArrayList<String>());
+                                }
+
                                 UserViewModel.insert(user);
 
                                 startActivity(new Intent(LoginActivity.this, HomeActivity.class));
