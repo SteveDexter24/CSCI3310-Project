@@ -7,6 +7,8 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.List;
+
 @Entity(tableName = "User_table")
 public class User {
     @PrimaryKey
@@ -32,13 +34,16 @@ public class User {
     @ColumnInfo(name = "imageUrl")
     private String imageUrl;
 
+    @ColumnInfo(name = "products")
+    private List<String> products;
+
     @ColumnInfo(name = "timeAdded")
     private String timeAdded;
 
     public User() {
     }
 
-    public User(String userId, String username, String email, String password, String location, String mobile, String imageUrl, String timeAdded) {
+    public User(String userId, String username, String email, String password, String location, String mobile, String imageUrl, List<String> products, String timeAdded) {
         this.userId = userId;
         this.username = username;
         this.email = email;
@@ -46,6 +51,7 @@ public class User {
         this.location = location;
         this.mobile = mobile;
         this.imageUrl = imageUrl;
+        this.products = products;
         this.timeAdded = timeAdded;
     }
 
@@ -100,6 +106,10 @@ public class User {
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
+
+    public List<String> getProducts() { return products; }
+
+    public void setProducts(List<String> products) { this.products = products; }
 
     public String getTimeAdded() {
         return timeAdded;
