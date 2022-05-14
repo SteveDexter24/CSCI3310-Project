@@ -5,6 +5,8 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.List;
+
 @Entity(tableName = "Product_table")
 public class Product {
     @PrimaryKey
@@ -37,13 +39,22 @@ public class Product {
     private String productBuyer;
 
     @ColumnInfo(name = "imageUrl")
-    private String imageUrl;
+    private List<String> imageUrls;
+
+    @ColumnInfo(name = "likes")
+    private List<String> likes;
+
+    @ColumnInfo(name = "conditions")
+    private String condition;
 
     @ColumnInfo(name = "timeAdded")
     private String timeAdded;
 
+    public Product(){
 
-    public Product(String productId, String productName, String productPrice, String productState, String productCategory, String productDescription,String productDeliveryMethod, String productSeller, String productBuyer, String imageUrl, String timeAdded){
+    }
+
+    public Product(String productId, String productName, String productPrice, String productState, String productCategory, String productDescription,String productDeliveryMethod, String productSeller, String productBuyer, List<String> imageUrls, List<String> likes, String condition, String timeAdded){
         this.productId = productId;
         this.productName = productName;
         this.productPrice = productPrice;
@@ -53,7 +64,9 @@ public class Product {
         this.productDeliveryMethod = productDeliveryMethod;
         this.productSeller = productSeller;
         this.productBuyer = productBuyer;
-        this.imageUrl = imageUrl;
+        this.imageUrls = imageUrls;
+        this.likes = likes;
+        this.condition = condition;
         this.timeAdded = timeAdded;
     }
 
@@ -94,9 +107,17 @@ public class Product {
 
     public void setProductBuyer(String productBuyer) { this.productBuyer = productBuyer; }
 
-    public String getImageUrl() { return imageUrl; }
+    public List<String> getImageUrls() { return imageUrls; }
 
-    public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
+    public void setImageUrls(List<String> imageUrl) { this.imageUrls = imageUrl; }
+
+    public List<String> getLikes() { return likes; }
+
+    public void setLikes(List<String> likes) { this.likes = likes; }
+
+    public String getCondition() { return condition; }
+
+    public void setCondition(String condition) { this.condition = condition; }
 
     public String getTimeAdded() { return timeAdded; }
 
