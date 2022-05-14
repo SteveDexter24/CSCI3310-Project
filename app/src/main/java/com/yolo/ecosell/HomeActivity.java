@@ -11,6 +11,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -37,45 +38,35 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        
+
         // Default Fragment: Explore Fragment
         getSupportFragmentManager().beginTransaction().replace(R.id.bottom_nav_fragment, exploreFragment).commit();
 
 
-        userViewModel = new ViewModelProvider.AndroidViewModelFactory(HomeActivity.this.getApplication())
-                .create(UserViewModel.class);
-
-        userViewModel.getAllUsers().observe(this, users -> {
-            try{
-                Log.d("HomeActivity", "onCreate: " + users.get(0).getUsername());
-            }catch (Exception e){
-                Log.d("HomeActivity", e.toString());
+        bottomNavigationView = findViewById(R.id.bottom_nav);
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.navigation_home:
+                    getSupportFragmentManager().beginTransaction().replace(R.id.bottom_nav_fragment, exploreFragment).commit();
+                    return true;
+                case R.id.navigation_groups:
+                    getSupportFragmentManager().beginTransaction().replace(R.id.bottom_nav_fragment, groupsFragment).commit();
+                    return true;
+                case R.id.navigation_dashboard:
+                    getSupportFragmentManager().beginTransaction().replace(R.id.bottom_nav_fragment, sellFragment).commit();
+                    return true;
+                case R.id.navigation_notifications:
+                    getSupportFragmentManager().beginTransaction().replace(R.id.bottom_nav_fragment, notificationsFragment).commit();
+                    return true;
+                case R.id.navigation_me:
+                    getSupportFragmentManager().beginTransaction().replace(R.id.bottom_nav_fragment, meFragment).commit();
+                    return true;
+                default:
+                    return false;
             }
-
-            bottomNavigationView = findViewById(R.id.bottom_nav);
-            bottomNavigationView.setOnItemSelectedListener(item -> {
-                switch (item.getItemId()) {
-                    case R.id.navigation_home:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.bottom_nav_fragment, exploreFragment).commit();
-                        return true;
-                    case R.id.navigation_groups:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.bottom_nav_fragment, groupsFragment).commit();
-                        return true;
-                    case R.id.navigation_dashboard:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.bottom_nav_fragment, sellFragment).commit();
-                        return true;
-                    case R.id.navigation_notifications:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.bottom_nav_fragment, notificationsFragment).commit();
-                        return true;
-                    case R.id.navigation_me:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.bottom_nav_fragment, meFragment).commit();
-                        return true;
-                    default:
-                        return false;
-                }
-            });
         });
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -85,7 +76,7 @@ public class HomeActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.likes_appbar_button:
                 goToLikesActivity();
                 return true;
@@ -97,12 +88,12 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    private void goToLikesActivity(){
+    private void goToLikesActivity() {
 
     }
 
-    private void goToChatActivity(){
-
+    private void goToChatActivity() {
+        startActivity(new Intent(HomeActivity.this, ChatListActivity.class));
     }
 }
 
