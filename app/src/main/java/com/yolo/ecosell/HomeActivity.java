@@ -37,6 +37,10 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        
+        // Default Fragment: Explore Fragment
+        getSupportFragmentManager().beginTransaction().replace(R.id.bottom_nav_fragment, exploreFragment).commit();
+
 
         userViewModel = new ViewModelProvider.AndroidViewModelFactory(HomeActivity.this.getApplication())
                 .create(UserViewModel.class);
@@ -77,6 +81,28 @@ public class HomeActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.appbar_menu, menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.likes_appbar_button:
+                goToLikesActivity();
+                return true;
+            case R.id.chat_appbar_button:
+                goToChatActivity();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void goToLikesActivity(){
+
+    }
+
+    private void goToChatActivity(){
+
     }
 }
 
