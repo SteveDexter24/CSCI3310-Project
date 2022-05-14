@@ -40,10 +40,13 @@ public class User {
     @ColumnInfo(name = "timeAdded")
     private String timeAdded;
 
+    @ColumnInfo(name = "chatRooms")
+    private List<String> chatRooms;
+
     public User() {
     }
 
-    public User(String userId, String username, String email, String password, String location, String mobile, String imageUrl, List<String> products, String timeAdded) {
+    public User(String userId, String username, String email, String password, String location, String mobile, String imageUrl, List<String> products, String timeAdded, List<String> chatRooms) {
         this.userId = userId;
         this.username = username;
         this.email = email;
@@ -53,6 +56,7 @@ public class User {
         this.imageUrl = imageUrl;
         this.products = products;
         this.timeAdded = timeAdded;
+        this.chatRooms = chatRooms;
     }
 
     public String getUserId() {
@@ -118,4 +122,8 @@ public class User {
     public void setTimeAdded(String timeAdded) {
         this.timeAdded = timeAdded;
     }
+
+    public List<String> getChatRooms() { return chatRooms; }
+
+    public void setChatRooms(List<String> chatRooms) { this.chatRooms = chatRooms; }
 }

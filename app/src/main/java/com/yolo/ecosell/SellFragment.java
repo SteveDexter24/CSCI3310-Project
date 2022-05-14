@@ -148,7 +148,7 @@ public class SellFragment extends Fragment {
         chips.add(view.findViewById(R.id.chip_heavily_used));
 
         chips.get(0).setChecked(true);
-        condition = chips.get(0).getText().toString();
+        getChipValue();
 
         listItButton = view.findViewById(R.id.add_listing_button);
 
@@ -210,7 +210,7 @@ public class SellFragment extends Fragment {
         String price = priceEditText.getText().toString().trim();
         String delivery = deliveryEditText.getText().toString().trim();
         String description = descriptionEditText.getText().toString().trim();
-        getChipValue();
+
 
         if (!validateFields(category, title, description, price, condition, delivery)) {
             Toast.makeText(getContext(), "Incomplete fields", Toast.LENGTH_LONG).show();
@@ -282,6 +282,7 @@ public class SellFragment extends Fragment {
                 .set(user, SetOptions.merge())
                 .addOnSuccessListener(unused -> {
                     Toast.makeText(getContext(), "Successfully created a new listing", Toast.LENGTH_LONG).show();
+                    // finish the fragment
                 })
                 .addOnFailureListener(e -> {
                     Log.d(TAG, "Failed to append listing to user");

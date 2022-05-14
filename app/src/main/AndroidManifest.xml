@@ -10,20 +10,27 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EcoSell">
         <activity
-            android:name=".EditPasswordActivity"
+            android:name=".ChatActivity"
             android:exported="false" />
+        <activity
+            android:name=".ChatListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EditPasswordActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name=".EditProfileActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name=".MyListingsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".MeActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name=".HomeActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name=".CreateAccountActivity"
             android:exported="false" />
