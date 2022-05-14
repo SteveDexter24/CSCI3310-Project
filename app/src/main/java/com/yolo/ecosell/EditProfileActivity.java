@@ -23,6 +23,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -141,7 +142,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private void updateUserCollection(User user) {
         collectionReference.document(mUser.getUserId())
-                .set(user)
+                .set(user, SetOptions.merge())
                 .addOnSuccessListener(aVoid -> {
                     collectionReference
                             .whereEqualTo("userId", user.getUserId())
