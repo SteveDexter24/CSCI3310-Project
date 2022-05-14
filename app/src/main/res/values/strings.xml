@@ -57,4 +57,5 @@
     <string name="enter_a_category">Enter a category</string>
     <string name="mailing_and_delivery">Mailing and Delivery</string>
     <string name="list_it">List it!</string>
+    <string name="describe_your_listing">Describe your listing</string>
 </resources>
