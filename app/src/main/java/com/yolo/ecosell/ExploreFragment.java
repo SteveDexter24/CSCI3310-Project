@@ -2,8 +2,13 @@ package com.yolo.ecosell;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -11,17 +16,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.yolo.ecosell.adapter.ExploreAdapter;
+import com.yolo.ecosell.adapter.ListingRecyclerViewAdapter;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import model.Product;
 
 public class ExploreFragment extends Fragment {
-    private RecyclerView recyclerView;
-    private ExploreAdapter exploreAdapter;
+    private RecyclerView exploreRecyclerView;
+    private ListingRecyclerViewAdapter exploreRecyclerViewAdapter;
     private List<Product> productlist;
     private SearchView searchView;
+
+
 
     public ExploreFragment() {
         // Required empty public constructor
@@ -31,6 +40,29 @@ public class ExploreFragment extends Fragment {
         ExploreFragment fragment = new ExploreFragment();
         Bundle args = new Bundle();
         return fragment;
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Explore");
+
+        View view = inflater.inflate(R.layout.fragment_explore, container, false);
+
+        exploreRecyclerView = view.findViewById(R.id.explore_recyclerview);
+        exploreRecyclerView.setHasFixedSize(true);
+        exploreRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+
+        // Setup adapter
+        exploreRecyclerViewAdapter = new ListingRecyclerViewAdapter(view.getContext());
+
+        exploreRecyclerView.setAdapter(exploreRecyclerViewAdapter);
+
+        exploreRecyclerView.setLayoutManager(new GridLayoutManager(view.getContext(), 2));
+
+        return view;
     }
 
     @Override
@@ -68,14 +100,10 @@ public class ExploreFragment extends Fragment {
         if(filteredList.isEmpty()){
             Toast.makeText(getContext(),"No Product Found",Toast.LENGTH_SHORT).show();
         }else{
-            exploreAdapter.setFilteredList(filteredList);
+//            ExploreAdapter.setFilteredList(filteredList);
+            Toast.makeText(getContext(),"Here is a filtered list:)", Toast.LENGTH_SHORT).show();
         }
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_explore, container, false);
-    }
+
 }
