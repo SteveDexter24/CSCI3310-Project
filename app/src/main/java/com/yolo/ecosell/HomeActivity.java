@@ -71,11 +71,13 @@ public class HomeActivity extends AppCompatActivity {
                 }
             });
         });
-
     }
 
-
-
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.appbar_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
 }
 
 
