@@ -64,7 +64,7 @@ public class SellFragment extends Fragment {
     private int chipSelectedId = View.NO_ID;
     private String condition;
     private LinkedList<Uri> imageUris = new LinkedList<>();
-    private LinkedList<String> imageUrls = new LinkedList<>();
+    private List<String> imageUrls = new LinkedList<>();
 
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
@@ -81,6 +81,8 @@ public class SellFragment extends Fragment {
 
     private UserViewModel userViewModel;
     private User user;
+
+
 
 
     public SellFragment() {
@@ -226,6 +228,7 @@ public class SellFragment extends Fragment {
         assert currentUser != null;
         String userId = currentUser.getUid();
 
+        Product newListing = new Product();
 
         for (int i = 0; i < imageUris.size(); i++) {
             // Upload Images to storage
@@ -233,42 +236,43 @@ public class SellFragment extends Fragment {
                     .child("listing_images")
                     .child(userId + "_" + new Timestamp(new Date()).toString() + "_" + i);
 
+            int finalI = i;
             filePath.putFile(imageUris.get(i))
                     .addOnSuccessListener(taskSnapshot -> {
                         filePath.getDownloadUrl()
                                 .addOnSuccessListener(uri -> {
-                                    Log.d(TAG, uri.toString());
                                     imageUrls.add(uri.toString());
+                                    if(finalI == imageUris.size() - 1){
+                                        newListing.setImageUrls(imageUrls);
+                                        newListing.setProductSeller(userId);
+                                        newListing.setProductName(title);
+                                        newListing.setProductCategory(category);
+                                        newListing.setProductPrice(price);
+                                        newListing.setProductDeliveryMethod(delivery);
+                                        newListing.setCondition(condition);
+                                        newListing.setProductDescription(description);
+                                        newListing.setTimeAdded(new Timestamp(new Date()).toString());
 
-                                    Product newListing = new Product();
-                                    newListing.setProductSeller(userId);
-                                    newListing.setProductName(title);
-                                    newListing.setProductCategory(category);
-                                    newListing.setProductPrice(price);
-                                    newListing.setProductDeliveryMethod(delivery);
-                                    newListing.setCondition(condition);
-                                    newListing.setProductDescription(description);
-                                    newListing.setImageUrls(imageUrls);
-                                    newListing.setTimeAdded(new Timestamp(new Date()).toString());
-
-                                    collectionReference.add(newListing)
-                                            .addOnSuccessListener(documentReference -> {
-                                                // update user collection
-                                                List<String> newProductId = new ArrayList<String>();
-                                                newProductId = user.getProducts();
-                                                newProductId.add(documentReference.getId());
-                                                user.setProducts(newProductId);
-                                                updateUserCollection(user);
-                                                listItButton.setEnabled(true);
-                                            })
-                                            .addOnFailureListener(e -> {
-                                                Toast.makeText(getContext(), "Failed to create a new listing", Toast.LENGTH_LONG).show();
-                                                listItButton.setEnabled(true);
-                                            });
-
+                                        collectionReference.add(newListing)
+                                                .addOnSuccessListener(documentReference -> {
+                                                    // update user collection
+                                                    List<String> newProductId = new ArrayList<String>();
+                                                    newProductId = user.getProducts();
+                                                    newProductId.add(documentReference.getId());
+                                                    user.setProducts(newProductId);
+                                                    updateUserCollection(user);
+                                                    listItButton.setEnabled(true);
+                                                })
+                                                .addOnFailureListener(e -> {
+                                                    Toast.makeText(getContext(), "Failed to create a new listing", Toast.LENGTH_LONG).show();
+                                                    listItButton.setEnabled(true);
+                                                });
+                                    }
                                 });
                     });
         }
+
+
 
 
     }
