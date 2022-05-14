@@ -11,18 +11,19 @@
         android:theme="@style/Theme.EcoSell">
         <activity
             android:name=".EditPasswordActivity"
+            android:windowSoftInputMode="adjustNothing"
             android:exported="false" />
         <activity
             android:name=".EditProfileActivity"
+            android:windowSoftInputMode="adjustNothing"
             android:exported="false" />
         <activity
             android:name=".MyListingsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".MeActivity"
+            android:windowSoftInputMode="adjustNothing"
             android:exported="false" />
         <activity
             android:name=".HomeActivity"
+            android:windowSoftInputMode="adjustNothing"
             android:exported="false" />
         <activity
             android:name=".CreateAccountActivity"
