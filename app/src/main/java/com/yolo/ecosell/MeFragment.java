@@ -58,13 +58,8 @@ public class MeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("My Profile");
-        return inflater.inflate(R.layout.fragment_me, container, false);
-    }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
+        View view  = inflater.inflate(R.layout.fragment_me, container, false);
         userProfileImage = view.findViewById(R.id.profile_imageView);
         usernameTextView = view.findViewById(R.id.me_username_text_view);
         emailTextView = view.findViewById(R.id.me_email_text_view);
@@ -77,6 +72,12 @@ public class MeFragment extends Fragment {
 
         editProfileButton = view.findViewById(R.id.goto_edit_profile);
         editPasswordButton = view.findViewById(R.id.goto_edit_password);
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         goToMyListingScreen();
         goToPaymentScreen();
@@ -84,9 +85,7 @@ public class MeFragment extends Fragment {
         goToEditProfileScreen();
         goToEditPasswordScreen();
 
-        userViewModel = new ViewModelProvider.AndroidViewModelFactory(MeFragment.this.getActivity().getApplication())
-                .create(UserViewModel.class);
-
+        userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
         userViewModel.getAllUsers().observe(getViewLifecycleOwner(), users -> {
             User user = users.get(0);
             Glide.with(this).load(user.getImageUrl()).into(userProfileImage);
