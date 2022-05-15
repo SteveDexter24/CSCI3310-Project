@@ -15,7 +15,7 @@ import model.User;
 @Dao
 public interface UserDao {
     // CRUD
-    @Query("SELECT * FROM User_table WHERE userId = :userId")
+    @Query("SELECT * FROM User_table WHERE userId == :userId")
     User getUser(String userId);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

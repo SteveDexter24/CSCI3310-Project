@@ -68,7 +68,8 @@ public class LoginActivity extends AppCompatActivity {
         goToCreateAccountActivity();
         loginWithEmailAndPassword();
     }
-    private void goToCreateAccountActivity(){
+
+    private void goToCreateAccountActivity() {
         createAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -76,7 +77,8 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-    private void loginWithEmailAndPassword(){
+
+    private void loginWithEmailAndPassword() {
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -87,17 +89,17 @@ public class LoginActivity extends AppCompatActivity {
 
                 if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
                     firebaseAuth.signInWithEmailAndPassword(email, password)
-                          .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                              @Override
-                              public void onComplete(@NonNull Task<AuthResult> task) {
-                                  if (task.isSuccessful()){
-                                      FirebaseUser loggedInUser = firebaseAuth.getCurrentUser();
-                                      assert loggedInUser != null;
-                                      final String currentUserId = loggedInUser.getUid();
-                                      getUserCollectionRef(currentUserId);
-                                  }
-                              }
-                          })
+                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (task.isSuccessful()) {
+                                        FirebaseUser loggedInUser = firebaseAuth.getCurrentUser();
+                                        assert loggedInUser != null;
+                                        final String currentUserId = loggedInUser.getUid();
+                                        getUserCollectionRef(currentUserId);
+                                    }
+                                }
+                            })
                             .addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
@@ -105,25 +107,25 @@ public class LoginActivity extends AppCompatActivity {
                                     progressBar.setVisibility(View.INVISIBLE);
                                 }
                             });
-                }else{
+                } else {
                     // Show Dialog to tell users that email or password field is not valid
                 }
             }
         });
     }
-    private void getUserCollectionRef(String currentUserId){
+
+    private void getUserCollectionRef(String currentUserId) {
         collectionReference
                 .whereEqualTo("userId", currentUserId)
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                .addSnapshotListener((queryDocumentSnapshots, e) -> {
 
-                        assert queryDocumentSnapshots != null;
-                        if (!queryDocumentSnapshots.isEmpty()) {
+                    assert queryDocumentSnapshots != null;
+                    if (!queryDocumentSnapshots.isEmpty()) {
 
-                            progressBar.setVisibility(View.INVISIBLE);
+                        progressBar.setVisibility(View.INVISIBLE);
+                        try {
+                            User user = new User();
                             for (QueryDocumentSnapshot snapshot : queryDocumentSnapshots) {
-                                User user = new User();
                                 user.setEmail(snapshot.getString("email"));
                                 user.setUsername(snapshot.getString("username"));
                                 user.setUserId(snapshot.getString("userId"));
@@ -131,17 +133,16 @@ public class LoginActivity extends AppCompatActivity {
                                 user.setImageUrl(snapshot.getString("imageUrl"));
                                 user.setTimeAdded(snapshot.getData().get("timeAdded").toString());
                                 user.setMobile(snapshot.getString("mobile"));
-                                if ((List<String>) snapshot.get("products") != null){
+                                if ((List<String>) snapshot.get("products") != null) {
                                     user.setProducts((List<String>) snapshot.get("products"));
-                                }else{
+                                } else {
                                     user.setProducts(new ArrayList<String>());
                                 }
-
-                                UserViewModel.insert(user);
-
-                                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                             }
-
+                            UserViewModel.insert(user);
+                            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                        } catch (Exception exception) {
+                            Log.d("LoginActivity", exception.getMessage());
                         }
                     }
                 });

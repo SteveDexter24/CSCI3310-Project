@@ -5,23 +5,36 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.yolo.ecosell.R;
 
 import java.util.LinkedList;
+import java.util.List;
+
+import model.Chat;
 
 public class ChatBubbleAdapter extends RecyclerView.Adapter<ChatBubbleAdapter.ChatBubbleViewHolder> {
 
     private Context context;
-    private LinkedList<String> chatMessages;
+    private List<Chat> messageList;
+    private String otherUserImageUrl;
+    private String currentUserImageUrl;
+    private String otherUserUsername;
+    private String currentUserUsername;
 
-    public ChatBubbleAdapter (Context context, LinkedList<String> chatMessages) {
+    public ChatBubbleAdapter(Context context, List<Chat> messageList, String otherUserImageUrl, String currentUserImageUrl, String otherUserUsername, String currentUserUsername) {
         this.context = context;
-        this.chatMessages = chatMessages;
+        this.messageList = messageList;
+        this.otherUserImageUrl = otherUserImageUrl;
+        this.currentUserImageUrl = currentUserImageUrl;
+        this.otherUserUsername = otherUserUsername;
+        this.currentUserUsername = currentUserUsername;
     }
 
     @NonNull
@@ -33,35 +46,59 @@ public class ChatBubbleAdapter extends RecyclerView.Adapter<ChatBubbleAdapter.Ch
 
     @Override
     public void onBindViewHolder(@NonNull ChatBubbleViewHolder holder, int position) {
-
+        // Each chat bubble holds userMessage, otherUserMessage, time, chatRoomId
+        Chat chat = messageList.get(position);
+        if (chat.getUserMessage() != "") {
+            holder.chatUserLayout.setVisibility(View.VISIBLE);
+            Glide.with(holder.itemView.getContext()).load(currentUserImageUrl).into(holder.currentUserImageView);
+            holder.currentUserNameTextView.setText(currentUserUsername);
+            holder.currentTimeTextView.setText(chat.getTime().toDate().toString().split("GMT")[0]);
+            holder.currentMessageTextView.setText(chat.getUserMessage());
+        } else {
+            holder.chatUserLayout.setVisibility(View.GONE);
+        }
+        if (chat.getOtherUserMessage() != "") {
+            holder.chatOtherUserLayout.setVisibility(View.VISIBLE);
+            Glide.with(holder.itemView.getContext()).load(otherUserImageUrl).into(holder.otherImageView);
+            holder.otherUserNameTextView.setText(otherUserUsername);
+            holder.otherUserTimeTextView.setText(chat.getTime().toDate().toString().split("GMT")[0]);
+            holder.otherMessageTextView.setText(chat.getOtherUserMessage());
+        } else {
+            holder.chatOtherUserLayout.setVisibility(View.GONE);
+        }
     }
 
     @Override
     public int getItemCount() {
-        return chatMessages.size();
+        return messageList.size();
     }
 
     static class ChatBubbleViewHolder extends RecyclerView.ViewHolder {
 
-        private ImageView senderImageView, receiverImageView;
-        private TextView senderUserNameTextView, receiverUserNameTextView;
-        private TextView senderTimeTextView, receiverTimeTextView;
-        private TextView senderMessageTextView, receiverMessageTextView;
+        private ImageView otherImageView, currentUserImageView;
+        private TextView otherUserNameTextView, currentUserNameTextView;
+        private TextView otherUserTimeTextView, currentTimeTextView;
+        private TextView otherMessageTextView, currentMessageTextView;
+
+        private RelativeLayout chatOtherUserLayout, chatUserLayout;
 
         public ChatBubbleViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            senderImageView = itemView.findViewById(R.id.msg_ousericon);
-            receiverImageView = itemView.findViewById(R.id.msg_usericon);
+            chatOtherUserLayout = itemView.findViewById(R.id.chatotherUserLayout);
+            chatUserLayout = itemView.findViewById(R.id.chatUserLayout);
 
-            senderUserNameTextView = itemView.findViewById(R.id.msg_ousername);
-            receiverUserNameTextView = itemView.findViewById(R.id.msg_username);
+            otherImageView = itemView.findViewById(R.id.msg_ousericon);
+            currentUserImageView = itemView.findViewById(R.id.msg_usericon);
 
-            senderTimeTextView = itemView.findViewById(R.id.msg_otime);
-            receiverTimeTextView = itemView.findViewById(R.id.msg_time);
+            otherUserNameTextView = itemView.findViewById(R.id.msg_ousername);
+            currentUserNameTextView = itemView.findViewById(R.id.msg_username);
 
-            senderMessageTextView = itemView.findViewById(R.id.msg_ocontent);
-            receiverMessageTextView = itemView.findViewById(R.id.msg_content);
+            otherUserTimeTextView = itemView.findViewById(R.id.msg_otime);
+            currentTimeTextView = itemView.findViewById(R.id.msg_time);
+
+            otherMessageTextView = itemView.findViewById(R.id.msg_ocontent);
+            currentMessageTextView = itemView.findViewById(R.id.msg_content);
 
         }
     }
