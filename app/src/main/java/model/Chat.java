@@ -1,15 +1,21 @@
 package model;
 
 import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.DocumentReference;
 
 public class Chat {
     private Timestamp time;
     private String userMessage;
     private String otherUserMessage;
+    private String chatRoom;
 
-    public Chat(Timestamp time, String userMessage, String otherUserMessage) {
+    public Chat(){
+    }
+
+    public Chat(Timestamp time, String userMessage, String otherUserMessage, String chatRoom) {
         this.time = time;
         this.userMessage = userMessage;
+        this.chatRoom = chatRoom;
         this.otherUserMessage = otherUserMessage;
     }
 
@@ -36,4 +42,6 @@ public class Chat {
     public void setOtherUserMessage(String otherUserMessage) {
         this.otherUserMessage = otherUserMessage;
     }
+    public String getChatRoom() { return chatRoom; }
+    public void setChatRoom(String chatRoom) { this.chatRoom = chatRoom; }
 }
