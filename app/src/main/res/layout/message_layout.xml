@@ -3,26 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingVertical="12dp"
+        android:orientation="vertical"
         android:paddingHorizontal="8dp"
-        android:orientation="vertical">
-<!--    layout of the item inside chat listview-->
+        android:paddingVertical="12dp">
+        <!--    layout of the item inside chat listview-->
 
         <RelativeLayout
+            android:id="@+id/chatotherUserLayout"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/chatotherUserLayout">
+            android:layout_height="wrap_content">
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/msg_ousericon"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_alignParentStart="true"
                 tools:src="@drawable/profile" />
 
@@ -45,9 +44,9 @@
                 android:background="@mipmap/bubble_system"
                 android:backgroundTint="#3498db"
                 android:maxWidth="220dp"
-                android:paddingStart="20dp"
-                android:paddingTop="14dp"
-                android:paddingEnd="20dp"
+                android:paddingStart="24dp"
+                android:paddingTop="12dp"
+                android:paddingEnd="22dp"
                 android:paddingBottom="14dp"
                 android:text="This is a message!"
                 android:textSize="15sp" />
@@ -57,7 +56,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/msg_ocontent"
-                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
                 android:layout_marginRight="6dp"
                 android:text="18:31:23 12/05/21" />
 
@@ -65,14 +64,14 @@
 
         <RelativeLayout
             android:id="@+id/chatUserLayout"
-            android:layout_marginTop="16dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp">
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/msg_usericon"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_alignParentEnd="true"
                 tools:src="@drawable/profile" />
 
@@ -94,9 +93,10 @@
                 android:layout_toLeftOf="@id/msg_usericon"
                 android:background="@mipmap/bubble_user1"
                 android:maxWidth="220dp"
-                android:paddingStart="20dp"
-                android:paddingTop="14dp"
-                android:paddingEnd="20dp"
+                android:backgroundTint="#2ecc71"
+                android:paddingStart="24dp"
+                android:paddingTop="12dp"
+                android:paddingEnd="22dp"
                 android:paddingBottom="14dp"
                 android:text="This is an other message!"
                 android:textSize="15sp" />
@@ -106,7 +106,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/msg_content"
-                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
                 android:layout_marginLeft="6dp"
                 android:text="19:31:23 12/05/21" />
 
