@@ -58,7 +58,7 @@
 
 
     <ImageView
-        android:id="@+id/stateImage"
+        android:id="@+id/conditionImage"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_marginStart="24dp"
@@ -69,13 +69,13 @@
 
 
     <TextView
-        android:id="@+id/productState"
+        android:id="@+id/productCondition"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="6dp"
         android:layout_marginTop="13dp"
         android:text="productState"
-        app:layout_constraintStart_toEndOf="@+id/stateImage"
+        app:layout_constraintStart_toEndOf="@+id/conditionImage"
         app:layout_constraintTop_toBottomOf="@id/sellerImage" />
 
     <ImageView
@@ -85,7 +85,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/stateImage"
+        app:layout_constraintTop_toBottomOf="@+id/conditionImage"
         app:srcCompat="@drawable/toc_24" />
 
     <TextView
@@ -96,7 +96,7 @@
         android:layout_marginTop="13dp"
         android:text="productCatagory"
         app:layout_constraintStart_toEndOf="@id/categoryImage"
-        app:layout_constraintTop_toBottomOf="@id/stateImage" />
+        app:layout_constraintTop_toBottomOf="@id/conditionImage" />
 
     <ImageView
         android:id="@+id/descriptionImage"
