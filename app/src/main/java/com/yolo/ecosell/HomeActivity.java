@@ -39,6 +39,9 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        userViewModel = new ViewModelProvider.AndroidViewModelFactory(HomeActivity.this.getApplication())
+                .create(UserViewModel.class);
+
         // Default Fragment: Explore Fragment
         getSupportFragmentManager().beginTransaction().replace(R.id.bottom_nav_fragment, exploreFragment).commit();
 
