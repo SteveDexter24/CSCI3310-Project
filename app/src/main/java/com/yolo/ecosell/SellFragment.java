@@ -115,9 +115,7 @@ public class SellFragment extends Fragment {
         firebaseAuth = FirebaseAuth.getInstance();
         storageReference = FirebaseStorage.getInstance().getReference();
 
-        userViewModel = new ViewModelProvider
-                .AndroidViewModelFactory(SellFragment.this.getActivity().getApplication())
-                .create(UserViewModel.class);
+        userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
         userViewModel.getAllUsers().observe(this.getActivity(), users -> {
             user = users.get(0);
         });
@@ -152,12 +150,31 @@ public class SellFragment extends Fragment {
 
         listItButton = view.findViewById(R.id.add_listing_button);
 
-        for (int i = 0; i < 4; i++) {
-            int num = i;
-            imageButtons.get(num).setOnClickListener(view1 -> getImage(num));
-        }
+        chooseImageButtons();
 
         listItButton.setOnClickListener(view1 -> createNewListing());
+    }
+
+    private void chooseImageButtons(){
+        for (int i = 0; i < 4; i++) {
+            int num = i;
+            imageButtons.get(num).setOnClickListener(view1 -> {
+                getImage(num);
+                Log.d(TAG, "image button at:" + num);
+            });
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        chooseImageButtons();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        chooseImageButtons();
     }
 
     private void getImage(int index) {
