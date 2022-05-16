@@ -7,8 +7,8 @@
     tools:context=".GroupsFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <androidx.appcompat.widget.SearchView
-        android:id="@+id/group_search"
+    <SearchView
+        android:id="@+id/group_searchView"
         android:layout_width="411dp"
         android:layout_height="49dp"
         android:layout_margin="8dp"
@@ -19,15 +19,16 @@
         app:layout_constraintTop_toTopOf="parent"
         app:queryHint="Search for group/organization..."
         app:iconifiedByDefault="false">
-    </androidx.appcompat.widget.SearchView>
+    </SearchView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/group_recyclerview"
         android:layout_width="409dp"
         android:layout_height="629dp"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="60dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/group_search" />
+        app:layout_constraintTop_toBottomOf="@+id/group_searchView" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton2"
