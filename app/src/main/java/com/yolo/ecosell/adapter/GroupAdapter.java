@@ -13,11 +13,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.yolo.ecosell.R;
 
+import java.util.List;
+
+import model.Group;
+
 public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupViewHolder> {
 
     private Context context;
-    public GroupAdapter(Context context){
+    private List<Group> groupList;
+    public GroupAdapter(Context context,List<Group> groupList ){
         this.context = context;
+        this.groupList = groupList;
     }
 
 
@@ -31,16 +37,19 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupViewHol
 
     @Override
     public void onBindViewHolder(@NonNull GroupViewHolder holder, int position) {
-        holder.group_item_name.setText("Share/Transaction Group");
-        holder.group_item_description.setText("Exchange here and save our planet!");
+        Group group = groupList.get(position);
+        holder.group_item_name.setText(group.getGroupName());
+        holder.group_item_description.setText(group.getGroupDescription());
         Glide.with(holder.itemView.getContext())
-                .load("https://images.lululemon.com/is/image/lululemon/LM5ADRS_0001_1?size=800,800").into(holder.group_item_image);
+                .load(group.getGroupImageUrl()).into(holder.group_item_image);
+
+        // Intent to group detailed view
 
     }
 
     @Override
     public int getItemCount() {
-        return 4;
+        return groupList.size();
     }
 
     public class GroupViewHolder extends RecyclerView.ViewHolder{
