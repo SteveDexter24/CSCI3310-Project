@@ -7,22 +7,22 @@ import java.util.List;
 
 public class Group {
 
-    private Timestamp createdtime;
+    private Timestamp createdTime;
     private String groupName;
     private String groupDescription;
     private DocumentReference creator;
     private List<DocumentReference> users;
 
     public Group(Timestamp createdtime, String groupName, String groupDescription, DocumentReference creator, List<DocumentReference> users){
-        this.createdtime = createdtime;
+        this.createdTime = createdtime;
         this.groupName = groupName;
         this.groupDescription = groupDescription;
         this.creator = creator;
         this.users = users;
     }
 
-    public Timestamp getCreatedtime() { return createdtime; }
-    public void setCreatedtime(Timestamp createdtime) { this.createdtime = createdtime; }
+    public Timestamp getCreatedTime() { return createdTime; }
+    public void setCreatedTime(Timestamp createdTime) { this.createdTime = createdTime; }
 
     public String getGroupName() { return groupName; }
     public void setGroupName(String groupName) { this.groupName = groupName; }
