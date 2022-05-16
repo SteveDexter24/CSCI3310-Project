@@ -15,8 +15,12 @@ public class Group {
     private List<String> users;
     private String groupId;
 
-    public Group(Timestamp createdtime, String groupName, String groupDescription, String creator, String groupImageUrl, List<String> users, String groupId){
-        this.createdTime = createdtime;
+    public Group(){
+
+    }
+
+    public Group(Timestamp createdTime, String groupName, String groupDescription, String creator, String groupImageUrl, List<String> users, String groupId){
+        this.createdTime = createdTime;
         this.groupName = groupName;
         this.groupDescription = groupDescription;
         this.creator = creator;
