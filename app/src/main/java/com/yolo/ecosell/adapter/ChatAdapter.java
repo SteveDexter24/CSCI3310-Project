@@ -37,7 +37,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
     private CollectionReference userCollectionReference;
     private String currentUserId;
     private String currentUserProfileImage;
-    private String username;
+    private String currentUserUsername;
 
     public ChatAdapter(Context context, List<ChatRoom> chatRoomList, CollectionReference userCollectionReference, String currentUserId, String currentUserProfileImage, String username) {
         this.context = context;
@@ -45,7 +45,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
         this.userCollectionReference = userCollectionReference;
         this.currentUserId = currentUserId;
         this.currentUserProfileImage = currentUserProfileImage;
-        this.username = username;
+        this.currentUserUsername = username;
     }
 
     @NonNull
@@ -87,10 +87,8 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
                                         intent.putExtra("username", username);
                                         intent.putExtra("profileImage", profileImage);
                                         intent.putExtra("chatRoomId", chatRoom.getChatRoomId());
-                                        Log.d(TAG, currentUserProfileImage);
-                                        Log.d(TAG, username);
                                         intent.putExtra("currentUserProfileImage", currentUserProfileImage);
-                                        intent.putExtra("currentUserUsername", username);
+                                        intent.putExtra("currentUserUsername", currentUserUsername);
                                         context.startActivity(intent);
                                     });
                                 }
