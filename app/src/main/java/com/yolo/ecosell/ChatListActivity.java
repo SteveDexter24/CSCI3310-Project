@@ -45,6 +45,7 @@ public class ChatListActivity extends AppCompatActivity {
     private String username;
     private String email;
     private UserViewModel userViewModel;
+    private String profileImageUrl;
 
     // Views
     private RecyclerView chatRecyclerView;
@@ -57,6 +58,7 @@ public class ChatListActivity extends AppCompatActivity {
     private CollectionReference userCollectionReference = db.collection("Users");
     private User user;
     private List<ChatRoom> chatRoomList;
+
 
 
     private FirebaseAuth firebaseAuth;
@@ -80,7 +82,10 @@ public class ChatListActivity extends AppCompatActivity {
         userViewModel = new ViewModelProvider.AndroidViewModelFactory(ChatListActivity.this.getApplication())
                 .create(UserViewModel.class);
         userViewModel.getAllUsers().observe(this, users -> {
-            Glide.with(this).load(users.get(0).getImageUrl()).into(profileImageView);
+            User user = users.get(0);
+            profileImageUrl = user.getImageUrl();
+            Glide.with(this).load(profileImageUrl).into(profileImageView);
+            username = user.getUsername();
         });
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -104,7 +109,8 @@ public class ChatListActivity extends AppCompatActivity {
                             chatRoomList.add(chatRoom);
                         }
                         // Setup adapter
-                        chatRecyclerViewAdapter = new ChatAdapter(this, chatRoomList, userCollectionReference, currentUser.getUid());
+                        chatRecyclerViewAdapter = new ChatAdapter(this, chatRoomList,
+                                userCollectionReference, currentUser.getUid(), profileImageUrl, username);
                         chatRecyclerView.setAdapter(chatRecyclerViewAdapter);
                         chatRecyclerViewAdapter.notifyDataSetChanged();
                     } else {
