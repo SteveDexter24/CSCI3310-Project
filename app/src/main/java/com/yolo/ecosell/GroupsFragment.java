@@ -49,26 +49,90 @@ public class GroupsFragment extends Fragment {
 
         // Action button
         createGroupButton = view.findViewById(R.id.floatingActionButton2);
+        // Search View
+        searchView = (SearchView) view.findViewById(R.id.group_searchView);
 
         groupRecyclerView = view.findViewById(R.id.group_recyclerview);
         groupRecyclerView.setHasFixedSize(true);
         groupRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
-        // Setup adapter
-        groupRecyclerViewAdapter = new GroupAdapter(view.getContext());
-        groupRecyclerView.setAdapter(groupRecyclerViewAdapter);
-        groupRecyclerView.setLayoutManager(new GridLayoutManager(view.getContext(), 1));
-
         // Button onClick
         createGroupButton.setOnClickListener(view1 -> {
-            goTocreateGroupScreen();
+            goToCreateGroupScreen();
         });
+        // get query from search bar
+        getQuery();
 
         return view;
     }
 
-    private void goTocreateGroupScreen() {
+    @Override
+    public void onStart() {
+        super.onStart();
+        getAllGroups(searchQuery);
+    }
+
+    private void getQuery() {
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                Log.d(TAG, "submit: " + s);
+                searchQuery = s;
+                getAllGroups(s);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                Log.d(TAG, s);
+                return true;
+            }
+        });
+
+        searchView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+
+                InputMethodManager imm = (InputMethodManager) getContext().getSystemService(getContext().INPUT_METHOD_SERVICE);
+                imm.showSoftInput(view, 0);
+
+            }
+        });
+    }
+
+
+    private void goToCreateGroupScreen() {
         Log.d(TAG, "create group pressed");
         startActivity(new Intent(getActivity(), CreateGroupActivity.class));
+    }
+
+    private void getAllGroups(String query) {
+        Task<QuerySnapshot> searchDocRef;
+        if (query.isEmpty()) {
+            searchDocRef = groupsCollectionReference.get();
+        } else {
+            searchDocRef = groupsCollectionReference.whereEqualTo("groupName", query).get();
+        }
+        try {
+            searchDocRef
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            groupList = new ArrayList<>();
+                            for (QueryDocumentSnapshot groups : task.getResult()) {
+                                Group group = groups.toObject(Group.class);
+                                groupList.add(group);
+                            }
+                            // Setup adapter
+                            Log.d(TAG, "group size" + groupList.size());
+                            groupRecyclerViewAdapter = new GroupAdapter(getContext(), groupList);
+                            groupRecyclerView.setAdapter(groupRecyclerViewAdapter);
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    });
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
