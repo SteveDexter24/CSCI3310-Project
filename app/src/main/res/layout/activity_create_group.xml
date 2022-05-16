@@ -21,7 +21,7 @@
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="8dp"
                 android:paddingVertical="8dp"
-                android:text="Create new group"
+                android:text="Create a new group"
                 android:textColor="#2c3e50"
                 android:textSize="26sp"
                 android:textStyle="bold"
