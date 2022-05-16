@@ -12,15 +12,17 @@ public class Group {
     private String groupDescription;
     private String creator;
     private String groupImageUrl;
-    private List<DocumentReference> users;
+    private List<String> users;
+    private String groupId;
 
-    public Group(Timestamp createdtime, String groupName, String groupDescription, String creator, String groupImageUrl, List<DocumentReference> users){
+    public Group(Timestamp createdtime, String groupName, String groupDescription, String creator, String groupImageUrl, List<String> users, String groupId){
         this.createdTime = createdtime;
         this.groupName = groupName;
         this.groupDescription = groupDescription;
         this.creator = creator;
         this.groupImageUrl = groupImageUrl;
         this.users = users;
+        this.groupId = groupId;
     }
 
     public Timestamp getCreatedTime() { return createdTime; }
@@ -39,6 +41,10 @@ public class Group {
 
     public void setGroupImageUrl(String groupImageUrl) { this.groupImageUrl = groupImageUrl; }
 
-    public List<DocumentReference> getUsers() { return users; }
-    public void setUsers(List<DocumentReference> users) { this.users = users; }
+    public List<String> getUsers() { return users; }
+    public void setUsers(List<String> users) { this.users = users; }
+
+    public String getGroupId() { return groupId; }
+
+    public void setGroupId(String groupId) { this.groupId = groupId; }
 }
