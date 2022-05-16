@@ -15,7 +15,7 @@ import java.util.concurrent.Executors;
 import data.UserDao;
 import model.User;
 
-@Database(entities = {User.class}, version = 1, exportSchema = false)
+@Database(entities = {User.class}, version = 2, exportSchema = false)
 @TypeConverters({DataConverter.class})
 public abstract class EcoSellRoomDatabase extends RoomDatabase {
     public abstract UserDao userDao();
