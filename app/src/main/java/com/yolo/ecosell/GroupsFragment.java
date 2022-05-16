@@ -3,6 +3,7 @@ package com.yolo.ecosell;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -13,17 +14,39 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.SearchView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.yolo.ecosell.adapter.GroupAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import model.Group;
 
 public class GroupsFragment extends Fragment {
 
-    private final String TAG = "GroupFragment";
+    private final String TAG = "GroupsFragment";
 
     private RecyclerView groupRecyclerView;
     private GroupAdapter groupRecyclerViewAdapter;
     private FloatingActionButton createGroupButton;
+    private List<Group> groupList;
+    private SearchView searchView;
+    private String searchQuery = "";
+
+    // FireStore connection
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    // Product Collection
+    private CollectionReference groupsCollectionReference = db.collection("Groups");
 
     public GroupsFragment() {
         // Required empty public constructor
