@@ -11,11 +11,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.yolo.ecosell.ChatActivity;
 import com.yolo.ecosell.R;
 
@@ -28,12 +34,14 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
     private static final String TAG = "ChatAdapter";
     private Context context;
     private List<ChatRoom> chatRoomList;
-    private String chatRoomId;
+    private CollectionReference userCollectionReference;
+    private String currentUserId;
 
-    public ChatAdapter(Context context, List<ChatRoom> chatRoomList, String chatRoomId) {
+    public ChatAdapter(Context context, List<ChatRoom> chatRoomList, CollectionReference userCollectionReference, String currentUserId) {
         this.context = context;
         this.chatRoomList = chatRoomList;
-        this.chatRoomId = chatRoomId;
+        this.userCollectionReference = userCollectionReference;
+        this.currentUserId = currentUserId;
     }
 
     @NonNull
@@ -47,36 +55,51 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
     @Override
     public void onBindViewHolder(@NonNull ChatViewHolder holder, int position) {
 
-        chatRoomList.get(position).getOtherUser().get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                DocumentSnapshot document = task.getResult();
-                if (document.exists()) {
-                    Log.d(TAG, "DocumentSnapshot data: " + document.getData().get("username"));
-                    String username = (String) document.getData().get("username");
-                    String profileImage = (String) document.getData().get("imageUrl");
-                    holder.usernameTextView.setText(username);
-                    holder.lastMessageTextView.setText("hahaha");
-                    holder.chatUnseenTextView.setText("1");
-                    Glide.with(holder.itemView.getContext())
-                            .load(profileImage).into(holder.profileImageView);
-
-                    holder.rootLinearLayout.setOnClickListener(view -> {
-                        Intent intent = new Intent(context, ChatActivity.class);
-                        intent.putExtra("username", username);
-                        intent.putExtra("profileImage", profileImage);
-                        intent.putExtra("chatRoomId", chatRoomId);
-                        context.startActivity(intent);
-                    });
-                } else {
-                    Log.d(TAG, "No such document");
-                }
+        ChatRoom chatRoom = chatRoomList.get(position);
+        String otherUserId = null;
+        for (String users : chatRoom.getUsers()) {
+            if (!users.equals(currentUserId)) {
+                otherUserId = users;
             }
-        });
+        }
+
+        try {
+
+            userCollectionReference
+                    .whereEqualTo("userId", otherUserId)
+                    .addSnapshotListener((value, error) -> {
+                        assert value != null;
+                        if (!value.isEmpty()) {
+                            try {
+                                for (QueryDocumentSnapshot snapshot : value) {
+                                    String username = snapshot.getString("username");
+                                    String profileImage = snapshot.getString("imageUrl");
+                                    holder.usernameTextView.setText(username);
+                                    holder.lastMessageTextView.setText("hahaha");
+                                    holder.chatUnseenTextView.setText("1");
+                                    Glide.with(holder.itemView.getContext())
+                                            .load(profileImage).into(holder.profileImageView);
+                                    holder.rootLinearLayout.setOnClickListener(view -> {
+                                        Intent intent = new Intent(context, ChatActivity.class);
+                                        intent.putExtra("username", username);
+                                        intent.putExtra("profileImage", profileImage);
+                                        intent.putExtra("chatRoomId", chatRoom.getChatRoomId());
+                                        context.startActivity(intent);
+                                    });
+                                }
+
+
+                            } catch (Exception e) {
+                            }
+                        }
+                    });
+        }catch(Exception error){
+            Log.d(TAG, "Cannot get chat room details");
+        }
 
     }
 
     private void getOtherUserDetails(DocumentReference otherUser) {
-
     }
 
     @Override
