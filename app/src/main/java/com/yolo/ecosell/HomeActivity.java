@@ -50,19 +50,19 @@ public class HomeActivity extends AppCompatActivity {
         bottomNavigationView.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    getSupportFragmentManager().beginTransaction().replace(R.id.bottom_nav_fragment, exploreFragment).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.bottom_nav_fragment, exploreFragment, "ExploreFragment").commit();
                     return true;
                 case R.id.navigation_groups:
-                    getSupportFragmentManager().beginTransaction().replace(R.id.bottom_nav_fragment, groupsFragment).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.bottom_nav_fragment, groupsFragment, "GroupsFragment").commit();
                     return true;
                 case R.id.navigation_dashboard:
-                    getSupportFragmentManager().beginTransaction().replace(R.id.bottom_nav_fragment, sellFragment).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.bottom_nav_fragment, sellFragment, "SellFragment").commit();
                     return true;
                 case R.id.navigation_notifications:
-                    getSupportFragmentManager().beginTransaction().replace(R.id.bottom_nav_fragment, notificationsFragment).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.bottom_nav_fragment, notificationsFragment, "NotificationsFragment").commit();
                     return true;
                 case R.id.navigation_me:
-                    getSupportFragmentManager().beginTransaction().replace(R.id.bottom_nav_fragment, meFragment).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.bottom_nav_fragment, meFragment, "MeFragment").commit();
                     return true;
                 default:
                     return false;
