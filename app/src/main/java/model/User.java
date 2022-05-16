@@ -7,6 +7,8 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.google.firebase.firestore.DocumentReference;
+
 import java.util.List;
 
 @Entity(tableName = "User_table")
@@ -43,10 +45,12 @@ public class User {
     @ColumnInfo(name = "chatRooms")
     private List<String> chatRooms;
 
+    private List<String> groups;
+
     public User() {
     }
 
-    public User(String userId, String username, String email, String password, String location, String mobile, String imageUrl, List<String> products, String timeAdded, List<String> chatRooms) {
+    public User(String userId, String username, String email, String password, String location, String mobile, String imageUrl, List<String> products, String timeAdded, List<String> chatRooms, List<String> groups) {
         this.userId = userId;
         this.username = username;
         this.email = email;
@@ -57,6 +61,7 @@ public class User {
         this.products = products;
         this.timeAdded = timeAdded;
         this.chatRooms = chatRooms;
+        this.groups = groups;
     }
 
     public String getUserId() {
@@ -126,4 +131,8 @@ public class User {
     public List<String> getChatRooms() { return chatRooms; }
 
     public void setChatRooms(List<String> chatRooms) { this.chatRooms = chatRooms; }
+
+    public List<String> getGroups() { return groups; }
+
+    public void setGroups(List<String> groups) { this.groups = groups; }
 }
