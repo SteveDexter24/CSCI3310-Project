@@ -1,9 +1,8 @@
 package com.yolo.ecosell;
 
-import androidx.annotation.Nullable;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,28 +18,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.yolo.ecosell.adapter.ChatBubbleAdapter;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import model.Chat;
-import model.ChatRoom;
-import model.User;
 import model.UserViewModel;
 
 public class ChatActivity extends AppCompatActivity {
@@ -57,7 +50,8 @@ public class ChatActivity extends AppCompatActivity {
     // Firebase
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference chatsCollectionReference = db.collection("Chats");
-    //private FirebaseAuth firebaseAuth;
+    private CollectionReference chatRoomsCollectionReference = db.collection("ChatRooms");
+    private FirebaseAuth firebaseAuth;
 
     private UserViewModel userViewModel;
     private String currentUserImageUrl, otherUserImageUrl;
@@ -69,7 +63,7 @@ public class ChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
-        //firebaseAuth = FirebaseAuth.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
 
         Intent intent = getIntent();
         getSupportActionBar().hide();
@@ -126,18 +120,18 @@ public class ChatActivity extends AppCompatActivity {
                         Log.w(TAG, "Listen failed.", error);
                         return;
                     }
+                    Log.d(TAG, value.toString());
 
                     if (value != null && !value.isEmpty()) {
                         messageList = new ArrayList<>();
                         for (QueryDocumentSnapshot chats : value) {
                             Chat chat = chats.toObject(Chat.class);
                             messageList.add(chat);
-                            Log.d(TAG, chat.getUserMessage());
-                            // Setup adapter
-
                         }
-                        Log.d(TAG, "Line 125" + messageList.size());
-                        chatBubbleAdapter = new ChatBubbleAdapter(ChatActivity.this, messageList, otherUserImageUrl, currentUserImageUrl, otherUserName, currentUserName);
+                        // Setup adapter
+                        chatBubbleAdapter = new ChatBubbleAdapter(ChatActivity.this,
+                                messageList, otherUserImageUrl, currentUserImageUrl,
+                                otherUserName, currentUserName, firebaseAuth.getCurrentUser().getUid());
                         chatBubbleRecyclerView.setAdapter(chatBubbleAdapter);
                         chatBubbleAdapter.notifyDataSetChanged();
                     } else {
@@ -150,12 +144,15 @@ public class ChatActivity extends AppCompatActivity {
         String currentUserMessage = messageEditText.getText().toString().trim();
         if (TextUtils.isEmpty(currentUserMessage) || TextUtils.isEmpty(chatRoomId)) return;
 
-        Chat message = new Chat(Timestamp.now(), currentUserMessage, "", chatRoomId);
+        Chat message = new Chat(Timestamp.now(), currentUserMessage, firebaseAuth.getCurrentUser().getUid(), chatRoomId);
 
         chatsCollectionReference
                 .add(message)
                 .addOnSuccessListener(documentReference -> {
-
+                    chatRoomsCollectionReference
+                            .document(chatRoomId)
+                            .update("chats", FieldValue.arrayUnion(documentReference))
+                            .addOnCompleteListener(task -> Log.d(TAG, "Line 160: " + "Add to chat room list"));
                 });
     }
     private void hideKeybaord(View v) {
@@ -163,3 +160,5 @@ public class ChatActivity extends AppCompatActivity {
         inputMethodManager.hideSoftInputFromWindow(v.getApplicationWindowToken(),0);
     }
 }
+
+// sQ9rWNe6qHxr4PuAcsKo
