@@ -93,19 +93,20 @@ public class ChatListActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         currentUser = firebaseAuth.getCurrentUser();
+        Log.d(TAG, "line 96: " + currentUser.getUid());
         chatRoomsCollectionReference
-                .whereEqualTo("user", currentUser.getUid())
+                .whereArrayContains("users", currentUser.getUid())
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     if (!queryDocumentSnapshots.isEmpty()) {
                         for (QueryDocumentSnapshot chatRooms : queryDocumentSnapshots) {
                             ChatRoom chatRoom = chatRooms.toObject(ChatRoom.class);
                             chatRoomList.add(chatRoom);
-                            // Setup adapter
-                            chatRecyclerViewAdapter = new ChatAdapter(this, chatRoomList, chatRooms.getId());
-                            chatRecyclerView.setAdapter(chatRecyclerViewAdapter);
-                            chatRecyclerViewAdapter.notifyDataSetChanged();
                         }
+                        // Setup adapter
+                        chatRecyclerViewAdapter = new ChatAdapter(this, chatRoomList, userCollectionReference, currentUser.getUid());
+                        chatRecyclerView.setAdapter(chatRecyclerViewAdapter);
+                        chatRecyclerViewAdapter.notifyDataSetChanged();
                     } else {
                         Log.d(TAG, "chat room is empty");
                     }

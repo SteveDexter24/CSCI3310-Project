@@ -5,36 +5,22 @@ import com.google.firebase.firestore.DocumentReference;
 import java.util.List;
 
 public class ChatRoom {
-    private String user1;
-    private String user2;
-    private DocumentReference otherUser;
+    private List<String> users;
+    private List<DocumentReference> usersDocumentReference;
     private List<DocumentReference> chats;
+    private String chatRoomId;
 
     public ChatRoom () {
     }
 
-    public ChatRoom(String user1, String user2, DocumentReference otherUser, List<DocumentReference> chats) {
-        this.user1 = user1;
-        this.user2 = user2;
-        this.otherUser = otherUser;
+    public ChatRoom(List<String> users, List<DocumentReference> usersDocumentReference, List<DocumentReference> chats, String chatRoomId) {
+        this.users = users;
         this.chats = chats;
+        this.chatRoomId = chatRoomId;
+        this.usersDocumentReference = usersDocumentReference;
     }
 
-    public String getUser1() {
-        return user1;
-    }
 
-    public void setUser1(String user1) {
-        this.user1 = user1;
-    }
-
-    public DocumentReference getOtherUser() {
-        return otherUser;
-    }
-
-    public void setOtherUser(DocumentReference otherUser) {
-        this.otherUser = otherUser;
-    }
 
     public List<DocumentReference> getChats() {
         return chats;
@@ -44,11 +30,15 @@ public class ChatRoom {
         this.chats = chats;
     }
 
-    public String getUser2() {
-        return user2;
-    }
+    public List<String> getUsers() { return users; }
 
-    public void setUser2(String user2) {
-        this.user2 = user2;
-    }
+    public void setUsers(List<String> users) { this.users = users; }
+
+    public String getChatRoomId() { return chatRoomId; }
+
+    public void setChatRoomId(String chatRoomId) { this.chatRoomId = chatRoomId; }
+
+    public List<DocumentReference> getUsersDocumentReference() { return usersDocumentReference; }
+
+    public void setUsersDocumentReference(List<DocumentReference> usersDocumentReference) { this.usersDocumentReference = usersDocumentReference; }
 }
