@@ -1,6 +1,7 @@
 package com.yolo.ecosell.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,12 +15,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.yolo.ecosell.R;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import model.Chat;
 
 public class ChatBubbleAdapter extends RecyclerView.Adapter<ChatBubbleAdapter.ChatBubbleViewHolder> {
+
+    private final String TAG = "ChatBubbleAdapter";
 
     private Context context;
     private List<Chat> messageList;
@@ -27,14 +29,19 @@ public class ChatBubbleAdapter extends RecyclerView.Adapter<ChatBubbleAdapter.Ch
     private String currentUserImageUrl;
     private String otherUserUsername;
     private String currentUserUsername;
+    private String currentUserId;
 
-    public ChatBubbleAdapter(Context context, List<Chat> messageList, String otherUserImageUrl, String currentUserImageUrl, String otherUserUsername, String currentUserUsername) {
+    public ChatBubbleAdapter(Context context, List<Chat> messageList,
+                             String otherUserImageUrl, String currentUserImageUrl,
+                             String otherUserUsername, String currentUserUsername,
+                             String currentUserId) {
         this.context = context;
         this.messageList = messageList;
         this.otherUserImageUrl = otherUserImageUrl;
         this.currentUserImageUrl = currentUserImageUrl;
         this.otherUserUsername = otherUserUsername;
         this.currentUserUsername = currentUserUsername;
+        this.currentUserId = currentUserId;
     }
 
     @NonNull
@@ -48,23 +55,22 @@ public class ChatBubbleAdapter extends RecyclerView.Adapter<ChatBubbleAdapter.Ch
     public void onBindViewHolder(@NonNull ChatBubbleViewHolder holder, int position) {
         // Each chat bubble holds userMessage, otherUserMessage, time, chatRoomId
         Chat chat = messageList.get(position);
-        if (chat.getUserMessage() != "") {
+
+        holder.chatOtherUserLayout.setVisibility(View.GONE);
+        holder.chatUserLayout.setVisibility(View.GONE);
+
+        if (chat.getUserId().equals(currentUserId)) {
             holder.chatUserLayout.setVisibility(View.VISIBLE);
             Glide.with(holder.itemView.getContext()).load(currentUserImageUrl).into(holder.currentUserImageView);
             holder.currentUserNameTextView.setText(currentUserUsername);
             holder.currentTimeTextView.setText(chat.getTime().toDate().toString().split("GMT")[0]);
-            holder.currentMessageTextView.setText(chat.getUserMessage());
+            holder.currentMessageTextView.setText(chat.getMessage());
         } else {
-            holder.chatUserLayout.setVisibility(View.GONE);
-        }
-        if (chat.getOtherUserMessage() != "") {
             holder.chatOtherUserLayout.setVisibility(View.VISIBLE);
             Glide.with(holder.itemView.getContext()).load(otherUserImageUrl).into(holder.otherImageView);
             holder.otherUserNameTextView.setText(otherUserUsername);
             holder.otherUserTimeTextView.setText(chat.getTime().toDate().toString().split("GMT")[0]);
-            holder.otherMessageTextView.setText(chat.getOtherUserMessage());
-        } else {
-            holder.chatOtherUserLayout.setVisibility(View.GONE);
+            holder.otherMessageTextView.setText(chat.getMessage());
         }
     }
 
