@@ -19,7 +19,6 @@ public class ProductDetailFragment extends Fragment {
     public static ProductDetailFragment newInstance(String param1, String param2) {
         ProductDetailFragment fragment = new ProductDetailFragment();
         Bundle args = new Bundle();
-
         return fragment;
     }
 
