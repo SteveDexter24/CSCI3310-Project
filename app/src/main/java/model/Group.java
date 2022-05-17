@@ -1,19 +1,26 @@
 package model;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentReference;
 
 import java.util.List;
 
+@Entity(tableName = "Group_table")
 public class Group {
-
+    @PrimaryKey
+    @NonNull
+    private String groupId;
     private Timestamp createdTime;
     private String groupName;
     private String groupDescription;
     private String creator;
     private String groupImageUrl;
     private List<String> users;
-    private String groupId;
+
 
     public Group(){
 
