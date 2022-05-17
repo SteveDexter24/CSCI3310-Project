@@ -282,7 +282,7 @@ public class SellFragment extends Fragment {
                                     .addOnSuccessListener(uri -> {
                                         imageUrls.add(uri.toString());
                                         if (finalI == bytesCompressImages.size() - 1) {
-                                            String productId = collectionReference.getId();
+                                            String productId = collectionReference.document().getId();
                                             newListing.setImageUrls(imageUrls);
                                             newListing.setProductSeller(userId);
                                             newListing.setProductName(title);

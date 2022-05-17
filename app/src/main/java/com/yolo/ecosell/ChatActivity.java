@@ -30,6 +30,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.yolo.ecosell.adapter.ChatBubbleAdapter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -141,12 +142,16 @@ public class ChatActivity extends AppCompatActivity {
 
         Chat message = new Chat(Timestamp.now(), currentUserMessage, firebaseAuth.getCurrentUser().getUid(), chatRoomId);
 
+        Map<String,Object> updates = new HashMap<>();
+
         chatsCollectionReference
                 .add(message)
                 .addOnSuccessListener(documentReference -> {
+                    updates.put("chats", FieldValue.arrayUnion(documentReference));
+                    updates.put("lastMessage", currentUserMessage);
                     chatRoomsCollectionReference
                             .document(chatRoomId)
-                            .update("chats", FieldValue.arrayUnion(documentReference))
+                            .update(updates)
                             .addOnCompleteListener(task -> Log.d(TAG, "Line 160: " + "Add to chat room list"));
                 });
     }

@@ -7,6 +7,7 @@
     android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/my_listing_row_card_view"
         android:layout_width="match_parent"
         android:layout_height="244dp"
         android:padding="8dp"

@@ -78,7 +78,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
                                     String username = snapshot.getString("username");
                                     String profileImage = snapshot.getString("imageUrl");
                                     holder.usernameTextView.setText(username);
-                                    holder.lastMessageTextView.setText("hahaha");
+                                    holder.lastMessageTextView.setText(chatRoom.getLastMessage());
                                     holder.chatUnseenTextView.setText("1");
                                     Glide.with(holder.itemView.getContext())
                                             .load(profileImage).into(holder.profileImageView);
