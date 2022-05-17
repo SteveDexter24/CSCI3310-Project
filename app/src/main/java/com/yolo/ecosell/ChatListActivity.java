@@ -97,6 +97,12 @@ public class ChatListActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        chatRoomList = new ArrayList<>();
+        getChatRooms();
+
+    }
+
+    private void getChatRooms(){
         currentUser = firebaseAuth.getCurrentUser();
         Log.d(TAG, "line 96: " + currentUser.getUid());
         chatRoomsCollectionReference
