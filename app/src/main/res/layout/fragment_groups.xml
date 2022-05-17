@@ -53,9 +53,10 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="20dp"
-            android:backgroundTint="#16a085"
+            android:backgroundTint="@color/primary"
             android:clickable="true"
             android:src="@drawable/ic_baseline_add_24"
+            app:tint="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             tools:ignore="SpeakableTextPresentCheck" />
