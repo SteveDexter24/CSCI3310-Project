@@ -73,6 +73,10 @@ public class ChatActivity extends AppCompatActivity {
         chatRoomId = intent.getStringExtra("chatRoomId");
         otherUserImageUrl = intent.getStringExtra("profileImage");
         otherUserName = intent.getStringExtra("username");
+        currentUserImageUrl = intent.getStringExtra("currentUserProfileImage");
+        currentUserName = intent.getStringExtra("currentUserUsername");
+        Log.d(TAG, currentUserImageUrl);
+        Log.d(TAG, currentUserName);
 
         messageList = new ArrayList<>();
 
@@ -82,15 +86,6 @@ public class ChatActivity extends AppCompatActivity {
         profileImageView = findViewById(R.id.chatBubbleProfileImageView);
         Glide.with(this)
                 .load(otherUserImageUrl).into(profileImageView);
-
-        userViewModel = new ViewModelProvider.AndroidViewModelFactory(ChatActivity.this.getApplication())
-                .create(UserViewModel.class);
-
-        userViewModel.getAllUsers().observe(this, users -> {
-            currentUserImageUrl = users.get(0).getImageUrl();
-            currentUserName = users.get(0).getUsername();
-
-        });
 
         messageEditText = findViewById(R.id.chat_input);
         sendButton = findViewById(R.id.btn_chatsend);

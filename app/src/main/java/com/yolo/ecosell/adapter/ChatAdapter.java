@@ -36,12 +36,16 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
     private List<ChatRoom> chatRoomList;
     private CollectionReference userCollectionReference;
     private String currentUserId;
+    private String currentUserProfileImage;
+    private String currentUserUsername;
 
-    public ChatAdapter(Context context, List<ChatRoom> chatRoomList, CollectionReference userCollectionReference, String currentUserId) {
+    public ChatAdapter(Context context, List<ChatRoom> chatRoomList, CollectionReference userCollectionReference, String currentUserId, String currentUserProfileImage, String username) {
         this.context = context;
         this.chatRoomList = chatRoomList;
         this.userCollectionReference = userCollectionReference;
         this.currentUserId = currentUserId;
+        this.currentUserProfileImage = currentUserProfileImage;
+        this.currentUserUsername = username;
     }
 
     @NonNull
@@ -64,7 +68,6 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
         }
 
         try {
-
             userCollectionReference
                     .whereEqualTo("userId", otherUserId)
                     .addSnapshotListener((value, error) -> {
@@ -84,10 +87,11 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
                                         intent.putExtra("username", username);
                                         intent.putExtra("profileImage", profileImage);
                                         intent.putExtra("chatRoomId", chatRoom.getChatRoomId());
+                                        intent.putExtra("currentUserProfileImage", currentUserProfileImage);
+                                        intent.putExtra("currentUserUsername", currentUserUsername);
                                         context.startActivity(intent);
                                     });
                                 }
-
 
                             } catch (Exception e) {
                             }
