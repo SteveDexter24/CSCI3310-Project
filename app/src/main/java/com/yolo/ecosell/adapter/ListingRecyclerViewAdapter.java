@@ -43,12 +43,12 @@ public class ListingRecyclerViewAdapter extends RecyclerView.Adapter<ListingRecy
         holder.priceTextView.setText("HK$" + product.getProductPrice());
         holder.productNameTextView.setText(product.getProductName());
         holder.usageTextView.setText(product.getCondition());
-        holder.sellerTextView.setText(product.getProductSeller());
+        holder.sellerTextView.setText(product.getSellerUserName());
         Glide.with(holder.itemView.getContext())
                 .load(product.getImageUrls().get(0)).into(holder.productImageView);
 
         Glide.with(holder.itemView.getContext())
-                .load("https://images.lululemon.com/is/image/lululemon/LM5ADRS_0001_1?size=800,800").into(holder.sellerImageView);
+                .load(product.getSellerImageUrl()).into(holder.sellerImageView);
     }
 
     @Override
