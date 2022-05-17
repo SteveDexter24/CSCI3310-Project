@@ -6,9 +6,11 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -39,6 +41,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.Group;
+import model.GroupViewModel;
 
 public class GroupsFragment extends Fragment {
 
@@ -48,6 +51,7 @@ public class GroupsFragment extends Fragment {
     private GroupAdapter groupRecyclerViewAdapter;
     private FloatingActionButton createGroupButton;
     private List<Group> groupList;
+    private GroupViewModel groupViewModel;
     private androidx.appcompat.widget.SearchView searchView;
     private String searchQuery = "";
     private androidx.appcompat.widget.SearchView.OnQueryTextListener queryTextListener;
@@ -110,6 +114,14 @@ public class GroupsFragment extends Fragment {
     }
 
     @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        groupViewModel = new ViewModelProvider(requireActivity()).get(GroupViewModel.class);
+
+    }
+
+    @Override
     public void onStart() {
         super.onStart();
         getAllGroups(searchQuery);
@@ -136,6 +148,7 @@ public class GroupsFragment extends Fragment {
                             for (QueryDocumentSnapshot groups : task.getResult()) {
                                 Group group = groups.toObject(Group.class);
                                 groupList.add(group);
+                                groupViewModel.insertGroup(group);
                             }
                             // Setup adapter
                             Log.d(TAG, "group size" + groupList.size());
