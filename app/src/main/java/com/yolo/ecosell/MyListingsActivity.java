@@ -9,6 +9,8 @@ import android.os.Bundle;
 
 import com.yolo.ecosell.adapter.ListingRecyclerViewAdapter;
 
+import java.util.ArrayList;
+
 public class MyListingsActivity extends AppCompatActivity {
 
     private RecyclerView listingRecyclerView;
@@ -25,7 +27,7 @@ public class MyListingsActivity extends AppCompatActivity {
         listingRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // Setup adapter
-        listingRecyclerViewAdapter = new ListingRecyclerViewAdapter(MyListingsActivity.this);
+        listingRecyclerViewAdapter = new ListingRecyclerViewAdapter(MyListingsActivity.this, new ArrayList<>());
 
         listingRecyclerView.setAdapter(listingRecyclerViewAdapter);
 

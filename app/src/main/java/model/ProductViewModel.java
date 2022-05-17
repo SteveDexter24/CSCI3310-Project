@@ -8,17 +8,20 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
-import data.UserRepository;
-
-//import data.ProductRepository;
+import data.ProductRepository;
 
 
 public class ProductViewModel extends AndroidViewModel {
 
-//    public static ProductRepository repository;
-//    public final LiveData<List<Product>> allUProducts;
+    public static ProductRepository productRepository;
+    public final LiveData<List<Product>> allProducts;
 
-    public ProductViewModel(@NonNull Application application) {
+    public ProductViewModel(@NonNull Application application){
         super(application);
+        productRepository = new ProductRepository(application);
+        allProducts = productRepository.getAllProducts();
     }
+
+    public static LiveData<List<Product>> getAllProducts() {return productRepository.getAllProducts();}
+    public static void insertProduct(Product product) {productRepository.insertProduct(product);}
 }

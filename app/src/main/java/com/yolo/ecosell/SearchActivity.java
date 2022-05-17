@@ -108,7 +108,7 @@ public class SearchActivity extends AppCompatActivity {
                     searchRecyclerView.setAdapter(filteredGroupAdapter);
                 } else if (searchType.equals("explore")) {
                     searchRecyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
-                    filteredProductRecyclerViewAdapter = new ListingRecyclerViewAdapter(getApplicationContext());
+                    filteredProductRecyclerViewAdapter = new ListingRecyclerViewAdapter(getApplicationContext(), new ArrayList<>());
                     searchRecyclerView.setAdapter(filteredProductRecyclerViewAdapter);
                 }
                 return false;
