@@ -1,5 +1,6 @@
 package com.yolo.ecosell;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -7,6 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -31,7 +33,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.Group;
+import model.GroupViewModel;
 import model.Product;
+import model.ProductViewModel;
 
 public class ExploreFragment extends Fragment {
 
@@ -41,6 +45,7 @@ public class ExploreFragment extends Fragment {
     private ListingRecyclerViewAdapter exploreRecyclerViewAdapter;
     private List<Product> productList;
     private SearchView searchView;
+    private ProductViewModel productViewModel;
 
     // FireStore connection
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -65,6 +70,7 @@ public class ExploreFragment extends Fragment {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Explore");
 
         View view = inflater.inflate(R.layout.fragment_explore, container, false);
+       // productViewModel = new ViewModelProvider(requireActivity()).get(ProductViewModel.class);
 
         exploreRecyclerView = view.findViewById(R.id.explore_recyclerview);
         exploreRecyclerView.setHasFixedSize(true);
@@ -82,6 +88,13 @@ public class ExploreFragment extends Fragment {
     public void onStart() {
         super.onStart();
         getAllProducts("");
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        productViewModel = new ViewModelProvider(requireActivity()).get(ProductViewModel.class);
     }
 
     private void filterText(String text) {
@@ -116,7 +129,7 @@ public class ExploreFragment extends Fragment {
                             for (QueryDocumentSnapshot products : task.getResult()) {
                                 Product product = products.toObject(Product.class);
                                 productList.add(product);
-                               // groupViewModel.insertGroup(group);
+                                productViewModel.insertProduct(product);
                             }
 
                             // Setup adapter
