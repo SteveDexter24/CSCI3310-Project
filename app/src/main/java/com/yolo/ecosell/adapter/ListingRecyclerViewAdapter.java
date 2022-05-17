@@ -14,13 +14,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.yolo.ecosell.R;
 
+import java.util.List;
+
+import model.Product;
+
 public class ListingRecyclerViewAdapter extends RecyclerView.Adapter<ListingRecyclerViewAdapter.ListingsViewHolder> {
 
-    //private LiveData<List<>>
     private Context context;
+    private List<Product> productlist;
 
-    public ListingRecyclerViewAdapter(Context context){
+    public ListingRecyclerViewAdapter(Context context, List<Product> productlist){
         this.context = context;
+        this.productlist = productlist;
     }
 
     @NonNull
@@ -33,12 +38,14 @@ public class ListingRecyclerViewAdapter extends RecyclerView.Adapter<ListingRecy
 
     @Override
     public void onBindViewHolder(@NonNull ListingsViewHolder holder, int position) {
-        holder.priceTextView.setText("HK$100");
-        holder.productNameTextView.setText("Pants");
-        holder.usageTextView.setText("90% New");
-        holder.sellerTextView.setText(("DummyUser1234"));
+        Product product = productlist.get(position);
+
+        holder.priceTextView.setText("HK$" + product.getProductPrice());
+        holder.productNameTextView.setText(product.getProductName());
+        holder.usageTextView.setText(product.getCondition());
+        holder.sellerTextView.setText(product.getProductSeller());
         Glide.with(holder.itemView.getContext())
-                .load("https://images.lululemon.com/is/image/lululemon/LM5ADRS_0001_1?size=800,800").into(holder.productImageView);
+                .load(product.getImageUrls().get(0)).into(holder.productImageView);
 
         Glide.with(holder.itemView.getContext())
                 .load("https://images.lululemon.com/is/image/lululemon/LM5ADRS_0001_1?size=800,800").into(holder.sellerImageView);
@@ -46,7 +53,7 @@ public class ListingRecyclerViewAdapter extends RecyclerView.Adapter<ListingRecy
 
     @Override
     public int getItemCount() {
-        return 3;
+        return productlist.size();
     }
 
     public class ListingsViewHolder extends RecyclerView.ViewHolder{
