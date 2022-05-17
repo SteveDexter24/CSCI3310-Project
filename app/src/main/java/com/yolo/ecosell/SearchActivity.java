@@ -31,6 +31,7 @@ import java.util.stream.Collectors;
 import model.Group;
 import model.GroupViewModel;
 import model.Product;
+import model.ProductViewModel;
 
 public class SearchActivity extends AppCompatActivity {
 
@@ -45,6 +46,7 @@ public class SearchActivity extends AppCompatActivity {
     private ListingRecyclerViewAdapter filteredProductRecyclerViewAdapter;
 
     private GroupViewModel groupViewModel;
+    private ProductViewModel productViewModel;
 
 
     @Override
@@ -66,6 +68,12 @@ public class SearchActivity extends AppCompatActivity {
 
         groupViewModel.getAllGroups().observe(this, groups -> {
             groupList = groups;
+        });
+
+        productViewModel = new ViewModelProvider.AndroidViewModelFactory(SearchActivity.this.getApplication())
+                .create(ProductViewModel.class);
+        productViewModel.getAllProducts().observe(this, products -> {
+            productsList = products;
         });
     }
 
@@ -95,20 +103,30 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String newText) {
                 Log.d(TAG, newText);
-                List<Group> list = new ArrayList<>();
-                for (Group c : groupList) {
-                    String q = newText.toLowerCase();
-                    if (c.getGroupName().toLowerCase().contains(q) ||c.getGroupDescription().toLowerCase().contains(q)) {
-                        list.add(c);
-                    }
-                }
+                List<Group> gList = new ArrayList<>();
+                List<Product> pList = new ArrayList<>();
+                String q = newText.toLowerCase();
+
+
                 if (searchType.equals("groups") && !TextUtils.isEmpty(newText)) {
+                    for (Group c : groupList) {
+                        if (c.getGroupName().toLowerCase().contains(q) || c.getGroupDescription().toLowerCase().contains(q)) {
+                            gList.add(c);
+                        }
+                    }
                     searchRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                    filteredGroupAdapter = new GroupAdapter(getApplicationContext(), list);
+                    filteredGroupAdapter = new GroupAdapter(getApplicationContext(), gList);
                     searchRecyclerView.setAdapter(filteredGroupAdapter);
-                } else if (searchType.equals("explore")) {
+                } else if (searchType.equals("explore") && !TextUtils.isEmpty(newText)) {
+                    for (Product p : productsList) {
+                        if (p.getSellerUserName().toLowerCase().contains(q)
+                                || p.getProductName().toLowerCase().contains(q)
+                                || p.getCondition().toLowerCase().contains(q)) {
+                            pList.add(p);
+                        }
+                    }
                     searchRecyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
-                    filteredProductRecyclerViewAdapter = new ListingRecyclerViewAdapter(getApplicationContext(), new ArrayList<>());
+                    filteredProductRecyclerViewAdapter = new ListingRecyclerViewAdapter(getApplicationContext(), pList);
                     searchRecyclerView.setAdapter(filteredProductRecyclerViewAdapter);
                 }
                 return false;
