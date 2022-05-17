@@ -13,15 +13,18 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import data.GroupDao;
+import data.ProductDao;
 import data.UserDao;
 import model.Group;
+import model.Product;
 import model.User;
 
-@Database(entities = {User.class, Group.class}, version = 3, exportSchema = false)
+@Database(entities = {User.class, Group.class, Product.class}, version = 4, exportSchema = false)
 @TypeConverters({DataConverter.class})
 public abstract class EcoSellRoomDatabase extends RoomDatabase {
     public abstract UserDao userDao();
     public abstract GroupDao groupDao();
+    public abstract ProductDao productDao();
     public static final int NUM_OF_THREADS = 4;
 
     private static volatile EcoSellRoomDatabase INSTANCE;
@@ -49,7 +52,8 @@ public abstract class EcoSellRoomDatabase extends RoomDatabase {
                     databaseWriteExecutor.execute(() -> {
                         UserDao userDao = INSTANCE.userDao();
                         GroupDao groupDao = INSTANCE.groupDao();
-                        userDao.deleteAll();
+                        ProductDao productDao = INSTANCE.productDao();
+                        //userDao.deleteAll();
                     });
                 }
             };
