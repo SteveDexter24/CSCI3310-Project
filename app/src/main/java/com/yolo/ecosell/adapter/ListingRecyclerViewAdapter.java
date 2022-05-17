@@ -1,6 +1,7 @@
 package com.yolo.ecosell.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,10 +9,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.yolo.ecosell.ProductDetailActivity;
 import com.yolo.ecosell.R;
 
 import java.util.List;
@@ -49,6 +52,13 @@ public class ListingRecyclerViewAdapter extends RecyclerView.Adapter<ListingRecy
 
         Glide.with(holder.itemView.getContext())
                 .load(product.getSellerImageUrl()).into(holder.sellerImageView);
+
+        holder.listingCardView.setOnClickListener(view -> {
+            Intent intent = new Intent(context, ProductDetailActivity.class);
+            intent.putExtra("itemAtIndex", position);
+            intent.putExtra("title", product.getProductName());
+            context.startActivity(intent);
+        });
     }
 
     @Override
@@ -60,6 +70,7 @@ public class ListingRecyclerViewAdapter extends RecyclerView.Adapter<ListingRecy
 
         private ImageView productImageView, sellerImageView;
         private TextView productNameTextView, priceTextView, usageTextView, sellerTextView;
+        private CardView listingCardView;
 
         public ListingsViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -70,6 +81,8 @@ public class ListingRecyclerViewAdapter extends RecyclerView.Adapter<ListingRecy
             priceTextView = itemView.findViewById(R.id.listing_price_textView);
             usageTextView = itemView.findViewById(R.id.listing_usage_textView);
             sellerTextView = itemView.findViewById(R.id.listing_user_textView);
+
+            listingCardView = itemView.findViewById(R.id.my_listing_row_card_view);
         }
     }
 }
