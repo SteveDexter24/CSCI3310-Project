@@ -12,7 +12,7 @@ import util.EcoSellRoomDatabase;
 public class GroupRepository {
     private GroupDao groupDao;
     private LiveData<List<Group>> allGroups;
-    private LiveData<List<Group>> searchGroups;
+    private List<Group> searchGroups;
     private Group group;
 
     public GroupRepository(Application application) {
@@ -25,10 +25,10 @@ public class GroupRepository {
         return allGroups;
     }
 
-    public LiveData<List<Group>> searchGroups(String query){
+    public List<Group> searchGroups(String query){
         EcoSellRoomDatabase.databaseWriteExecutor.execute(() -> {
             searchGroups = groupDao.searchGroups(query);
-        });
+       });
         return searchGroups;
     }
 

@@ -22,7 +22,7 @@ public class GroupViewModel extends AndroidViewModel {
     }
 
     public static LiveData<List<Group>> getAllGroups() {return groupRepository.getAllGroups();}
-    public static LiveData<List<Group>> searchGroups(String query) {return groupRepository.searchGroups(query);}
+    public static List<Group> searchGroups(String query) {return groupRepository.searchGroups(query);}
     public static void insertGroup(Group group) {groupRepository.insertGroup(group);}
     public static void getGroup(String groupId) {groupRepository.getGroup(groupId);}
 }
