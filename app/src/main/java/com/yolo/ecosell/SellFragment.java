@@ -1,6 +1,7 @@
 package com.yolo.ecosell;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -39,6 +40,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -63,7 +66,7 @@ public class SellFragment extends Fragment {
     private int imageIndex = 0;
     private int chipSelectedId = View.NO_ID;
     private String condition;
-    private LinkedList<Uri> imageUris = new LinkedList<>();
+    private LinkedList<byte[]> bytesCompressImages = new LinkedList<>();
     private List<String> imageUrls = new LinkedList<>();
 
     private FirebaseAuth firebaseAuth;
@@ -82,7 +85,8 @@ public class SellFragment extends Fragment {
     private UserViewModel userViewModel;
     private User user;
 
-
+    private Bitmap bmp = null;
+    private byte[] imageCompressedData;
 
 
     public SellFragment() {
@@ -119,6 +123,10 @@ public class SellFragment extends Fragment {
         userViewModel.getAllUsers().observe(this.getActivity(), users -> {
             user = users.get(0);
         });
+
+//        for (int i = 0; i < 4; i++){
+//            imageUris.add(new Byte.);
+//        }
 
         imageButtons.add(view.findViewById(R.id.add_listing_photo_1));
         imageButtons.add(view.findViewById(R.id.add_listing_photo_2));
@@ -189,9 +197,17 @@ public class SellFragment extends Fragment {
 
         if (requestCode == 2 && resultCode == RESULT_OK && data != null) {
             Uri imageUri = data.getData();
-            imageUris.add(imageUri);
-            Log.d(TAG, "" + imageUris.size());
+            Log.d(TAG, "" + bytesCompressImages.size());
             imageButtons.get(imageIndex).setImageURI(imageUri);
+            try {
+                bmp = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), imageUri);
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                bmp.compress(Bitmap.CompressFormat.JPEG, 25, baos);
+                imageCompressedData = baos.toByteArray();
+                bytesCompressImages.add(imageCompressedData);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -234,7 +250,7 @@ public class SellFragment extends Fragment {
             return;
         }
 
-        if (imageUris.size() == 0) {
+        if (bytesCompressImages.size() == 0) {
             Toast.makeText(getContext(), "Please add at least one image", Toast.LENGTH_LONG).show();
             return;
         }
@@ -247,19 +263,20 @@ public class SellFragment extends Fragment {
 
         Product newListing = new Product();
 
-        for (int i = 0; i < imageUris.size(); i++) {
+        for (int i = 0; i < bytesCompressImages.size(); i++) {
             // Upload Images to storage
             StorageReference filePath = storageReference
                     .child("listing_images")
                     .child(userId + "_" + new Timestamp(new Date()).toString() + "_" + i);
 
             int finalI = i;
-            filePath.putFile(imageUris.get(i))
+            filePath.putBytes(bytesCompressImages.get(i))
                     .addOnSuccessListener(taskSnapshot -> {
                         filePath.getDownloadUrl()
                                 .addOnSuccessListener(uri -> {
                                     imageUrls.add(uri.toString());
-                                    if(finalI == imageUris.size() - 1){
+                                    if(finalI == bytesCompressImages.size() - 1){
+                                        String productId = collectionReference.getId();
                                         newListing.setImageUrls(imageUrls);
                                         newListing.setProductSeller(userId);
                                         newListing.setProductName(title);
@@ -269,6 +286,9 @@ public class SellFragment extends Fragment {
                                         newListing.setCondition(condition);
                                         newListing.setProductDescription(description);
                                         newListing.setTimeAdded(new Timestamp(new Date()).toString());
+                                        newListing.setSellerImageUrl(user.getImageUrl());
+                                        newListing.setSellerUserName(user.getUsername());
+                                        newListing.setProductId(productId);
 
                                         collectionReference.add(newListing)
                                                 .addOnSuccessListener(documentReference -> {
