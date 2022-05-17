@@ -6,19 +6,22 @@ import java.util.List;
 
 public class ChatRoom {
     private List<String> users;
-    private List<DocumentReference> usersDocumentReference;
     private List<DocumentReference> chats;
     private String chatRoomId;
+    private String uniqueChatRoomIdentifier;
+    private String lastMessage;
 
     public ChatRoom () {
     }
 
-    public ChatRoom(List<String> users, List<DocumentReference> usersDocumentReference, List<DocumentReference> chats, String chatRoomId) {
+    public ChatRoom(List<String> users, List<DocumentReference> chats, String chatRoomId, String uniqueChatRoomIdentifier, String lastMessage) {
         this.users = users;
         this.chats = chats;
         this.chatRoomId = chatRoomId;
-        this.usersDocumentReference = usersDocumentReference;
+        this.uniqueChatRoomIdentifier = uniqueChatRoomIdentifier;
+        this.lastMessage = lastMessage;
     }
+
 
 
 
@@ -38,7 +41,19 @@ public class ChatRoom {
 
     public void setChatRoomId(String chatRoomId) { this.chatRoomId = chatRoomId; }
 
-    public List<DocumentReference> getUsersDocumentReference() { return usersDocumentReference; }
+    public String getUniqueChatRoomIdentifier() {
+        return uniqueChatRoomIdentifier;
+    }
 
-    public void setUsersDocumentReference(List<DocumentReference> usersDocumentReference) { this.usersDocumentReference = usersDocumentReference; }
+    public void setUniqueChatRoomIdentifier(String uniqueChatRoomIdentifier) {
+        this.uniqueChatRoomIdentifier = uniqueChatRoomIdentifier;
+    }
+
+    public String getLastMessage() {
+        return lastMessage;
+    }
+
+    public void setLastMessage(String lastMessage) {
+        this.lastMessage = lastMessage;
+    }
 }
