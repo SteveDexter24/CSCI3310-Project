@@ -1,5 +1,6 @@
 package com.yolo.ecosell;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -75,6 +76,9 @@ public class SellFragment extends Fragment {
     private FirebaseStorage storage;
     private StorageReference storageReference;
 
+    // Progress Bar
+    private ProgressDialog progressDialog;
+
     // FireStore connection
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     // Product Collection
@@ -124,9 +128,10 @@ public class SellFragment extends Fragment {
             user = users.get(0);
         });
 
-//        for (int i = 0; i < 4; i++){
-//            imageUris.add(new Byte.);
-//        }
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setCancelable(true);
+        progressDialog.setMessage("Creating a new listing ...");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 
         imageButtons.add(view.findViewById(R.id.add_listing_photo_1));
         imageButtons.add(view.findViewById(R.id.add_listing_photo_2));
@@ -163,7 +168,7 @@ public class SellFragment extends Fragment {
         listItButton.setOnClickListener(view1 -> createNewListing());
     }
 
-    private void chooseImageButtons(){
+    private void chooseImageButtons() {
         for (int i = 0; i < 4; i++) {
             int num = i;
             imageButtons.get(num).setOnClickListener(view1 -> {
@@ -255,63 +260,66 @@ public class SellFragment extends Fragment {
             return;
         }
 
+        try {
+            progressDialog.show();
+            listItButton.setEnabled(false);
+            currentUser = firebaseAuth.getCurrentUser();
+            assert currentUser != null;
+            String userId = currentUser.getUid();
 
-        listItButton.setEnabled(false);
-        currentUser = firebaseAuth.getCurrentUser();
-        assert currentUser != null;
-        String userId = currentUser.getUid();
+            Product newListing = new Product();
 
-        Product newListing = new Product();
+            for (int i = 0; i < bytesCompressImages.size(); i++) {
+                // Upload Images to storage
+                StorageReference filePath = storageReference
+                        .child("listing_images")
+                        .child(userId + "_" + new Timestamp(new Date()).toString() + "_" + i);
 
-        for (int i = 0; i < bytesCompressImages.size(); i++) {
-            // Upload Images to storage
-            StorageReference filePath = storageReference
-                    .child("listing_images")
-                    .child(userId + "_" + new Timestamp(new Date()).toString() + "_" + i);
+                int finalI = i;
+                filePath.putBytes(bytesCompressImages.get(i))
+                        .addOnSuccessListener(taskSnapshot -> {
+                            filePath.getDownloadUrl()
+                                    .addOnSuccessListener(uri -> {
+                                        imageUrls.add(uri.toString());
+                                        if (finalI == bytesCompressImages.size() - 1) {
+                                            String productId = collectionReference.getId();
+                                            newListing.setImageUrls(imageUrls);
+                                            newListing.setProductSeller(userId);
+                                            newListing.setProductName(title);
+                                            newListing.setProductCategory(category);
+                                            newListing.setProductPrice(price);
+                                            newListing.setProductDeliveryMethod(delivery);
+                                            newListing.setCondition(condition);
+                                            newListing.setProductDescription(description);
+                                            newListing.setTimeAdded(new Timestamp(new Date()).toString());
+                                            newListing.setSellerImageUrl(user.getImageUrl());
+                                            newListing.setSellerUserName(user.getUsername());
+                                            newListing.setProductId(productId);
 
-            int finalI = i;
-            filePath.putBytes(bytesCompressImages.get(i))
-                    .addOnSuccessListener(taskSnapshot -> {
-                        filePath.getDownloadUrl()
-                                .addOnSuccessListener(uri -> {
-                                    imageUrls.add(uri.toString());
-                                    if(finalI == bytesCompressImages.size() - 1){
-                                        String productId = collectionReference.getId();
-                                        newListing.setImageUrls(imageUrls);
-                                        newListing.setProductSeller(userId);
-                                        newListing.setProductName(title);
-                                        newListing.setProductCategory(category);
-                                        newListing.setProductPrice(price);
-                                        newListing.setProductDeliveryMethod(delivery);
-                                        newListing.setCondition(condition);
-                                        newListing.setProductDescription(description);
-                                        newListing.setTimeAdded(new Timestamp(new Date()).toString());
-                                        newListing.setSellerImageUrl(user.getImageUrl());
-                                        newListing.setSellerUserName(user.getUsername());
-                                        newListing.setProductId(productId);
+                                            collectionReference.add(newListing)
+                                                    .addOnSuccessListener(documentReference -> {
+                                                        // update user collection
+                                                        List<String> newProductId = new ArrayList<String>();
+                                                        newProductId = user.getProducts();
+                                                        newProductId.add(documentReference.getId());
+                                                        user.setProducts(newProductId);
+                                                        updateUserCollection(user);
+                                                        progressDialog.hide();
+                                                        listItButton.setEnabled(true);
+                                                    })
+                                                    .addOnFailureListener(e -> {
+                                                        Toast.makeText(getContext(), "Failed to create a new listing", Toast.LENGTH_LONG).show();
+                                                        listItButton.setEnabled(true);
+                                                        progressDialog.hide();
+                                                    });
+                                        }
+                                    });
+                        });
+            }
 
-                                        collectionReference.add(newListing)
-                                                .addOnSuccessListener(documentReference -> {
-                                                    // update user collection
-                                                    List<String> newProductId = new ArrayList<String>();
-                                                    newProductId = user.getProducts();
-                                                    newProductId.add(documentReference.getId());
-                                                    user.setProducts(newProductId);
-                                                    updateUserCollection(user);
-                                                    listItButton.setEnabled(true);
-                                                })
-                                                .addOnFailureListener(e -> {
-                                                    Toast.makeText(getContext(), "Failed to create a new listing", Toast.LENGTH_LONG).show();
-                                                    listItButton.setEnabled(true);
-                                                });
-                                    }
-                                });
-                    });
+        } catch (Exception e) {
+            progressDialog.hide();
         }
-
-
-
-
     }
 
     private void updateUserCollection(User user) {
