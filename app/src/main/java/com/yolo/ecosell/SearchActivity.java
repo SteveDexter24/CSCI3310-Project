@@ -97,7 +97,8 @@ public class SearchActivity extends AppCompatActivity {
                 Log.d(TAG, newText);
                 List<Group> list = new ArrayList<>();
                 for (Group c : groupList) {
-                    if (c.getGroupName().toLowerCase().contains(newText.toLowerCase())) {
+                    String q = newText.toLowerCase();
+                    if (c.getGroupName().toLowerCase().contains(q) ||c.getGroupDescription().toLowerCase().contains(q)) {
                         list.add(c);
                     }
                 }
