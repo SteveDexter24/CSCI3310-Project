@@ -40,7 +40,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/create_group_button">
+                app:layout_constraintBottom_toTopOf="@+id/create_qr_button">
 
 
                 <LinearLayout
@@ -60,16 +60,15 @@
                         tools:ignore="HardcodedText" />
 
                     <ImageButton
-                        android:id="@+id/add_group_photo"
+                        android:id="@+id/add_qr_photo"
                         android:layout_width="280dp"
                         android:layout_height="280dp"
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:backgroundTint="#0F000000"
-                        android:scaleType="fitCenter"
+                        android:scaleType="centerCrop"
                         android:src="@drawable/ic_baseline_add_circle_outline_24"
-                        tools:ignore="SpeakableTextPresentCheck, contentDescription"
-                        />
+                        tools:ignore="SpeakableTextPresentCheck, contentDescription" />
 
                     <TextView
                         android:id="@+id/add_group_photo_text_view2"
@@ -84,7 +83,7 @@
             </LinearLayout>
 
             <Button
-                android:id="@+id/create_group_button"
+                android:id="@+id/create_qr_button"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="8dp"
