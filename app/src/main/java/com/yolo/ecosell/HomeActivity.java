@@ -121,7 +121,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void goToLikesActivity() {
-
+        startActivity(new Intent(HomeActivity.this, LikesActivity.class));
     }
 
     private void goToChatActivity() {

@@ -226,7 +226,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         ChatRoom chatRoom = new ChatRoom(users, new ArrayList<>(), chatRoomDocRef.getId(), uniqueId1, uniqueId2, null);
 
         chatRoomsCollectionReference
-                .whereNotIn("users", Arrays.asList(userId, sellerId))
+                .whereEqualTo("uniqueChatRoomIdentifier1", uniqueId1)
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     if (queryDocumentSnapshots.isEmpty()) {
@@ -239,6 +239,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                                     }
                                 });
                     } else {
+                        Log.d(TAG, "" + queryDocumentSnapshots.size());
                         Toast.makeText(this, "You already have a chat room with this user", Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(this, ChatListActivity.class);
                         startActivity(intent);

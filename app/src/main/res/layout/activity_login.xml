@@ -39,6 +39,8 @@
 
             <AutoCompleteTextView
                 android:id="@+id/email"
+                android:paddingHorizontal="8dp"
+                android:background="@drawable/custom_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/enter_email"
@@ -52,6 +54,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:paddingHorizontal="8dp"
+                android:background="@drawable/custom_input"
                 android:hint="@string/enter_password"
                 android:inputType="textPassword"
                 android:maxLines="1"
@@ -70,24 +74,6 @@
                 app:cornerRadius="4dp"
                 android:layout_marginHorizontal="4dp"
                 tools:ignore="TextContrastCheck" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:gravity="center_horizontal"
-                android:text="@string/or"
-                android:textSize="19sp"
-                android:textStyle="bold" />
-
-            <com.google.android.gms.common.SignInButton
-                android:id="@+id/google_button"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="0dp"
-                app:cornerRadius="6dp"
-                android:text="@string/sign_in_with_google"
-                android:layout_margin="0dp"/>
         </LinearLayout>
 
     </LinearLayout>
