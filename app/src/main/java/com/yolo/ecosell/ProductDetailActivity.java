@@ -3,6 +3,8 @@ package com.yolo.ecosell;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.media.Image;
@@ -23,6 +25,7 @@ import com.google.android.material.floatingactionbutton.ExtendedFloatingActionBu
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
@@ -89,8 +92,8 @@ public class ProductDetailActivity extends AppCompatActivity {
                 .create(ProductViewModel.class);
 
         productViewModel.getAllProducts().observe(this, products -> {
-            for (Product p: products){
-                if (p.getProductId().equals(productId)){
+            for (Product p : products) {
+                if (p.getProductId().equals(productId)) {
                     product = p;
                     setDataToUI(product);
                     break;
@@ -145,37 +148,24 @@ public class ProductDetailActivity extends AppCompatActivity {
         ChatRoom chatRoom = new ChatRoom(users, new ArrayList<>(), chatRoomDocRef.getId(), uniqueId1, uniqueId2, null);
 
         chatRoomsCollectionReference
-                .whereEqualTo("uniqueChatRoomIdentifier1", uniqueId1)
-                .whereEqualTo("uniqueChatRoomIdentifier2", uniqueId2)
+                .whereNotIn("users", Arrays.asList(userId, sellerId))
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
-
-                    if (!queryDocumentSnapshots.isEmpty()) {
-                        Toast.makeText(this, "You already have a chat room with this user", Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(this, ChatActivity.class);
-                        for (QueryDocumentSnapshot val : queryDocumentSnapshots) {
-                            intent.putExtra("chatRoomId", val.getString("chatRoomId"));
-                            intent.putExtra("profileImage", product.getSellerImageUrl());
-                            intent.putExtra("username", product.getSellerUserName());
-                            intent.putExtra("currentUserProfileImage", user.getImageUrl());
-                            intent.putExtra("currentUserUsername", user.getUsername());
-                        }
-                        startActivity(intent);
-                    } else {
+                    if (queryDocumentSnapshots.isEmpty()){
                         chatRoomDocRef
-                                .set(chatRoom)
+                                .set(chatRoom, SetOptions.merge())
                                 .addOnCompleteListener(task -> {
                                     if (task.isSuccessful()) {
                                         Intent intent = new Intent(ProductDetailActivity.this, ChatListActivity.class);
                                         startActivity(intent);
                                     }
                                 });
+                    }else {
+                        Toast.makeText(this, "You already have a chat room with this user", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(this, ChatListActivity.class);
+                        startActivity(intent);
                     }
-                })
-                .addOnFailureListener(e -> {
-
                 });
-
 
     }
 

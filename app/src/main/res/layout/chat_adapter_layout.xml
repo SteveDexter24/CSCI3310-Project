@@ -3,15 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto">
+
 
     <LinearLayout
         android:id="@+id/chat_root_linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="true"
-        android:orientation="vertical"
-        android:paddingHorizontal="16dp">
+        android:padding="4dp"
+        android:background="@drawable/border"
+        android:orientation="vertical">
 
         <RelativeLayout
             android:id="@+id/chat_relativeLayout"
@@ -23,7 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_toStartOf="@+id/chat_unseen_textView"
                 android:layout_toEndOf="@+id/chat_profile_image"
@@ -36,7 +39,7 @@
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:text="Username"
-                    android:textSize="18sp"
+                    android:textSize="19sp"
                     android:textStyle="bold"
                     tools:ignore="HardcodedText" />
 
@@ -44,11 +47,11 @@
                     android:id="@+id/chat_last_message_textView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="2dp"
                     android:maxLines="1"
                     android:text="This is the last message"
                     android:textColor="#2980b9"
-                    android:textSize="14sp"
+                    android:textSize="15sp"
                     android:textStyle="bold"
                     tools:ignore="HardcodedText" />
             </LinearLayout>
@@ -57,6 +60,7 @@
                 android:id="@+id/chat_unseen_textView"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
+                android:visibility="gone"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
@@ -73,9 +77,9 @@
                 android:layout_height="50dp"
                 android:layout_centerVertical="true"
                 android:layout_marginTop="40dp"
-                android:src="@drawable/profile"
                 app:civ_border_color="@color/white"
-                app:civ_border_width="1dp" />
+                app:civ_border_width="1dp"
+                tools:src="@drawable/profile" />
 
         </RelativeLayout>
 

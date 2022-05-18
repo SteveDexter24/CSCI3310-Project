@@ -126,18 +126,7 @@ public class LoginActivity extends AppCompatActivity {
                         try {
                             User user = new User();
                             for (QueryDocumentSnapshot snapshot : queryDocumentSnapshots) {
-                                user.setEmail(snapshot.getString("email"));
-                                user.setUsername(snapshot.getString("username"));
-                                user.setUserId(snapshot.getString("userId"));
-                                user.setLocation(snapshot.getString("location"));
-                                user.setImageUrl(snapshot.getString("imageUrl"));
-                                user.setTimeAdded(snapshot.getData().get("timeAdded").toString());
-                                user.setMobile(snapshot.getString("mobile"));
-                                if ((List<String>) snapshot.get("products") != null) {
-                                    user.setProducts((List<String>) snapshot.get("products"));
-                                } else {
-                                    user.setProducts(new ArrayList<String>());
-                                }
+                                user = snapshot.toObject(User.class);
                             }
                             UserViewModel.insert(user);
                             startActivity(new Intent(LoginActivity.this, HomeActivity.class));
