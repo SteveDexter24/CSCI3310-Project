@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.yolo.ecosell.ProductDetailActivity;
 import com.yolo.ecosell.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import model.Product;
@@ -57,6 +58,7 @@ public class ListingRecyclerViewAdapter extends RecyclerView.Adapter<ListingRecy
             Intent intent = new Intent(context, ProductDetailActivity.class);
             intent.putExtra("itemAtIndex", position);
             intent.putExtra("title", product.getProductName());
+            intent.putExtra("productId", product.getProductId());
             context.startActivity(intent);
         });
     }

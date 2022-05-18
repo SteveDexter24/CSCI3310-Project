@@ -5,14 +5,17 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -92,6 +95,25 @@ public class ChatListActivity extends AppCompatActivity {
         chatRecyclerView = findViewById(R.id.chat_list_RecyclerView);
         chatRecyclerView.setHasFixedSize(true);
         chatRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                int position = viewHolder.getAdapterPosition();
+                ChatRoom chatRoom = chatRoomList.get(position);
+                chatRoomsCollectionReference
+                        .document(chatRoom.getChatRoomId())
+                        .delete()
+                        .addOnCompleteListener(task -> {
+
+                        });
+            }
+        }).attachToRecyclerView(chatRecyclerView);
     }
 
     @Override

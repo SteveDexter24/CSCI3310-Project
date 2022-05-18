@@ -3,6 +3,8 @@ package com.yolo.ecosell;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.media.Image;
@@ -23,6 +25,7 @@ import com.google.android.material.floatingactionbutton.ExtendedFloatingActionBu
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
@@ -47,7 +50,8 @@ public class ProductDetailActivity extends AppCompatActivity {
     private UserViewModel userViewModel;
     private Product product;
     private User user;
-    private String userId, productId;
+    private String userId, productId, productPrice, condition, productCategory, productDescription, productDeliveryMethod;
+    private String productSeller, productBuyer, imageUrl;
 
     private ImageView productImageView;
     private TextView productNameTextView, productPriceTextView, productSellerTextView,
@@ -67,6 +71,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         Intent intent = getIntent();
         itemAtIndex = intent.getIntExtra("itemAtIndex", 0);
         title = intent.getStringExtra("title");
+        productId = intent.getStringExtra("productId");
 
         getSupportActionBar().setTitle(title);
 
@@ -86,14 +91,19 @@ public class ProductDetailActivity extends AppCompatActivity {
         productViewModel = new ViewModelProvider.AndroidViewModelFactory(this.getApplication())
                 .create(ProductViewModel.class);
 
+        productViewModel.getAllProducts().observe(this, products -> {
+            for (Product p : products) {
+                if (p.getProductId().equals(productId)) {
+                    product = p;
+                    setDataToUI(product);
+                    break;
+                }
+            }
+        });
+
         userViewModel = new ViewModelProvider.AndroidViewModelFactory(this.getApplication())
                 .create(UserViewModel.class);
 
-        productViewModel.getAllProducts().observe(this, products -> {
-            product = products.get(itemAtIndex);
-            productId = product.getProductId();
-            setDataToUI(product);
-        });
 
         userViewModel.getAllUsers().observe(this, users -> {
             user = users.get(0);
@@ -133,40 +143,29 @@ public class ProductDetailActivity extends AppCompatActivity {
         }
         users.add(user.getUserId());
         users.add(product.getProductSeller());
-        String uniqueId = userId + sellerId;
-        ChatRoom chatRoom = new ChatRoom(users, new ArrayList<>(), chatRoomDocRef.getId(), uniqueId, null);
+        String uniqueId1 = userId + sellerId;
+        String uniqueId2 = sellerId + userId;
+        ChatRoom chatRoom = new ChatRoom(users, new ArrayList<>(), chatRoomDocRef.getId(), uniqueId1, uniqueId2, null);
 
         chatRoomsCollectionReference
-                .whereEqualTo("uniqueChatRoomIdentifier", uniqueId)
+                .whereNotIn("users", Arrays.asList(userId, sellerId))
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
-
-                    if (!queryDocumentSnapshots.isEmpty()) {
-                        Toast.makeText(this, "You already have a chat room with this user", Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(this, ChatActivity.class);
-                        for (QueryDocumentSnapshot val : queryDocumentSnapshots) {
-                            intent.putExtra("chatRoomId", val.getString("chatRoomId"));
-                            intent.putExtra("profileImage", product.getSellerImageUrl());
-                            intent.putExtra("username", product.getSellerUserName());
-                            intent.putExtra("currentUserProfileImage", user.getImageUrl());
-                            intent.putExtra("currentUserUsername", user.getUsername());
-                        }
-                        startActivity(intent);
-                    } else {
+                    if (queryDocumentSnapshots.isEmpty()){
                         chatRoomDocRef
-                                .set(chatRoom)
+                                .set(chatRoom, SetOptions.merge())
                                 .addOnCompleteListener(task -> {
                                     if (task.isSuccessful()) {
                                         Intent intent = new Intent(ProductDetailActivity.this, ChatListActivity.class);
                                         startActivity(intent);
                                     }
                                 });
+                    }else {
+                        Toast.makeText(this, "You already have a chat room with this user", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(this, ChatListActivity.class);
+                        startActivity(intent);
                     }
-                })
-                .addOnFailureListener(e -> {
-
                 });
-
 
     }
 

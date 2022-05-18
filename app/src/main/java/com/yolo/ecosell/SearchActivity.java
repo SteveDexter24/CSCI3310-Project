@@ -105,6 +105,7 @@ public class SearchActivity extends AppCompatActivity {
                 Log.d(TAG, newText);
                 List<Group> gList = new ArrayList<>();
                 List<Product> pList = new ArrayList<>();
+                List<Integer> productIndexes = new ArrayList<>();
                 String q = newText.toLowerCase();
 
 
@@ -115,18 +116,21 @@ public class SearchActivity extends AppCompatActivity {
                         }
                     }
                     searchRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                    filteredGroupAdapter = new GroupAdapter(getApplicationContext(), gList);
+                    filteredGroupAdapter = new GroupAdapter(SearchActivity.this, gList);
                     searchRecyclerView.setAdapter(filteredGroupAdapter);
                 } else if (searchType.equals("explore") && !TextUtils.isEmpty(newText)) {
+                    int pIdx = 0;
                     for (Product p : productsList) {
                         if (p.getSellerUserName().toLowerCase().contains(q)
                                 || p.getProductName().toLowerCase().contains(q)
                                 || p.getCondition().toLowerCase().contains(q)) {
                             pList.add(p);
+                            productIndexes.add(pIdx);
                         }
+                        pIdx += 1;
                     }
                     searchRecyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
-                    filteredProductRecyclerViewAdapter = new ListingRecyclerViewAdapter(getApplicationContext(), pList);
+                    filteredProductRecyclerViewAdapter = new ListingRecyclerViewAdapter(SearchActivity.this, pList);
                     searchRecyclerView.setAdapter(filteredProductRecyclerViewAdapter);
                 }
                 return false;

@@ -17,4 +17,7 @@ public interface ProductDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertProduct(Product product);
+
+    @Query("SELECT * FROM Product_table WHERE productId = :productId")
+    LiveData<Product> getProduct(String productId);
 }

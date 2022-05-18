@@ -21,7 +21,7 @@ import model.Post;
 import model.Product;
 import model.User;
 
-@Database(entities = {User.class, Group.class, Product.class, Post.class}, version = 5, exportSchema = false)
+@Database(entities = {User.class, Group.class, Product.class, Post.class}, version = 6, exportSchema = false)
 @TypeConverters({DataConverter.class})
 public abstract class EcoSellRoomDatabase extends RoomDatabase {
     public abstract UserDao userDao();
