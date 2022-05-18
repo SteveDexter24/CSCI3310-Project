@@ -119,6 +119,7 @@ public class PaymentActivity extends AppCompatActivity {
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 bmp.compress(Bitmap.CompressFormat.JPEG, 25, baos);
                 imageCompressedData = baos.toByteArray();
+                qrImageButton.setImageURI(imageUri);
             } catch (IOException e) {
                 e.printStackTrace();
             }
