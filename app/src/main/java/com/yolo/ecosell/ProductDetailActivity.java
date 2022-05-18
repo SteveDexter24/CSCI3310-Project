@@ -47,7 +47,8 @@ public class ProductDetailActivity extends AppCompatActivity {
     private UserViewModel userViewModel;
     private Product product;
     private User user;
-    private String userId, productId;
+    private String userId, productId, productPrice, condition, productCategory, productDescription, productDeliveryMethod;
+    private String productSeller, productBuyer, imageUrl;
 
     private ImageView productImageView;
     private TextView productNameTextView, productPriceTextView, productSellerTextView,
@@ -67,6 +68,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         Intent intent = getIntent();
         itemAtIndex = intent.getIntExtra("itemAtIndex", 0);
         title = intent.getStringExtra("title");
+        productId = intent.getStringExtra("productId");
 
         getSupportActionBar().setTitle(title);
 
@@ -86,14 +88,19 @@ public class ProductDetailActivity extends AppCompatActivity {
         productViewModel = new ViewModelProvider.AndroidViewModelFactory(this.getApplication())
                 .create(ProductViewModel.class);
 
+        productViewModel.getAllProducts().observe(this, products -> {
+            for (Product p: products){
+                if (p.getProductId().equals(productId)){
+                    product = p;
+                    setDataToUI(product);
+                    break;
+                }
+            }
+        });
+
         userViewModel = new ViewModelProvider.AndroidViewModelFactory(this.getApplication())
                 .create(UserViewModel.class);
 
-        productViewModel.getAllProducts().observe(this, products -> {
-            product = products.get(itemAtIndex);
-            productId = product.getProductId();
-            setDataToUI(product);
-        });
 
         userViewModel.getAllUsers().observe(this, users -> {
             user = users.get(0);
@@ -133,11 +140,13 @@ public class ProductDetailActivity extends AppCompatActivity {
         }
         users.add(user.getUserId());
         users.add(product.getProductSeller());
-        String uniqueId = userId + sellerId;
-        ChatRoom chatRoom = new ChatRoom(users, new ArrayList<>(), chatRoomDocRef.getId(), uniqueId, null);
+        String uniqueId1 = userId + sellerId;
+        String uniqueId2 = sellerId + userId;
+        ChatRoom chatRoom = new ChatRoom(users, new ArrayList<>(), chatRoomDocRef.getId(), uniqueId1, uniqueId2, null);
 
         chatRoomsCollectionReference
-                .whereEqualTo("uniqueChatRoomIdentifier", uniqueId)
+                .whereEqualTo("uniqueChatRoomIdentifier1", uniqueId1)
+                .whereEqualTo("uniqueChatRoomIdentifier2", uniqueId2)
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
 

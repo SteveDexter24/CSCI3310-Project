@@ -12,6 +12,7 @@ import util.EcoSellRoomDatabase;
 public class ProductRepository {
     private ProductDao productDao;
     private LiveData<List<Product>> allProducts;
+    private LiveData<Product> product;
 
     public ProductRepository(Application application) {
         EcoSellRoomDatabase db = EcoSellRoomDatabase.getDatabase(application);
@@ -28,4 +29,7 @@ public class ProductRepository {
             productDao.insertProduct(product);
         });
     }
+    public LiveData<Product> getProduct(String productId){
+        return product;
+    };
 }
