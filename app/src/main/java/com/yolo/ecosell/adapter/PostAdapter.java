@@ -49,11 +49,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
         holder.usernameTextView.setText(post.getUsername());
         holder.postDescriptionTextView.setText(post.getPostMessage());
-        holder.likesTextView.setText("" + post.getLikes().size());
 
-        holder.likeButton.setOnClickListener(view -> {
-            // set likes
-        });
 
     }
 
@@ -74,8 +70,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             usernameTextView = itemView.findViewById(R.id.post_username);
             postDescriptionTextView = itemView.findViewById(R.id.post_description);
             postImageView = itemView.findViewById(R.id.post_image);
-            likesTextView = itemView.findViewById(R.id.post_like_text_view);
-            likeButton = itemView.findViewById(R.id.post_like_image);
 
         }
     }
