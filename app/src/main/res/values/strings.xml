@@ -58,4 +58,6 @@
     <string name="mailing_and_delivery">Mailing and Delivery</string>
     <string name="list_it">List it!</string>
     <string name="describe_your_listing">Describe your listing</string>
+    <string name="log_out">Log out</string>
+    <string name="number_of_listings">Number of listings:</string>
 </resources>

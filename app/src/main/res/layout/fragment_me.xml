@@ -14,6 +14,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingBottom="20dp"
             android:background="#f5f5f5">
 
             <ImageView
@@ -238,36 +239,67 @@
                     android:textSize="18sp" />
             </LinearLayout>
 
-            <Button
-                android:id="@+id/goto_edit_profile"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
+            <LinearLayout
+                android:id="@+id/listings_linear_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
                 android:layout_marginTop="20dp"
-                android:backgroundTint="#16A085"
-                android:gravity="center"
-                android:text="@string/me_edit_profile_button_title"
-                android:textColor="#ffffff"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:cornerRadius="8dp"
-                app:layout_constraintEnd_toEndOf="@+id/location_linear_layout"
-                app:layout_constraintStart_toStartOf="@+id/location_linear_layout"
-                app:layout_constraintTop_toBottomOf="@+id/location_linear_layout" />
-            <Button
-                android:id="@+id/goto_edit_password"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:backgroundTint="#d35400"
-                android:gravity="center"
-                android:text="@string/update_password_button_text"
-                android:textColor="#ffffff"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:cornerRadius="8dp"
-                app:layout_constraintEnd_toEndOf="@+id/location_linear_layout"
-                app:layout_constraintStart_toStartOf="@+id/location_linear_layout"
-                app:layout_constraintTop_toBottomOf="@+id/goto_edit_profile" />
+                android:layout_marginEnd="24dp"
+                android:paddingVertical="16dp"
+                android:paddingHorizontal="8dp"
+                android:background="@drawable/white_bg"
+                app:layout_constraintTop_toBottomOf="@+id/location_linear_layout"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/number_of_listings"
+                    android:textColor="#5917e1"
+                    android:textSize="18sp" />
 
+                <TextView
+                    android:id="@+id/me_listing_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="1 listing(s)"
+                    android:textAlignment="viewEnd"
+                    android:textColor="#5b5b5b"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+<!--            <LinearLayout-->
+<!--                android:id="@+id/date_joined_linear_layout"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="24dp"-->
+<!--                android:layout_marginTop="20dp"-->
+<!--                android:layout_marginEnd="24dp"-->
+<!--                android:paddingVertical="16dp"-->
+<!--                android:paddingHorizontal="8dp"-->
+<!--                android:background="@drawable/white_bg"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/listings_linear_layout"-->
+<!--                android:orientation="horizontal">-->
+<!--                <TextView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:text="Date joined:"-->
+<!--                    android:textColor="#5917e1"-->
+<!--                    android:textSize="18sp" />-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/date_joined"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:text="DD/MM/YY"-->
+<!--                    android:textAlignment="viewEnd"-->
+<!--                    android:textColor="#5b5b5b"-->
+<!--                    android:textSize="18sp" />-->
+<!--            </LinearLayout>-->
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
