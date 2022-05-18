@@ -47,10 +47,12 @@ public class User {
 
     private List<String> groups;
 
+    private String qrImageUrl;
+
     public User() {
     }
 
-    public User(String userId, String username, String email, String password, String location, String mobile, String imageUrl, List<String> products, String timeAdded, List<String> chatRooms, List<String> groups) {
+    public User(String userId, String username, String email, String password, String location, String mobile, String imageUrl, List<String> products, String timeAdded, List<String> chatRooms, List<String> groups, String qrImageUrl) {
         this.userId = userId;
         this.username = username;
         this.email = email;
@@ -62,6 +64,7 @@ public class User {
         this.timeAdded = timeAdded;
         this.chatRooms = chatRooms;
         this.groups = groups;
+        this.qrImageUrl = qrImageUrl;
     }
 
     public String getUserId() {
@@ -135,4 +138,8 @@ public class User {
     public List<String> getGroups() { return groups; }
 
     public void setGroups(List<String> groups) { this.groups = groups; }
+
+    public String getQrImageUrl() { return qrImageUrl; }
+
+    public void setQrImageUrl(String qrImageUrl) { this.qrImageUrl = qrImageUrl; }
 }
