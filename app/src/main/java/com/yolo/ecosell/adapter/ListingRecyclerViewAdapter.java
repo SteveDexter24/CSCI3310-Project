@@ -57,6 +57,7 @@ public class ListingRecyclerViewAdapter extends RecyclerView.Adapter<ListingRecy
             Intent intent = new Intent(context, ProductDetailActivity.class);
             intent.putExtra("itemAtIndex", position);
             intent.putExtra("title", product.getProductName());
+            // Pass everything, not position
             context.startActivity(intent);
         });
     }

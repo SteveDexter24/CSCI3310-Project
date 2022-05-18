@@ -40,11 +40,10 @@ public class GroupDetailActivity extends AppCompatActivity {
     private Button joinButton;
     private RecyclerView postDetailRecyclerView;
     private int itemAtIndex;
-    private String title, groupId;
+    private String title, groupId, groupImage, groupDescription, groupFollowers, groupName;
 
     private GroupViewModel groupViewModel;
     private PostViewModel postViewModel;
-    private Group group;
 
     private List<Post> postList;
     private PostAdapter postAdapter;
@@ -64,6 +63,10 @@ public class GroupDetailActivity extends AppCompatActivity {
         itemAtIndex = intent.getIntExtra("itemAtIndex", 0);
         title = intent.getStringExtra("title");
         groupId = intent.getStringExtra("groupId");
+        groupImage = intent.getStringExtra("groupImage");
+        groupDescription = intent.getStringExtra("groupDescription");
+        groupFollowers = intent.getStringExtra("groupFollowers");
+        groupName = intent.getStringExtra("groupName");
         getSupportActionBar().setTitle(title);
 
         postList = new ArrayList<>();
@@ -76,6 +79,12 @@ public class GroupDetailActivity extends AppCompatActivity {
         followersTextView = findViewById(R.id.group_detail_followers);
         addCommentButton = findViewById(R.id.group_detail_floatingActionButton);
 
+        Glide.with(this)
+                .load(groupImage).into(groupImageView);
+        groupNameTextView.setText(groupName);
+        groupDescriptionTextView.setText(groupDescription);
+        followersTextView.setText("Followers: " + groupFollowers);
+
         postDetailRecyclerView.setHasFixedSize(true);
         postDetailRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -84,11 +93,6 @@ public class GroupDetailActivity extends AppCompatActivity {
 
         postViewModel = new ViewModelProvider.AndroidViewModelFactory(this.getApplication())
                 .create(PostViewModel.class);
-
-        groupViewModel.getAllGroups().observe(this, groups -> {
-            group = groups.get(itemAtIndex);
-            setUpUI();
-        });
 
         addCommentButton.setOnClickListener(view -> {
             Intent goToCreatePostIntent = new Intent(this, CreatePostActivity.class);
@@ -99,11 +103,7 @@ public class GroupDetailActivity extends AppCompatActivity {
     }
 
     private void setUpUI(){
-        Glide.with(this)
-                .load(group.getGroupImageUrl()).into(groupImageView);
-        groupNameTextView.setText(group.getGroupName());
-        groupDescriptionTextView.setText(group.getGroupDescription());
-        followersTextView.setText("Followers: " + group.getUsers().size());
+
     }
 
     @Override

@@ -115,7 +115,7 @@ public class SearchActivity extends AppCompatActivity {
                         }
                     }
                     searchRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                    filteredGroupAdapter = new GroupAdapter(getApplicationContext(), gList);
+                    filteredGroupAdapter = new GroupAdapter(SearchActivity.this, gList);
                     searchRecyclerView.setAdapter(filteredGroupAdapter);
                 } else if (searchType.equals("explore") && !TextUtils.isEmpty(newText)) {
                     for (Product p : productsList) {
@@ -126,7 +126,7 @@ public class SearchActivity extends AppCompatActivity {
                         }
                     }
                     searchRecyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
-                    filteredProductRecyclerViewAdapter = new ListingRecyclerViewAdapter(getApplicationContext(), pList);
+                    filteredProductRecyclerViewAdapter = new ListingRecyclerViewAdapter(SearchActivity.this, pList);
                     searchRecyclerView.setAdapter(filteredProductRecyclerViewAdapter);
                 }
                 return false;
