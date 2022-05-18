@@ -20,6 +20,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import model.User;
 import model.UserViewModel;
 
@@ -31,10 +34,12 @@ import model.UserViewModel;
 public class MeFragment extends Fragment {
     final private String TAG = "MeFragment";
     private ImageView userProfileImage;
-    private TextView usernameTextView, emailTextView, mobileTextView, locationTextView;
+    private TextView usernameTextView, emailTextView, mobileTextView, locationTextView, listingCountTextView, dateJoinedTextView;
     private UserViewModel userViewModel;
     private LinearLayout listingLinearLayout, paymentLinearLayout, settingsLinearLayout;
-    private Button editProfileButton, editPasswordButton;
+    private String userId;
+    private String username;
+    private String qrImageUrl;
 
     public MeFragment() {
         // Required empty public constructor
@@ -65,13 +70,13 @@ public class MeFragment extends Fragment {
         emailTextView = view.findViewById(R.id.me_email_text_view);
         mobileTextView = view.findViewById(R.id.me_mobile_phone_number);
         locationTextView = view.findViewById(R.id.me_location);
+        listingCountTextView = view.findViewById(R.id.me_listing_count);
+        //dateJoinedTextView = view.findViewById(R.id.date_joined);
 
         listingLinearLayout = view.findViewById(R.id.me_listing_layout);
         paymentLinearLayout = view.findViewById(R.id.me_payment_layout);
         settingsLinearLayout = view.findViewById(R.id.settings_button_linear_layout);
 
-        editProfileButton = view.findViewById(R.id.goto_edit_profile);
-        editPasswordButton = view.findViewById(R.id.goto_edit_password);
         return view;
     }
 
@@ -82,48 +87,51 @@ public class MeFragment extends Fragment {
         goToMyListingScreen();
         goToPaymentScreen();
         goToSettingScreen();
-        goToEditProfileScreen();
-        goToEditPasswordScreen();
 
         userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
         userViewModel.getAllUsers().observe(getViewLifecycleOwner(), users -> {
             User user = users.get(0);
             Glide.with(this).load(user.getImageUrl()).into(userProfileImage);
+            userId = user.getUserId();
+            username = user.getUsername();
             usernameTextView.setText(user.getUsername());
             emailTextView.setText(user.getEmail());
             mobileTextView.setText(user.getMobile());
             locationTextView.setText(user.getLocation());
+            listingCountTextView.setText(user.getProducts().size() + " listing(s)");
+            if (user.getQrImageUrl() != null){
+                qrImageUrl = user.getQrImageUrl();
+            }else{
+                qrImageUrl = "";
+            }
         });
     }
 
     private void goToMyListingScreen() {
         listingLinearLayout.setOnClickListener(view -> {
-            startActivity(new Intent(MeFragment.this.getActivity(), MyListingsActivity.class));
+            Intent intent = new Intent(MeFragment.this.getActivity(), MyListingsActivity.class);
+            intent.putExtra("userId", userId);
+            startActivity(intent);
         });
     }
 
     private void goToPaymentScreen() {
         paymentLinearLayout.setOnClickListener(view -> {
-            Log.d(TAG, "paymentClicked");
+            Intent intent = new Intent(MeFragment.this.getActivity(), PaymentActivity.class);
+            intent.putExtra("username", username);
+            intent.putExtra("userId", userId);
+            intent.putExtra("qrImageUrl", qrImageUrl);
+            startActivity(intent);
         });
     }
 
     private void goToSettingScreen() {
         settingsLinearLayout.setOnClickListener(view -> {
-            Log.d(TAG, "settingsClicked");
+            Intent intent = new Intent(MeFragment.this.getActivity(), SettingsActivity.class);
+            intent.putExtra("username", username);
+            startActivity(intent);
         });
     }
 
-    private void goToEditProfileScreen() {
-        editProfileButton.setOnClickListener(view -> {
-            startActivity(new Intent(MeFragment.this.getActivity(), EditProfileActivity.class));
-        });
-    }
-
-    private void goToEditPasswordScreen(){
-        editPasswordButton.setOnClickListener(view -> {
-            startActivity(new Intent(MeFragment.this.getActivity(), EditPasswordActivity.class));
-        });
-    }
 }
 

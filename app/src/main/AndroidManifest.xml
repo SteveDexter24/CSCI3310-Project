@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EcoSell">
         <activity
+            android:name=".PaymentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SettingsActivity"
+            android:exported="false" />
+        <activity
             android:name=".CreatePostActivity"
             android:exported="false" />
         <activity
