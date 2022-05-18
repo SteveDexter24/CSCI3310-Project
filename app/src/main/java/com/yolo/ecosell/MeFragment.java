@@ -39,6 +39,7 @@ public class MeFragment extends Fragment {
     private LinearLayout listingLinearLayout, paymentLinearLayout, settingsLinearLayout;
     private String userId;
     private String username;
+    private String qrImageUrl;
 
     public MeFragment() {
         // Required empty public constructor
@@ -98,6 +99,11 @@ public class MeFragment extends Fragment {
             mobileTextView.setText(user.getMobile());
             locationTextView.setText(user.getLocation());
             listingCountTextView.setText(user.getProducts().size() + " listing(s)");
+            if (user.getQrImageUrl() != null){
+                qrImageUrl = user.getQrImageUrl();
+            }else{
+                qrImageUrl = "";
+            }
         });
     }
 
@@ -113,6 +119,8 @@ public class MeFragment extends Fragment {
         paymentLinearLayout.setOnClickListener(view -> {
             Intent intent = new Intent(MeFragment.this.getActivity(), PaymentActivity.class);
             intent.putExtra("username", username);
+            intent.putExtra("userId", userId);
+            intent.putExtra("qrImageUrl", qrImageUrl);
             startActivity(intent);
         });
     }
