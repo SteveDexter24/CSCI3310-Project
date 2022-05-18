@@ -26,8 +26,10 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.firebase.Timestamp;
@@ -163,9 +165,15 @@ public class SellFragment extends Fragment {
 
         listItButton = view.findViewById(R.id.add_listing_button);
 
-        chooseImageButtons();
-
         listItButton.setOnClickListener(view1 -> createNewListing());
+
+        for (int i = 0; i < 4; i++) {
+            int num = i;
+            imageButtons.get(num).setOnClickListener(view1 -> {
+                getImage(num);
+                Log.d(TAG, "image button at:" + num);
+            });
+        }
     }
 
     private void chooseImageButtons() {
@@ -282,7 +290,7 @@ public class SellFragment extends Fragment {
                                     .addOnSuccessListener(uri -> {
                                         imageUrls.add(uri.toString());
                                         if (finalI == bytesCompressImages.size() - 1) {
-                                            String productId = collectionReference.document().getId();
+                                            DocumentReference productDocRef = collectionReference.document();
                                             newListing.setImageUrls(imageUrls);
                                             newListing.setProductSeller(userId);
                                             newListing.setProductName(title);
@@ -294,18 +302,21 @@ public class SellFragment extends Fragment {
                                             newListing.setTimeAdded(new Timestamp(new Date()).toString());
                                             newListing.setSellerImageUrl(user.getImageUrl());
                                             newListing.setSellerUserName(user.getUsername());
-                                            newListing.setProductId(productId);
+                                            newListing.setLikes(new ArrayList<>());
+                                            newListing.setProductId(productDocRef.getId());
 
-                                            collectionReference.add(newListing)
-                                                    .addOnSuccessListener(documentReference -> {
-                                                        // update user collection
-                                                        List<String> newProductId = new ArrayList<String>();
-                                                        newProductId = user.getProducts();
-                                                        newProductId.add(documentReference.getId());
-                                                        user.setProducts(newProductId);
-                                                        updateUserCollection(user);
-                                                        progressDialog.hide();
-                                                        listItButton.setEnabled(true);
+                                            productDocRef
+                                                    .set(newListing, SetOptions.merge())
+                                                    .addOnCompleteListener(task -> {
+                                                        if (task.isSuccessful()){
+                                                            List<String> newProductId = new ArrayList<String>();
+                                                            newProductId = user.getProducts();
+                                                            newProductId.add(productDocRef.getId());
+                                                            user.setProducts(newProductId);
+                                                            updateUserCollection(user);
+                                                            progressDialog.hide();
+                                                            listItButton.setEnabled(true);
+                                                        }
                                                     })
                                                     .addOnFailureListener(e -> {
                                                         Toast.makeText(getContext(), "Failed to create a new listing", Toast.LENGTH_LONG).show();
