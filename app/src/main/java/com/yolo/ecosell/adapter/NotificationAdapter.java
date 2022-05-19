@@ -1,5 +1,6 @@
 package com.yolo.ecosell.adapter;
 
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,16 +16,24 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.yolo.ecosell.R;
 
+import org.ocpsoft.prettytime.PrettyTime;
+
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.text.SimpleDateFormat;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import model.Notification;
 import model.Post;
 
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.NotificationViewHolder>{
 
     private Context context;
-    public NotificationAdapter(Context context){
+    private List<Notification> notificationList;
+    public NotificationAdapter(Context context, List<Notification> notificationList){
         this.context = context;
+        this.notificationList = notificationList;
     }
 
     @NonNull
@@ -37,17 +46,21 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     @Override
     public void onBindViewHolder(@NonNull NotificationViewHolder holder, int position) {
-        holder.notification_username.setText("dummy2Username");
-        holder.notification_content.setText("this is a test notification");
-        holder.notification_time.setText("13:31:23 15/05/21");
+        Notification notification =  notificationList.get(position);
+        PrettyTime p = new PrettyTime();
+        Date date = notification.getSentTime().toDate();
+        String ago = p.format(date);
+        holder.notification_username.setText(notification.getSenderUsername());
+        holder.notification_content.setText(notification.getMessage());
+        holder.notification_time.setText(ago);
         Glide.with(holder.itemView.getContext())
-                .load("https://miro.medium.com/max/1400/1*xP2U5u21teQMEZ7NFzC-Hw.png").into(holder.notification_usericon);
+                .load(notification.getImageUrl()).into(holder.notification_usericon);
 
     }
 
     @Override
     public int getItemCount() {
-        return 4;
+        return notificationList.size();
     }
 
     public class NotificationViewHolder extends RecyclerView.ViewHolder {
