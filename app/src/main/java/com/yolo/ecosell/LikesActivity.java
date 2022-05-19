@@ -68,6 +68,7 @@ public class LikesActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        productList.clear();
         if (productList.isEmpty()) {
             userViewModel.getAllUsers().observe(this, users -> {
                 user = users.get(0);

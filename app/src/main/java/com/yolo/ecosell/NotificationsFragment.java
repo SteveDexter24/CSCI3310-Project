@@ -7,16 +7,35 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.yolo.ecosell.adapter.NotificationAdapter;
 
-public class NotificationsFragment extends Fragment {
+import java.util.ArrayList;
+import java.util.List;
 
+import model.Notification;
+
+public class NotificationsFragment extends Fragment {
+    private final String TAG = "NotificationsFragment";
     private RecyclerView notificationRecyclerView;
     private NotificationAdapter notificationRecyclerViewAdapter;
+    private List<Notification> mNotificationList = new ArrayList<>();
+
+    // Firebase
+    private FirebaseAuth firebaseAuth;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private CollectionReference notificationRoomsCollectionReference = db.collection("Notifications");
 
     public NotificationsFragment() {
         // Required empty public constructor
@@ -31,6 +50,9 @@ public class NotificationsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        firebaseAuth = FirebaseAuth.getInstance();
+        Log.d(TAG, firebaseAuth.getCurrentUser().getUid());
+
     }
 
     @Override
@@ -42,12 +64,28 @@ public class NotificationsFragment extends Fragment {
 
 
         notificationRecyclerView = view.findViewById(R.id.notification_recycler_view);
-        notificationRecyclerViewAdapter = new NotificationAdapter(view.getContext());
-
         notificationRecyclerView.setHasFixedSize(true);
-        notificationRecyclerView.setAdapter(notificationRecyclerViewAdapter);
-        notificationRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-
+        getNotifications();
         return view;
+    }
+
+    private void getNotifications(){
+        notificationRoomsCollectionReference
+                .whereEqualTo("to", firebaseAuth.getCurrentUser().getUid())
+                .orderBy("sentTime", Query.Direction.DESCENDING)
+                .limit(10)
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    assert queryDocumentSnapshots != null;
+
+                    for (QueryDocumentSnapshot val: queryDocumentSnapshots){
+                        Notification notification = val.toObject(Notification.class);
+                        mNotificationList.add(notification);
+                    }
+
+                    notificationRecyclerViewAdapter = new NotificationAdapter(getContext(), mNotificationList);
+                    notificationRecyclerView.setAdapter(notificationRecyclerViewAdapter);
+                    notificationRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                });
     }
 }
