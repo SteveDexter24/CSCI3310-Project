@@ -11,10 +11,10 @@
         android:id="@+id/chat_root_linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        android:padding="4dp"
         android:background="@drawable/border"
-        android:orientation="vertical">
+        android:clickable="true"
+        android:orientation="vertical"
+        android:padding="4dp">
 
         <RelativeLayout
             android:id="@+id/chat_relativeLayout"
@@ -60,7 +60,6 @@
                 android:id="@+id/chat_unseen_textView"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:visibility="gone"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
@@ -69,6 +68,7 @@
                 android:background="#3498db"
                 android:gravity="center"
                 android:textColor="@color/white"
+                android:visibility="gone"
                 tools:ignore="TextContrastCheck" />
 
             <de.hdodenhof.circleimageview.CircleImageView

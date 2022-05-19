@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -38,7 +40,6 @@ import model.UserViewModel;
 public class LoginActivity extends AppCompatActivity {
     private Button createAccount, signInButton, signInWithGoogleButton;
     private EditText emailEditText, passwordEditText;
-    private ProgressBar progressBar;
 
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
@@ -48,6 +49,9 @@ public class LoginActivity extends AppCompatActivity {
 
     private UserViewModel userViewModel;
 
+    // Progress Bar
+    private ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,11 +60,15 @@ public class LoginActivity extends AppCompatActivity {
         createAccount = findViewById(R.id.link_to_signup);
         emailEditText = findViewById(R.id.email);
         passwordEditText = findViewById(R.id.password);
-        progressBar = findViewById(R.id.login_progress);
         signInButton = findViewById(R.id.email_sign_in_button);
 
         emailEditText.setText("dummy2@gmail.com");
         passwordEditText.setText("12345678");
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setCancelable(true);
+        progressDialog.setMessage("Logging in...");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 
         userViewModel = new ViewModelProvider.AndroidViewModelFactory(LoginActivity.this.getApplication())
                 .create(UserViewModel.class);
@@ -79,37 +87,28 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void loginWithEmailAndPassword() {
-        signInButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                progressBar.setVisibility(View.VISIBLE);
+        signInButton.setOnClickListener(view -> {
 
-                String email = emailEditText.getText().toString().trim();
-                String password = passwordEditText.getText().toString().trim();
+            String email = emailEditText.getText().toString().trim();
+            String password = passwordEditText.getText().toString().trim();
 
-                if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
-                    firebaseAuth.signInWithEmailAndPassword(email, password)
-                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                    if (task.isSuccessful()) {
-                                        FirebaseUser loggedInUser = firebaseAuth.getCurrentUser();
-                                        assert loggedInUser != null;
-                                        final String currentUserId = loggedInUser.getUid();
-                                        getUserCollectionRef(currentUserId);
-                                    }
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    // Dialogue failed to login
-                                    progressBar.setVisibility(View.INVISIBLE);
-                                }
-                            });
-                } else {
-                    // Show Dialog to tell users that email or password field is not valid
-                }
+            if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
+                progressDialog.show();
+                firebaseAuth.signInWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                FirebaseUser loggedInUser = firebaseAuth.getCurrentUser();
+                                assert loggedInUser != null;
+                                final String currentUserId = loggedInUser.getUid();
+                                getUserCollectionRef(currentUserId);
+                            }
+                        })
+                        .addOnFailureListener(e -> {
+                            // Dialogue failed to login
+                            progressDialog.hide();
+                        });
+            } else {
+                // Show Dialog to tell users that email or password field is not valid
             }
         });
     }
@@ -122,7 +121,8 @@ public class LoginActivity extends AppCompatActivity {
                     assert queryDocumentSnapshots != null;
                     if (!queryDocumentSnapshots.isEmpty()) {
 
-                        progressBar.setVisibility(View.INVISIBLE);
+                        progressDialog.hide();
+                        Toast.makeText(this, "Successfully logged in", Toast.LENGTH_SHORT).show();
                         try {
                             User user = new User();
                             for (QueryDocumentSnapshot snapshot : queryDocumentSnapshots) {

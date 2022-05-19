@@ -298,12 +298,19 @@ public class SellFragment extends Fragment {
                                                     updateUserCollection(productDocRef.getId());
                                                     progressDialog.hide();
                                                     listItButton.setEnabled(true);
+
                                                 }
                                             })
                                             .addOnFailureListener(e -> {
                                                 Toast.makeText(getContext(), "Failed to create a new listing", Toast.LENGTH_LONG).show();
                                                 listItButton.setEnabled(true);
                                                 progressDialog.hide();
+                                                imageButton.setImageURI(Uri.EMPTY);
+                                                categoryEditText.setText("");
+                                                listingTitleEditText.setText("");
+                                                priceEditText.setText("");
+                                                deliveryEditText.setText("");
+                                                descriptionEditText.setText("");
                                             });
 
                                 });
@@ -321,6 +328,7 @@ public class SellFragment extends Fragment {
                 .addOnSuccessListener(unused -> {
                     Toast.makeText(getContext(), "Successfully created a new listing", Toast.LENGTH_LONG).show();
                     // finish the fragment
+                    userViewModel.editUser(user);
                 })
                 .addOnFailureListener(e -> {
                     Log.d(TAG, "Failed to append listing to user");

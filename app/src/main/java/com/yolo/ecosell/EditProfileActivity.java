@@ -27,6 +27,8 @@ import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import model.User;
@@ -141,8 +143,15 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     private void updateUserCollection(User user) {
-        collectionReference.document(mUser.getUserId())
-                .set(user, SetOptions.merge())
+        Map<String,Object> updates = new HashMap<>();
+        updates.put("imageUrl" ,user.getImageUrl());
+        updates.put("username", user.getUsername());
+        updates.put("email", user.getEmail());
+        updates.put("mobile", user.getMobile());
+        updates.put("location", user.getLocation());
+        collectionReference
+                .document(mUser.getUserId())
+                .update(updates)
                 .addOnSuccessListener(aVoid -> {
                     collectionReference
                             .whereEqualTo("userId", user.getUserId())

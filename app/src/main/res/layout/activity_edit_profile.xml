@@ -72,6 +72,8 @@
                     android:layout_marginTop="16dp"
                     android:hint="@string/edit_username"
                     android:maxLines="1"
+                    android:paddingHorizontal="8dp"
+                    android:background="@drawable/custom_input"
                     android:minHeight="48dp"
                     tools:ignore="TextContrastCheck" />
 
@@ -83,6 +85,8 @@
                     android:hint="@string/edit_email_address"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
+                    android:paddingHorizontal="8dp"
+                    android:background="@drawable/custom_input"
                     android:minHeight="48dp"
                     tools:ignore="TextContrastCheck" />
 
@@ -94,6 +98,8 @@
                     android:hint="Update your phone number"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
+                    android:paddingHorizontal="8dp"
+                    android:background="@drawable/custom_input"
                     android:minHeight="48dp"
                     tools:ignore="TextContrastCheck" />
 
@@ -104,6 +110,8 @@
                     android:layout_marginTop="16dp"
                     android:hint="@string/change_location"
                     android:maxLines="1"
+                    android:paddingHorizontal="8dp"
+                    android:background="@drawable/custom_input"
                     android:minHeight="48dp"
                     tools:ignore="TextContrastCheck" />
 
@@ -116,6 +124,8 @@
                     android:backgroundTint="@color/primary_variant"
                     android:text="@string/update_profile"
                     android:textColor="@color/white"
+                    android:paddingHorizontal="8dp"
+                    android:background="@drawable/custom_input"
                     app:cornerRadius="4dp"
                     tools:ignore="TextContrastCheck" />
             </LinearLayout>
