@@ -75,6 +75,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
                         if (!value.isEmpty()) {
                             try {
                                 for (QueryDocumentSnapshot snapshot : value) {
+                                    String id = snapshot.getString("userId");
                                     String username = snapshot.getString("username");
                                     String profileImage = snapshot.getString("imageUrl");
                                     holder.usernameTextView.setText(username);
@@ -84,6 +85,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
                                             .load(profileImage).into(holder.profileImageView);
                                     holder.rootLinearLayout.setOnClickListener(view -> {
                                         Intent intent = new Intent(context, ChatActivity.class);
+                                        intent.putExtra("otherUserId", id);
                                         intent.putExtra("username", username);
                                         intent.putExtra("profileImage", profileImage);
                                         intent.putExtra("chatRoomId", chatRoom.getChatRoomId());
