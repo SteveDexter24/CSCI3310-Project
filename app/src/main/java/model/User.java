@@ -51,10 +51,12 @@ public class User {
 
     private List<String> likes;
 
+    private String deviceToken;
+
     public User() {
     }
 
-    public User(String userId, String username, String email, String password, String location, String mobile, String imageUrl, List<String> products, String timeAdded, List<String> chatRooms, List<String> groups, String qrImageUrl, List<String> likes) {
+    public User(String userId, String username, String email, String password, String location, String mobile, String imageUrl, List<String> products, String timeAdded, List<String> chatRooms, List<String> groups, String qrImageUrl, List<String> likes, String deviceToken) {
         this.userId = userId;
         this.username = username;
         this.email = email;
@@ -68,6 +70,7 @@ public class User {
         this.groups = groups;
         this.qrImageUrl = qrImageUrl;
         this.likes = likes;
+        this.deviceToken = deviceToken;
     }
 
     public String getUserId() {
@@ -149,4 +152,8 @@ public class User {
     public List<String> getLikes() { return likes; }
 
     public void setLikes(List<String> likes) { this.likes = likes; }
+
+    public String getDeviceToken() { return deviceToken; }
+
+    public void setDeviceToken(String deviceToken) { this.deviceToken = deviceToken; }
 }

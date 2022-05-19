@@ -23,18 +23,21 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.yolo.ecosell.adapter.ChatBubbleAdapter;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import model.Chat;
+import model.Notification;
 import model.UserViewModel;
 
 public class ChatActivity extends AppCompatActivity {
@@ -46,12 +49,13 @@ public class ChatActivity extends AppCompatActivity {
     private EditText messageEditText;
     private Button sendButton;
     private ImageView profileImageView;
-    private String chatRoomId, otherUserName;
+    private String chatRoomId, otherUserName, otherUserId;
 
     // Firebase
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference chatsCollectionReference = db.collection("Chats");
     private CollectionReference chatRoomsCollectionReference = db.collection("ChatRooms");
+    private CollectionReference notificationRoomsCollectionReference = db.collection("Notifications");
     private FirebaseAuth firebaseAuth;
 
     private UserViewModel userViewModel;
@@ -74,6 +78,7 @@ public class ChatActivity extends AppCompatActivity {
         chatRoomId = intent.getStringExtra("chatRoomId");
         otherUserImageUrl = intent.getStringExtra("profileImage");
         otherUserName = intent.getStringExtra("username");
+        otherUserId = intent.getStringExtra("otherUserId");
         currentUserImageUrl = intent.getStringExtra("currentUserProfileImage");
         currentUserName = intent.getStringExtra("currentUserUsername");
         Log.d(TAG, currentUserImageUrl);
@@ -136,28 +141,38 @@ public class ChatActivity extends AppCompatActivity {
                 });
     }
 
-    private void onSubmitMessage(){
+    private void onSubmitMessage() {
         String currentUserMessage = messageEditText.getText().toString().trim();
         if (TextUtils.isEmpty(currentUserMessage) || TextUtils.isEmpty(chatRoomId)) return;
 
         Chat message = new Chat(Timestamp.now(), currentUserMessage, firebaseAuth.getCurrentUser().getUid(), chatRoomId);
 
-        Map<String,Object> updates = new HashMap<>();
+        Map<String, Object> updates = new HashMap<>();
 
         chatsCollectionReference
                 .add(message)
                 .addOnSuccessListener(documentReference -> {
-                    updates.put("chats", FieldValue.arrayUnion(documentReference));
-                    updates.put("lastMessage", currentUserMessage);
-                    chatRoomsCollectionReference
-                            .document(chatRoomId)
-                            .update(updates)
-                            .addOnCompleteListener(task -> Log.d(TAG, "Line 160: " + "Add to chat room list"));
+                    // successfully sent message
+                    Notification notification = new Notification(currentUserName, otherUserId, currentUserImageUrl, currentUserMessage, Timestamp.now(), false);
+                    notificationRoomsCollectionReference
+                            .add(notification)
+                            .addOnCompleteListener(task -> {
+                                if (task.isSuccessful()) {
+                                    updates.put("chats", FieldValue.arrayUnion(documentReference));
+                                    updates.put("lastMessage", currentUserMessage);
+                                    chatRoomsCollectionReference
+                                            .document(chatRoomId)
+                                            .update(updates)
+                                            .addOnCompleteListener(task1 -> Log.d(TAG, "Line 160: " + "Add to chat room list"));
+                                }
+                            });
+
                 });
     }
+
     private void hideKeybaord(View v) {
-        InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(v.getApplicationWindowToken(),0);
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(v.getApplicationWindowToken(), 0);
     }
 }
 

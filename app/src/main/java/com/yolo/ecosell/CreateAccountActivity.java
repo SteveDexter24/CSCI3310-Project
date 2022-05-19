@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -33,6 +34,8 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -177,6 +180,12 @@ public class CreateAccountActivity extends AppCompatActivity {
         }
     }
 
+    private void getDeviceId(){
+
+
+    }
+
+
     private void createUserByEmailAddPassword(String username, String email, String password, String location, String phoneNumber) {
         if (!TextUtils.isEmpty(email) && email.contains("@") && !TextUtils.isEmpty(password) && !TextUtils.isEmpty(username) && !TextUtils.isEmpty(location)) {
             progressDialog.show();
@@ -195,20 +204,30 @@ public class CreateAccountActivity extends AppCompatActivity {
                             filepath.putBytes(imageCompressedData)
                                     .addOnSuccessListener(taskSnapshot -> filepath.getDownloadUrl()
                                             .addOnSuccessListener(uri -> {
-                                                User user = new User();
-                                                user.setUserId(userId);
-                                                user.setUsername(username);
-                                                user.setEmail(email);
-                                                user.setLocation(location);
-                                                user.setMobile(phoneNumber);
-                                                user.setProducts(new ArrayList<>());
-                                                user.setChatRooms(new ArrayList<>());
-                                                user.setLikes(new ArrayList<>());
-                                                user.setGroups(new ArrayList<>());
-                                                user.setImageUrl(uri.toString());
-                                                user.setTimeAdded(new Timestamp(new Date()).toString());
-                                                UserViewModel.insert(user);
-                                                createUserObjectEntry(user, userId);
+                                                FirebaseMessaging
+                                                        .getInstance()
+                                                        .getToken()
+                                                        .addOnCompleteListener(task1 -> {
+                                                            if (!task1.isSuccessful()){
+                                                                return;
+                                                            }
+                                                            User user = new User();
+                                                            Log.d("createAcc", task1.getResult());
+                                                            user.setDeviceToken(task1.getResult());
+                                                            user.setUserId(userId);
+                                                            user.setUsername(username);
+                                                            user.setEmail(email);
+                                                            user.setLocation(location);
+                                                            user.setMobile(phoneNumber);
+                                                            user.setProducts(new ArrayList<>());
+                                                            user.setChatRooms(new ArrayList<>());
+                                                            user.setLikes(new ArrayList<>());
+                                                            user.setGroups(new ArrayList<>());
+                                                            user.setImageUrl(uri.toString());
+                                                            user.setTimeAdded(new Timestamp(new Date()).toString());
+                                                            UserViewModel.insert(user);
+                                                            createUserObjectEntry(user, userId);
+                                                        });
                                             }))
                                     .addOnFailureListener(new OnFailureListener() {
                                         @Override
