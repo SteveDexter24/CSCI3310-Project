@@ -18,7 +18,6 @@ import java.util.Map;
 
 public class FCMSend {
     private static String BASE_URL = "https://fcm.googleapis.com/fcm/send";
-    private static String SERVER_KEY = "AAAAIJM6gCs:APA91bEwT7ZihOqRQ4KVWX1KysD8ZQbIFh8kVnrnM1WMmUgIg2JzmegEaYIrgJtP-sFXg5OioCWsGjTvUoWjqo8DLWVqg_9O4_S96nEcWnDm_JE2Gaz_b4ytlZth-9t9OAD_p9lpS3om";
 
     public static void pushNotification (Context context, String token, String title, String message){
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -47,7 +46,7 @@ public class FCMSend {
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     Map<String, String> params = new HashMap<>();
                     params.put("Content-Type", "application/json");
-                    params.put("Authorization", SERVER_KEY);
+                    params.put("Authorization", "");
                     return params;
                 }
             };
