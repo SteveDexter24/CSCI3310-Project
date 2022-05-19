@@ -105,6 +105,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         productSellerTextView.setOnClickListener(view -> {
             Intent goToUserIntent = new Intent(ProductDetailActivity.this, UserActivity.class);
             goToUserIntent.putExtra("sellerId", product.getProductSeller());
+            goToUserIntent.putExtra("username", product.getSellerUserName());
             startActivity(goToUserIntent);
         });
 

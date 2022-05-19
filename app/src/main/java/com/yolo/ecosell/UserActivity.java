@@ -39,6 +39,7 @@ public class UserActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         userId = intent.getStringExtra("sellerId");
+        getSupportActionBar().setTitle(intent.getStringExtra("username"));
         Log.d(TAG, userId);
 
         profileImageView = findViewById(R.id.user_profile_imageView);
