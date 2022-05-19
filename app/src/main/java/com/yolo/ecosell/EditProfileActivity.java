@@ -167,7 +167,6 @@ public class EditProfileActivity extends AppCompatActivity {
                                 progressDialog.hide();
                                 if (!value.isEmpty()) {
                                     progressDialog.hide();
-                                    Toast.makeText(this, "Successfully updated your profile", Toast.LENGTH_LONG).show();
                                     for (QueryDocumentSnapshot snapshot : value) {
                                         user.setEmail(snapshot.getString("email"));
                                         user.setUsername(snapshot.getString("username"));
@@ -177,13 +176,14 @@ public class EditProfileActivity extends AppCompatActivity {
                                         user.setImageUrl(imageUrl);
                                     }
                                     // By default replaces as long as same primary key
+                                    Toast.makeText(this, "Successfully updated your profile", Toast.LENGTH_SHORT).show();
                                     userViewModel.insert(user);
                                 }
                             });
                 })
                 .addOnFailureListener(e -> {
                     progressDialog.hide();
-                    Toast.makeText(this, "Failed to update your profile", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "Failed to update your profile", Toast.LENGTH_SHORT).show();
                 });
     }
 

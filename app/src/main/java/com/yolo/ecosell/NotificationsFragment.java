@@ -2,6 +2,7 @@ package com.yolo.ecosell;
 
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,7 +16,9 @@ import android.view.ViewGroup;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -24,6 +27,7 @@ import com.yolo.ecosell.adapter.NotificationAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.Chat;
 import model.Notification;
 
 public class NotificationsFragment extends Fragment {
@@ -70,19 +74,25 @@ public class NotificationsFragment extends Fragment {
     }
 
     private void getNotifications(){
+        //mNotificationList = new ArrayList<>();
         notificationRoomsCollectionReference
                 .whereEqualTo("to", firebaseAuth.getCurrentUser().getUid())
                 .orderBy("sentTime", Query.Direction.DESCENDING)
                 .limit(10)
-                .get()
-                .addOnSuccessListener(queryDocumentSnapshots -> {
-                    assert queryDocumentSnapshots != null;
-
-                    for (QueryDocumentSnapshot val: queryDocumentSnapshots){
-                        Notification notification = val.toObject(Notification.class);
-                        mNotificationList.add(notification);
+                .addSnapshotListener((value, error) -> {
+                    if (error != null) {
+                        Log.w(TAG, "Listen failed.", error);
+                        return;
                     }
+                    Log.d(TAG, value.toString());
 
+                    if (value != null && !value.isEmpty()) {
+                        mNotificationList = new ArrayList<>();
+                        for (QueryDocumentSnapshot notification : value) {
+                            Notification n = notification.toObject(Notification.class);
+                            mNotificationList.add(n);
+                        }
+                    }
                     notificationRecyclerViewAdapter = new NotificationAdapter(getContext(), mNotificationList);
                     notificationRecyclerView.setAdapter(notificationRecyclerViewAdapter);
                     notificationRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
