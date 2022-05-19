@@ -40,6 +40,8 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         holder.notification_username.setText("dummy2Username");
         holder.notification_content.setText("this is a test notification");
         holder.notification_time.setText("13:31:23 15/05/21");
+        Glide.with(holder.itemView.getContext())
+                .load("https://miro.medium.com/max/1400/1*xP2U5u21teQMEZ7NFzC-Hw.png").into(holder.notification_usericon);
 
     }
 
@@ -49,7 +51,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     }
 
     public class NotificationViewHolder extends RecyclerView.ViewHolder {
-        private CircleImageView notification_usericon;
+        private ImageView notification_usericon;
         private TextView notification_username, notification_content, notification_time;
 
         public NotificationViewHolder(@NonNull View itemView) {
