@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -41,7 +42,6 @@ public class EditProfileActivity extends AppCompatActivity {
     private ImageView profileImageView;
     private UserViewModel userViewModel;
     private Uri imageUri;
-    private ProgressBar progressBar;
 
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
@@ -51,6 +51,8 @@ public class EditProfileActivity extends AppCompatActivity {
     private String oldEmail;
     private User mUser;
     private String new_image_url;
+    // Progress Bar
+    private ProgressDialog progressDialog;
 
     // FireStore connection
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -71,7 +73,11 @@ public class EditProfileActivity extends AppCompatActivity {
         locationEditText = findViewById(R.id.edit_location);
         profileImageView = findViewById(R.id.edit_profile_profile_image);
         updateProfileButton = findViewById(R.id.edit_user_profile_button);
-        progressBar = findViewById(R.id.edit_progress);
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setCancelable(true);
+        progressDialog.setMessage("Updating profile...");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 
         getImage();
 
@@ -106,7 +112,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private void updateEmailAddress(String username, String email, String location, String mobileNum){
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         assert firebaseUser != null;
-        progressBar.setVisibility(View.VISIBLE);
+        progressDialog.show();
         firebaseUser.updateEmail(email)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
@@ -121,7 +127,7 @@ public class EditProfileActivity extends AppCompatActivity {
                         updateUserCollection(mUser);
                     }
                 })
-                .addOnFailureListener(e -> progressBar.setVisibility(View.GONE));
+                .addOnFailureListener(e -> progressDialog.hide());
     }
 
     private void uploadImage(String userId, Uri updated_image_uri) {
@@ -137,7 +143,7 @@ public class EditProfileActivity extends AppCompatActivity {
                            mUser.setImageUrl(uri.toString());
                         })
                         .addOnFailureListener(e -> {
-                            progressBar.setVisibility(View.GONE);
+                            progressDialog.hide();
                             Toast.makeText(this, "Failed to update profile image", Toast.LENGTH_LONG).show();
                         }));
     }
@@ -158,9 +164,9 @@ public class EditProfileActivity extends AppCompatActivity {
                             .addSnapshotListener((value, error) -> {
                                 assert value != null;
                                 Log.d(TAG, "Successfully update user");
-                                progressBar.setVisibility(View.GONE);
+                                progressDialog.hide();
                                 if (!value.isEmpty()) {
-                                    progressBar.setVisibility(View.GONE);
+                                    progressDialog.hide();
                                     Toast.makeText(this, "Successfully updated your profile", Toast.LENGTH_LONG).show();
                                     for (QueryDocumentSnapshot snapshot : value) {
                                         user.setEmail(snapshot.getString("email"));
@@ -171,12 +177,12 @@ public class EditProfileActivity extends AppCompatActivity {
                                         user.setImageUrl(imageUrl);
                                     }
                                     // By default replaces as long as same primary key
-                                    userViewModel.editUser(user);
+                                    userViewModel.insert(user);
                                 }
                             });
                 })
                 .addOnFailureListener(e -> {
-                    progressBar.setVisibility(View.GONE);
+                    progressDialog.hide();
                     Toast.makeText(this, "Failed to update your profile", Toast.LENGTH_LONG).show();
                 });
     }

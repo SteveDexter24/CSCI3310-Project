@@ -144,11 +144,11 @@ public class SellFragment extends Fragment {
         descriptionEditText = view.findViewById(R.id.add_listing_description_editText_view);
 
         // For testing purposes
-        categoryEditText.setText("Trip");
-        listingTitleEditText.setText("HK Trip");
-        priceEditText.setText("2580");
-        deliveryEditText.setText("N/A");
-        descriptionEditText.setText("fake description");
+//        categoryEditText.setText("Trip");
+//        listingTitleEditText.setText("HK Trip");
+//        priceEditText.setText("2580");
+//        deliveryEditText.setText("N/A");
+//        descriptionEditText.setText("fake description");
 
         chipGroup = view.findViewById(R.id.add_listing_chipGroup);
 

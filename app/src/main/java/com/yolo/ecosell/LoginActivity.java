@@ -62,9 +62,6 @@ public class LoginActivity extends AppCompatActivity {
         passwordEditText = findViewById(R.id.password);
         signInButton = findViewById(R.id.email_sign_in_button);
 
-        emailEditText.setText("dummy2@gmail.com");
-        passwordEditText.setText("12345678");
-
         progressDialog = new ProgressDialog(this);
         progressDialog.setCancelable(true);
         progressDialog.setMessage("Logging in...");
@@ -105,10 +102,12 @@ public class LoginActivity extends AppCompatActivity {
                         })
                         .addOnFailureListener(e -> {
                             // Dialogue failed to login
+                            Toast.makeText(this, "User not found", Toast.LENGTH_LONG).show();
                             progressDialog.hide();
                         });
             } else {
                 // Show Dialog to tell users that email or password field is not valid
+
             }
         });
     }
@@ -122,16 +121,17 @@ public class LoginActivity extends AppCompatActivity {
                     if (!queryDocumentSnapshots.isEmpty()) {
 
                         progressDialog.hide();
-                        Toast.makeText(this, "Successfully logged in", Toast.LENGTH_SHORT).show();
+
                         try {
                             User user = new User();
                             for (QueryDocumentSnapshot snapshot : queryDocumentSnapshots) {
                                 user = snapshot.toObject(User.class);
                             }
                             UserViewModel.insert(user);
+                            Toast.makeText(this, "Successfully logged in", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                         } catch (Exception exception) {
-                            Log.d("LoginActivity", exception.getMessage());
+                            //Log.d("LoginActivity", exception.getMessage());
                         }
                     }
                 });
