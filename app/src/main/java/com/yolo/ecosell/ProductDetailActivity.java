@@ -101,22 +101,12 @@ public class ProductDetailActivity extends AppCompatActivity {
         productViewModel = new ViewModelProvider.AndroidViewModelFactory(this.getApplication())
                 .create(ProductViewModel.class);
 
-        productViewModel.getAllProducts().observe(this, products -> {
-            for (Product p : products) {
-                if (p.getProductId().equals(productId)) {
-                    product = p;
-                    likeClicked = product.getLikes().contains(userId);
 
-                    if (likeClicked) {
-                        likeButton.setImageResource(heartLiked);
-                    } else {
-
-                        likeButton.setImageResource(heartNotLiked);
-                    }
-                    setDataToUI(product);
-                    break;
-                }
-            }
+        productSellerTextView.setOnClickListener(view -> {
+            Intent goToUserIntent = new Intent(ProductDetailActivity.this, UserActivity.class);
+            goToUserIntent.putExtra("sellerId", product.getProductSeller());
+            goToUserIntent.putExtra("username", product.getSellerUserName());
+            startActivity(goToUserIntent);
         });
 
 
@@ -145,6 +135,28 @@ public class ProductDetailActivity extends AppCompatActivity {
                 likeClicked = true;
                 // insert to list
                 addLikes();
+            }
+        });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        productViewModel.getAllProducts().observe(this, products -> {
+            for (Product p : products) {
+                if (p.getProductId().equals(productId)) {
+                    product = p;
+                    likeClicked = product.getLikes().contains(userId);
+
+                    if (likeClicked) {
+                        likeButton.setImageResource(heartLiked);
+                    } else {
+
+                        likeButton.setImageResource(heartNotLiked);
+                    }
+                    setDataToUI(product);
+                    break;
+                }
             }
         });
     }

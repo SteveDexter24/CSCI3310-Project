@@ -33,7 +33,7 @@ public class MyListingsActivity extends AppCompatActivity {
     private RecyclerView listingRecyclerView;
     private ListingRecyclerViewAdapter listingRecyclerViewAdapter;
     private UserViewModel userViewModel;
-    private String userId;
+    private String userId, notCurrentUserName;
     private User user;
     private List<Product> productList = new ArrayList<>();
 
@@ -46,10 +46,16 @@ public class MyListingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_listings);
-        getSupportActionBar().setTitle("My Listings");
 
         Intent intent = getIntent();
         userId = intent.getStringExtra("userId");
+        notCurrentUserName = intent.getStringExtra("notCurrentUser");
+
+        if (notCurrentUserName != null){
+            getSupportActionBar().setTitle(notCurrentUserName + "'s listing(s)");
+        }else{
+            getSupportActionBar().setTitle("My Listings");
+        }
 
         listingRecyclerView = findViewById(R.id.my_listing_recycler_view);
         listingRecyclerView.hasFixedSize();
@@ -62,6 +68,7 @@ public class MyListingsActivity extends AppCompatActivity {
         if (productList.isEmpty()){
             getUserProducts();
         }
+
     }
 
     private void getUserProducts(){
